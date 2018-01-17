@@ -12,6 +12,7 @@ knex.schema.hasTable('favorites').then(exists => {
     knex.schema.createTable('favorites', (table) => {
       table.increments('id').primary();
       table.integer('userId');
+      table.string('favorite');
     })
     .then(() => console.log('Created favorites'));
   }
@@ -30,4 +31,4 @@ knex.schema.hasTable('users').then(exists => {
 
 const db = require('bookshelf')(knex);
 
-module.exports = db;
+module.exports = {db, knex}

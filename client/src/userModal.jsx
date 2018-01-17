@@ -33,8 +33,8 @@ export default class UserModal extends React.Component {
     event.preventDefault();
     axios.post('/login', this.state.user)
     .then(response => {
-      const { userId } = response.data;
-      this.props.storeUser(userId);
+      const { id } = response.data;
+      this.props.storeUser(id);
     })
     .catch(error => {
       console.error('There was an error:', error)

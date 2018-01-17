@@ -12,7 +12,8 @@ const axios = require('axios');
 const db = require('../database/index.js');
 const sentiment = require('sentiment');
 const cron = require('node-cron');
-const pgDB = require('../database/real-database/config.js')
+const pgDB = require('../database/real-database/config.js').db;
+const knex = require('../database/real-database/config.js').knex;
 const User = require('../database/real-database/models/user.js')
 const Favorite = require('../database/real-database/models/favorite.js')
 
@@ -82,30 +83,59 @@ app.get('/database', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-  console.log('rece')
   const { username, email } = req.body;
-  const newUser = new User({username, email})
+  const newUser = new User({ email })
   newUser
   .fetch()
   .then(user => {
     if(!user) {
-      newUser.save()
+      newUser = new User({ username, email })
+      newUser
+      .fetch()
+      .save()
       .then(info => {
+        console.log('info', info)
         res.status(200).send(info);
       })
-      .catch(err => console.log(err))
+    } else {
+      res.status(200).send(user);
     }
-    res.status(200).send(user);
   })
   .catch(error => {
-    console.log(error)
     res.status(500).send(error);
   })
 })
 
-// app.post('/favorite', (req, res) => {
+<<<<<<< HEAD
+app.post('/favorite', (req, res) => {
 
-// })
+=======
+app.post('/favorites', (req, res) => {
+  const { favorite, userId } = req.body;
+  const newFav = new Favorite({ userId, favorite })
+  newFav
+  .fetch()
+  .then(fav => {
+    if(fav) {
+      res.status(200).send(fav)
+    } else {
+      newFav
+      .save()
+      .then(fav => {
+        res.status(200).send(fav)    
+      })
+    }
+  })
+})
+
+app.get('/favorites', (req, res) => {
+  knex.select('favorite').from('favorites')
+  .where('userId', req.headers.userid)
+  .then(result => {
+    res.status(200).send(result)
+  })
+>>>>>>> favFeat
+})
 
 app.listen(process.env.PORT || 3000, function() {
   console.log('listening on port 3000!');

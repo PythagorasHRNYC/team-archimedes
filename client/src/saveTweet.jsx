@@ -27,7 +27,7 @@ class SaveTweet extends React.Component {
   render() {
     const { connectDropTarget } = this.props;
     return connectDropTarget(
-      <div>
+      <div onClick={this.props.handleFaves}>
         <img src="./images/folder_icon.png" alt="" className="save"/>
       </div>
     )
