@@ -262,8 +262,7 @@ getUserProfileData = (userScreenName, cb) => {
 										return friend
 									}).sort(mostPopularUser)
 
-									let UserDataObject = [
-										{ 
+									let UserDataObject = { 
 											name: name,
 											screen_name: screen_name,
 											description: description,
@@ -280,9 +279,8 @@ getUserProfileData = (userScreenName, cb) => {
 											usersFollowers,
 											usersFriends,
 											userStatuses
-										}
-									]
-
+									}
+									
 									cb( UserDataObject )
 								}
 							});
