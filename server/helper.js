@@ -94,8 +94,61 @@ getTweets = (st, cb) => {
 		cb(cleaned);
 
 		}
-		});
+	});
 }
+
+getSpecificUserTweets = (user, cb) => {
+	var oauth = new OAuth.OAuth(
+		'https://api.twitter.com/oauth/request_token',
+		'https://api.twitter.com/oauth/access_token',
+		key.CONSUMER_KEY,
+		key.CONSUMER_SECRET,
+		'1.0A',
+		null,
+		'HMAC-SHA1'
+	);
+
+	oauth.get(`https://api.twitter.com/1.1/search/tweets.json?q=${user}&count=100&tweet_mode=extended`, key.ACCESS_TOKEN, key.ACCESS_TOKEN_SECRET, function(e, data, res) {
+		if (e) { 
+			console.error(e);
+			cb([]);
+		} else {
+			let temp = JSON.parse(data).statuses
+			let cleaned = {
+				userInfo:{},
+				score: 0
+			}
+			// console.log('ST IS ', st)
+			temp.forEach((val, idx, arr)=>{
+				console.log(arr.length);
+				console.log(idx)
+
+				console.log(sentiment(val.retweeted_status ? val.retweeted_status.full_text : val.full_text).score);
+				cleaned.score += sentiment(val.retweeted_status ? val.retweeted_status.full_text : val.full_text).score
+			})
+
+			cleaned.userInfo.name = temp[0].user.screen_name;
+			cleaned.userInfo.location = temp[0].user.location;
+			cleaned.userInfo.pic = temp[0].user.profile_image_url;
+
+
+			// temp.map((tweet) => {
+			// 	var selectedData = {
+			// 		// if tweet has been retweeted, its full text lives in the retweeted_status object
+			// 		user_name: tweet.user.screen_name,
+			// 		user_location: tweet.user.location,
+			// 		avatar_url: tweet.user.profile_image_url
+			// 	}
+
+			// 	cleaned.data = selectedData;
+			// });
+
+		cb(cleaned);
+
+		}
+	});
+}
+
 
 getUserProfileData = (userScreenName, cb) => {
 	var oauth = new OAuth.OAuth(
@@ -296,5 +349,6 @@ getUserProfileData = (userScreenName, cb) => {
 
 module.exports.getUserProfileData = getUserProfileData;
 module.exports.getTweets = getTweets;
+module.exports.getSpecificUserTweets = getSpecificUserTweets;
 module.exports.cronJob = cronJob;
 

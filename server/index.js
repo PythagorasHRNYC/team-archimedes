@@ -22,6 +22,7 @@ var getTweets = require('./helper.js').getTweets;
 var cronJob = require('./helper.js').cronJob;
 var getUserProfileData = require('./helper.js').getUserProfileData;
 
+var helper = require('./helper.js');
 
 cron.schedule('*/30 * * * *', () => {
   // call helper function every half-hour
@@ -31,6 +32,13 @@ cron.schedule('*/30 * * * *', () => {
 const sanitizeHTML = require('sanitize-html')
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.json())
+
+app.get('/userBattle', function(req, res){
+  helper.getSpecificUserTweets(req.query.user, (data)=>{
+    res.send(data)
+  })
+  
+})
 
 app.post('/search', function(req, res) {
 
@@ -106,10 +114,6 @@ app.post('/login', (req, res) => {
   })
 })
 
-<<<<<<< HEAD
-app.post('/favorite', (req, res) => {
-
-=======
 app.post('/favorites', (req, res) => {
   const { favorite, userId } = req.body;
   const newFav = new Favorite({ userId, favorite })
@@ -134,7 +138,6 @@ app.get('/favorites', (req, res) => {
   .then(result => {
     res.status(200).send(result)
   })
->>>>>>> favFeat
 })
 
 app.listen(process.env.PORT || 3000, function() {
