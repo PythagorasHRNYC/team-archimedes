@@ -47,8 +47,12 @@ class App extends React.Component {
       clickedUserDataContentLoaded: false,
       isDragging: false,
       authenticated: false,
-      userModalStylingSheet: 'user-modal-content-loading'
+      userModalStylingSheet: 'user-modal-content-loading',
+      battleUser : {},
+      battleData: [],
+      canBattle: false
     }
+
     this.getUserData = this.getUserData.bind(this);
     this.getAverage = this.getAverage.bind(this);
     this.getAllTweets = this.getAllTweets.bind(this)
@@ -63,12 +67,31 @@ class App extends React.Component {
     this.clickHandler = this.clickHandler.bind(this);
     this.storeUser = this.storeUser.bind(this);
     this.handleFaves = this.handleFaves.bind(this);
+    this.userClickHandler = this.userClickHandler.bind(this);
+    this.compareClick = this.compareClick.bind(this);
+    this.starwars = this.compareClick.bind(this);
+  }
+
+  userClickHandler(name){
+    this.state.battleUser[name] = true;
   }
 
   showGraph(e) {
     e.preventDefault()
     this.setState({
       graphMode: true
+    });
+  }
+
+  compareClick(){
+    this.setState({battleData: []})
+    Object.keys(this.state.battleUser).forEach((val, idx, arr)=>{
+      axios.get('/userBattle', {params:{user: val}})
+      .then((res)=>{
+        this.state.battleData.push(res.data);
+      }).then(()=>{
+        this.setState({canBattle: true})
+      })
     });
   }
 
@@ -235,6 +258,29 @@ class App extends React.Component {
     })
   }
 
+  // starwars(){
+  //   var byline = document.getElementById('byline');     // Find the H2
+  //   bylineText = byline.innerHTML;                                      // Get the content of the H2
+  //   bylineArr = bylineText.split('');                                   // Split content into array
+  //   byline.innerHTML = '';                                                      // Empty current content
+
+  //   var span;                   // Create variables to create elements
+  //   var letter;
+
+  //   for(i=0;i<bylineArr.length;i++){                                    // Loop for every letter
+  //     span = React.createElement('span', {}, bylineArr[i]);
+  //     // span = document.createElement("span");                    // Create a <span> element
+  //     // letter = document.createTextNode();   // Create the letter
+  //     if(bylineArr[i] == ' ') {                                             // If the letter is a space...
+  //       byline.appendChild(letter);                 // ...Add the space without a span
+  //     } else {
+  //       span.appendChild(letter);                       // Add the letter to the span
+  //       byline.appendChild(span);                   // Add the span to the h2
+  //     }
+  //   }    
+  // }
+
+
   componentWillMount() {
     this.getAllTweets('flock');
   }
@@ -287,16 +333,27 @@ class App extends React.Component {
     if (!this.state.loading) {
       if(!this.state.graphMode) {
         return (
+          
           <MuiThemeProvider>
           <div className="row">
+
+
+
             { !authenticated ?
               <UserModal storeUser={this.storeUser}/>:
               null
             }
+
+          <div onClick={()=>{console.log(this.state.battleUser)}}>hello</div>
+
             <div className="siteNav header col col-6-of-6">
               <h1>What the Flock?</h1>
               <img src="./images/poop_logo.png" alt="" className="logo"/>
             </div>
+
+
+              <button onClick={()=>{this.compareClick()}}> Test</button>
+              
             <Modal
               isOpen={this.state.clicked}
               ariaHideApp={false}
@@ -328,6 +385,47 @@ class App extends React.Component {
                 Tweets by @{this.state.clickedUser}
               </a>
             </Modal>
+
+            <Modal
+              isOpen={this.state.canBattle}
+              ariaHideApp={false}
+              // onAfterOpen={afterOpenFn}
+              // onRequestClose={requestCloseFn}
+              // closeTimeoutMS={n}
+              style={styles}
+              contentLabel="Modal" 
+              // style={{ backgroundImage: `url("//cssanimation.rocks/demo/starwars/images/bg.jpg")`}}
+            >
+            
+              <div className="starwars-demo" id="modalWar">
+                <img id="img" src="//cssanimation.rocks/demo/starwars/images/star.svg" alt="Star" className="star"/>
+                <img id="img" src="//cssanimation.rocks/demo/starwars/images/wars.svg" alt="Wars" className="wars"/>
+                <h2 className="byline" id="byline">The Force Awakens</h2>
+                
+              </div>
+              {/* <h1>User Wars</h1> */}
+
+              
+              {this.state.battleData.map((val, idx, arr)=>{
+                
+                return<div style={{textAlign:"end"}}>
+                        <img src={val.userInfo.pic} alt="Smiley face" height="42" width="42"/>
+                        <div>{val.userInfo.name}</div>
+                        <div>{val.userInfo.location}</div>
+                        <div>{val.score}</div>
+                    </div>
+              })}
+              
+
+              <IconButton
+                iconStyle={styles.mediumIcon}
+                style={Object.assign(styles.medium, styles.closeButton)}
+                onClick={()=>{this.setState({canBattle: !this.state.canBattle})}}
+              >
+                <ActionNavigationClose/>
+              </IconButton> 
+            </Modal>
+
             <Search submitQuery={this.submitQuery} searchTerm={this.state.searchTerm} getAllTweets={this.getAllTweets} handleInputChange={this.handleInputChange}/>
             <div id="error"></div>
             {
@@ -336,8 +434,8 @@ class App extends React.Component {
               null
             }
             <BarDisplay percentage={this.state.average} lastSearchTerm={this.state.lastSearchTerm} loading={this.state.loading} showGraph={this.showGraph}/>
-            <NegativeTweets className="tweetColumns row" dragging={this.handleDrag} drop={this.handleDrop} clickHandler={this.clickHandler} tweets={this.state.negativeTweets}/>
-            <PositiveTweets className="tweetColumns row" dragging={this.handleDrag} drop={this.handleDrop} clickHandler={this.clickHandler} tweets={this.state.positiveTweets}/>
+            <NegativeTweets className="tweetColumns row" userClickHandler={this.userClickHandler} dragging={this.handleDrag} drop={this.handleDrop} clickHandler={this.clickHandler} tweets={this.state.negativeTweets}/>
+            <PositiveTweets className="tweetColumns row" userClickHandler={this.userClickHandler} dragging={this.handleDrag} drop={this.handleDrop} clickHandler={this.clickHandler} tweets={this.state.positiveTweets}/>
           </div>
           </MuiThemeProvider>
         )
@@ -347,6 +445,7 @@ class App extends React.Component {
               <div className="siteNav header col col-6-of-6">
                 <h1>What the Flock?</h1>
                 <img src="./images/poop_logo.png" alt="" className="logo"/>
+                <button onClick={this.compareClick}> Test</button>
               </div>
               <Search submitQuery={this.submitQuery} searchTerm={this.state.searchTerm} getAllTweets={this.getAllTweets} handleInputChange={this.handleInputChange}/>
               <div id="error"></div>
@@ -361,6 +460,7 @@ class App extends React.Component {
         <div className="siteNav header col col-6-of-6">
           <h1>What the Flock?</h1>
           <img src="./images/poop_logo.png" alt="" className="logo"/>
+          <button onClick={this.compareClick}> Test</button>          
         </div>
         <Search submitQuery={this.submitQuery} searchTerm={this.state.searchTerm} getAllTweets={this.getAllTweets} handleInputChange={this.handleInputChange}/>
         <div id="error"></div>
