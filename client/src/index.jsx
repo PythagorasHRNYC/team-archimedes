@@ -22,6 +22,8 @@ import ActionNavigationClose from 'material-ui/svg-icons/navigation/close';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import UserModal from './userModal.jsx';
+import SelectedUsersProfile from './SelectedUsersProfile.jsx';
+
 
 
 class App extends React.Component {
@@ -45,7 +47,6 @@ class App extends React.Component {
       clickedUserData: {},
       clickedUserDataContentLoaded: false,
       isDragging: false,
-      userModalStylingSheet: 'user-modal-content-loading'
     }
     this.getUserData = this.getUserData.bind(this);
     this.getAverage = this.getAverage.bind(this);
@@ -75,10 +76,6 @@ class App extends React.Component {
         this.getUserData()
       })
     })
-  }
-  
-  closePorfile() {
-
   }
 
   resetGraphMode(e) {
@@ -157,9 +154,9 @@ class App extends React.Component {
   getUserData() {
     axios.post(`/UserProfileData`, {clickedUser: this.state.clickedUser})
     .then((results) => {
-      let UserProfileDataObject = results;
+      let UserProfileDataObject = results.data;
       console.log(UserProfileDataObject)
-      this.setState({UserProfileData: UserProfileDataObject}, () => {
+      this.setState({clickedUserData: UserProfileDataObject}, () => {
         this.setState({userModalStylingSheet: 'user-modal-content'})
         this.setState({clickedUserDataContentLoaded: true})
       })
@@ -248,7 +245,7 @@ class App extends React.Component {
       },
       closeButton: {
         right: "-90%",
-        bottom: 25
+        bottom: 85
       }
     };
 
@@ -270,7 +267,7 @@ class App extends React.Component {
               // closeTimeoutMS={n}
               className={{
                 base: 'user-modal-content',
-                afterOpen: `${this.state.userModalStylingSheet}`,
+                afterOpen: 'user-modal-overlay_after-open',
                 beforeClose: 'user-modal-content_before-close'
               }}
               overlayClassName={{
@@ -287,11 +284,10 @@ class App extends React.Component {
                 onClick={this.clickHandler}
               >
                 <ActionNavigationClose/>
-              </IconButton> 
-              <a className="twitter-timeline"
-                href={`https://twitter.com/${this.state.clickedUser}`}>
-                Tweets by @{this.state.clickedUser}
-              </a>
+              </IconButton>
+              <SelectedUsersProfile 
+                userData={this.state.clickedUserData}
+              />
             </Modal>
             <Search submitQuery={this.submitQuery} searchTerm={this.state.searchTerm} getAllTweets={this.getAllTweets} handleInputChange={this.handleInputChange}/>
             <div id="error"></div>

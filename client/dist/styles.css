@@ -64,16 +64,16 @@
   transition: width 2s
 }*/
 
-.user-modal-content-loading {
+.profile-content {
   position: absolute;
-  top: 40px;
-  left: 540px;
-  right: 540px;
+  top: 115px;
+  left: 50px;
+  right: 50px;
   bottom: 40px;
   border: 1px solid rgb(204, 204, 204);
-  background: rgb(255, 255, 255);
+  background: rgb(13, 106, 236);
   overflow: auto;
-  -webkit-overflow-scrolling: 'touch';
+  -webkit-overflow-scrolling: touch;
   border-radius: 4px;
   outline: none;
   padding: 20px;
@@ -140,9 +140,4 @@ ul {
 .rounded .progress-fill {
   border-radius: 3px;
   box-shadow: inset 0 0 5px rgba(0,0,0,.2);
-<<<<<<< HEAD
-}*/
-
-=======
 }
->>>>>>> react-dnd
