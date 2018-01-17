@@ -64,6 +64,31 @@
   transition: width 2s
 }*/
 
+.user-modal-content {
+  position: absolute;
+  top: 40px;
+  left: 540px;
+  right: 540px;
+  bottom: 40px;
+  border: 1px solid rgb(204, 204, 204);
+  background: rgb(255, 255, 255);
+  overflow: auto;
+  -webkit-overflow-scrolling: 'touch';
+  border-radius: 4px;
+  outline: none;
+  padding: 20px;
+}
+
+.user-modal-overlay {
+  position          : fixed;
+  top               : 0;
+  left              : 0;
+  right             : 0;
+  bottom            : 0;
+  background-color   : rgba(255, 255, 255, 0.75);
+}
+
+
 ul {
   list-style-type: none;
   padding: 0;

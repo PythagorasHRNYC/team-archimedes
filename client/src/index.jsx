@@ -23,6 +23,7 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import UserModal from './userModal.jsx';
 
+
 class App extends React.Component {
   constructor(props) {
   	super(props)
@@ -40,6 +41,9 @@ class App extends React.Component {
       savedTweets: [],
       clicked: false,
       clickedUser: '',
+      //hold data fetched from api call 
+      clickedUserData: {},
+      clickedUserDataContentLoaded: false,
       isDragging: false,
   	}
     this.getAverage = this.getAverage.bind(this);
@@ -146,6 +150,16 @@ class App extends React.Component {
     axios.post('/database', {average: newAverage, searchTerm: searchTerm});
   }
 
+  getUserData() {
+    axios.post(`/UserProfileData/${this.state.clickedUser}`)
+    .then((results) => {
+      let UserProfileDataObject = results.data[0];
+      this.setState({UserProfileData: UserProfileDataObject}, () => {
+        this.setState({clickedUserDataContentLoaded: true})
+      })
+    })
+  }
+
   handleDrop({idx, type}) {
     let positiveTweets = this.state.positiveTweets;
     let negativeTweets = this.state.negativeTweets;
@@ -229,19 +243,6 @@ class App extends React.Component {
       closeButton: {
         right: "-90%",
         bottom: 25
-      },
-      content : {
-        position: 'absolute',
-        top: 40,
-        left: 240,
-        right: 240,
-        bottom: 40,
-        border: '1px solid rgb(204, 204, 204)',
-        background: 'rgb(255, 255, 255)',
-        overflow: 'auto',
-        borderRadius: 4,
-        outline: 'none',
-        padding: 20
       }
     };
 
@@ -261,7 +262,16 @@ class App extends React.Component {
               // onAfterOpen={afterOpenFn}
               // onRequestClose={requestCloseFn}
               // closeTimeoutMS={n}
-              style={styles}
+              className={{
+                base: 'user-modal-content',
+                afterOpen: 'user-modal-content_after-open',
+                beforeClose: 'user-modal-content_before-close'
+              }}
+              overlayClassName={{
+                base: 'user-modal-overlay',
+                afterOpen: 'user-modal-overlay_after-open',
+                beforeClose: 'user-modal-overlay_before-close'
+              }}
               contentLabel="Modal" 
             >
               <h1>User Profile</h1>
