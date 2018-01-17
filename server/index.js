@@ -44,9 +44,10 @@ app.post('/search', function(req, res) {
 
 })
 
-app.get('/testUserProfileData', (req, res) => {
-  getUserProfileData('youtube', (data) => {
-    console.log('in')
+app.get('/UserProfileData/:user', (req, res) => {
+  let user = req.params.user;
+
+  getUserProfileData(user, (data) => {
     res.send(data)
   })  
 })
