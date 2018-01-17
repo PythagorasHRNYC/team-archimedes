@@ -22,8 +22,11 @@ class SelectedUsersProfile extends React.Component {
       ) 
     } else {
       return (
-        <div className={"profile-content"}>
+        <div className="profile-content">
           <h1>SelectedUsersProfile</h1>
+          <div className="profile-image-div">
+            <img className="profile-image" src={this.props.userData.} alt="" srcset=""/>
+          </div>
         </div>
       )
     }
