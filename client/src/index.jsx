@@ -254,7 +254,10 @@ class App extends React.Component {
       headers: {'userId': cookies.get('userId')}
     })
     .then(response => {
-      console.log('resp', response)
+      return response.data.map(a => a.favorite);
+    })
+    .then(names => {
+      console.log(names)
     })
   }
 
@@ -327,6 +330,19 @@ class App extends React.Component {
       closeButton: {
         right: "-90%",
         bottom: 25
+      },
+      content : {
+        position: 'relative',
+        top: 40,
+        left: 240,
+        right: 240,
+        bottom: 40,
+        border: '1px solid rgb(204, 204, 204)',
+        background: 'rgb(255, 255, 255)',
+        overflow: 'auto',
+        borderRadius: 4,
+        outline: 'none',
+        padding: 20
       }
     };
     const { authenticated } = this.state;
