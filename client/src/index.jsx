@@ -24,6 +24,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import UserModal from './userModal.jsx';
 import Cookies from 'universal-cookie';
 
+
 class App extends React.Component {
   constructor(props) {
   	super(props)
@@ -41,9 +42,14 @@ class App extends React.Component {
       savedTweets: [],
       clicked: false,
       clickedUser: '',
+      //hold data fetched from api call 
+      clickedUserData: {},
+      clickedUserDataContentLoaded: false,
       isDragging: false,
       authenticated: false,
-  	}
+      userModalStylingSheet: 'user-modal-content-loading'
+    }
+    this.getUserData = this.getUserData.bind(this);
     this.getAverage = this.getAverage.bind(this);
     this.getAllTweets = this.getAllTweets.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -68,7 +74,9 @@ class App extends React.Component {
 
   clickHandler(user) {
 		this.setState({clicked: !this.state.clicked}, () => {
-      this.setState({user: this.state.clickedUser})
+      this.setState({clickedUser: user}, () => {
+        this.getUserData()
+      })
     })
   }
   
@@ -147,6 +155,18 @@ class App extends React.Component {
       average: newAverage
     });
     axios.post('/database', {average: newAverage, searchTerm: searchTerm});
+  }
+
+  getUserData() {
+    axios.post(`/UserProfileData`, {clickedUser: this.state.clickedUser})
+    .then((results) => {
+      let UserProfileDataObject = results;
+      console.log(UserProfileDataObject)
+      this.setState({UserProfileData: UserProfileDataObject}, () => {
+        this.setState({userModalStylingSheet: 'user-modal-content'})
+        this.setState({clickedUserDataContentLoaded: true})
+      })
+    })
   }
 
   handleDrop({idx, type}) {
@@ -261,19 +281,6 @@ class App extends React.Component {
       closeButton: {
         right: "-90%",
         bottom: 25
-      },
-      content : {
-        position: 'absolute',
-        top: 40,
-        left: 240,
-        right: 240,
-        bottom: 40,
-        border: '1px solid rgb(204, 204, 204)',
-        background: 'rgb(255, 255, 255)',
-        overflow: 'auto',
-        borderRadius: 4,
-        outline: 'none',
-        padding: 20
       }
     };
     const { authenticated } = this.state;
@@ -293,10 +300,19 @@ class App extends React.Component {
             <Modal
               isOpen={this.state.clicked}
               ariaHideApp={false}
-              // onAfterOpen={afterOpenFn}
+              // onAfterOpen={}
               // onRequestClose={requestCloseFn}
               // closeTimeoutMS={n}
-              style={styles}
+              className={{
+                base: 'user-modal-content',
+                afterOpen: `${this.state.userModalStylingSheet}`,
+                beforeClose: 'user-modal-content_before-close'
+              }}
+              overlayClassName={{
+                base: 'user-modal-overlay',
+                afterOpen: 'user-modal-overlay_after-open',
+                beforeClose: 'user-modal-overlay_before-close'
+              }}
               contentLabel="Modal" 
             >
               <h1>User Profile</h1>
