@@ -44,9 +44,10 @@ app.post('/search', function(req, res) {
 
 })
 
-app.get('/UserProfileData/:user', (req, res) => {
-  let user = req.params.user;
+app.post('/UserProfileData', (req, res) => {
+  let user = req.body.clickedUser;
 
+  console.log('clickedUser', user);
   getUserProfileData(user, (data) => {
     res.send(data)
   })  

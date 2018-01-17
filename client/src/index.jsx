@@ -45,7 +45,9 @@ class App extends React.Component {
       clickedUserData: {},
       clickedUserDataContentLoaded: false,
       isDragging: false,
-  	}
+      userModalStylingSheet: 'user-modal-content-loading'
+    }
+    this.getUserData = this.getUserData.bind(this);
     this.getAverage = this.getAverage.bind(this);
     this.getAllTweets = this.getAllTweets.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -69,7 +71,9 @@ class App extends React.Component {
 
   clickHandler(user) {
 		this.setState({clicked: !this.state.clicked}, () => {
-      this.setState({user: this.state.clickedUser})
+      this.setState({clickedUser: user}, () => {
+        this.getUserData()
+      })
     })
   }
   
@@ -151,10 +155,12 @@ class App extends React.Component {
   }
 
   getUserData() {
-    axios.post(`/UserProfileData/${this.state.clickedUser}`)
+    axios.post(`/UserProfileData`, {clickedUser: this.state.clickedUser})
     .then((results) => {
-      let UserProfileDataObject = results.data[0];
+      let UserProfileDataObject = results;
+      console.log(UserProfileDataObject)
       this.setState({UserProfileData: UserProfileDataObject}, () => {
+        this.setState({userModalStylingSheet: 'user-modal-content'})
         this.setState({clickedUserDataContentLoaded: true})
       })
     })
@@ -259,12 +265,12 @@ class App extends React.Component {
             <Modal
               isOpen={this.state.clicked}
               ariaHideApp={false}
-              // onAfterOpen={afterOpenFn}
+              // onAfterOpen={}
               // onRequestClose={requestCloseFn}
               // closeTimeoutMS={n}
               className={{
                 base: 'user-modal-content',
-                afterOpen: 'user-modal-content_after-open',
+                afterOpen: `${this.state.userModalStylingSheet}`,
                 beforeClose: 'user-modal-content_before-close'
               }}
               overlayClassName={{

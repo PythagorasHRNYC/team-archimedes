@@ -182,7 +182,7 @@ getUserProfileData = (userScreenName, cb) => {
 
 							usersFollowers=followers.map((followerInfo) => {
 
-								({ 
+								let { 
 									name,
 									screen_name,
 									description,
@@ -196,7 +196,7 @@ getUserProfileData = (userScreenName, cb) => {
 									statuses_count,
 									profile_image_url_https,
 									profile_banner_url 
-								} = followerInfo);
+								} = followerInfo;
 
 								let follower = { 
 									name,
@@ -227,7 +227,7 @@ getUserProfileData = (userScreenName, cb) => {
 									let usersFriends;
 
 									usersFriends=friends.map((userFriend) => {
-										({ 
+										let { 
 											name,
 											screen_name,
 											description,
@@ -241,7 +241,7 @@ getUserProfileData = (userScreenName, cb) => {
 											statuses_count,
 											profile_image_url_https,
 											profile_banner_url 
-										} = userFriend)
+										} = userFriend
 										
 										let friend = { 
 											name,
@@ -262,24 +262,26 @@ getUserProfileData = (userScreenName, cb) => {
 										return friend
 									}).sort(mostPopularUser)
 
-									let UserDataObject = { 
-										name: name,
-										screen_name: screen_name,
-										description: description,
-										location: location,
-										protected: protected,
-										followers_count: followers_count,
-										friends_count: friends_count,
-										created_at: created_at,
-										favourites_count: favourites_count,
-										verified: verified,
-										statuses_count: statuses_count,
-										profile_image_url_https: adjustProfileImageSize(profile_image_url_https, 400),
-										profile_banner_url: profile_banner_url,
-										usersFollowers,
-										usersFriends,
-										userStatuses
-									}
+									let UserDataObject = [
+										{ 
+											name: name,
+											screen_name: screen_name,
+											description: description,
+											location: location,
+											protected: protected,
+											followers_count: followers_count,
+											friends_count: friends_count,
+											created_at: created_at,
+											favourites_count: favourites_count,
+											verified: verified,
+											statuses_count: statuses_count,
+											profile_image_url_https: adjustProfileImageSize(profile_image_url_https, 400),
+											profile_banner_url: profile_banner_url,
+											usersFollowers,
+											usersFriends,
+											userStatuses
+										}
+									]
 
 									cb( UserDataObject )
 								}
