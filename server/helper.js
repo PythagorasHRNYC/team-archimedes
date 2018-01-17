@@ -120,9 +120,9 @@ getUserProfileData = (userScreenName, cb) => {
 			//sorting callback function
 			const mostPopularUser = (user_a, user_b) => {
 				if(user_a.followers_count < user_b.followers_count) {
-					return -1
-				} else if(user_a.followers_count > user_b.followers_count) {
 					return 1
+				} else if(user_a.followers_count > user_b.followers_count) {
+					return -1
 				} else {
 					return 0
 				}
