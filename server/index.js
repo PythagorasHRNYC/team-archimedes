@@ -55,8 +55,6 @@ app.post('/search', function(req, res) {
 
 app.post('/UserProfileData', (req, res) => {
   let user = req.body.clickedUser;
-
-  console.log('clickedUser', user);
   getUserProfileData(user, (data) => {
     res.send(data)
   })  
@@ -102,7 +100,6 @@ app.post('/login', (req, res) => {
       .fetch()
       .save()
       .then(info => {
-        console.log('info', info)
         res.status(200).send(info);
       })
     } else {
