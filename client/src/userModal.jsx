@@ -5,7 +5,7 @@ import Modal from 'react-modal';
 import { ValidatorForm } from 'react-form-validator-core';
 import { TextValidator} from 'react-material-ui-form-validator';
 import axios from 'axios';
-import Cookies from 'universal-cookie';
+
 
 export default class UserModal extends React.Component {
   constructor() {

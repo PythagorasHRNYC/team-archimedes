@@ -34,6 +34,16 @@ const sanitizeHTML = require('sanitize-html')
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.json())
 
+app.post('/favetweets', (req, res) => {
+  console.log(req.body)
+  let users = req.body.slice(2);
+  users[0] = 'from:' + users[0];
+  users = users.join('ANDfrom:')
+  console.log(users)
+  helper.getSpecificUserTweets(users[0], (data) => console.log('data',data))
+})
+
+
 app.get('/userBattle', function(req, res){
   helper.getSpecificUserTweets(req.query.user, (data)=>{
     res.send(data)

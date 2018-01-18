@@ -255,6 +255,10 @@ class App extends React.Component {
     })
     .then(names => {
       console.log(names)
+      axios.post('/favetweets', names)
+      .then(res => {
+        console.log(res)
+      })
     })
   }
 
