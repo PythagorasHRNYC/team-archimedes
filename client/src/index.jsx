@@ -202,11 +202,8 @@ class App extends React.Component {
       negativeTweets.splice(idx, 0, tweet)
 
     } else if (type === 'negativeTweets') {
-      console.log('negative')
       tweet = negativeTweets.splice(idx, 1)[0]
-      console.log('pre', tweet.score)
       tweet.score = -tweet.score
-      console.log('aft', tweet.score)
       positiveTweets.splice(idx, 0, tweet);
     }
     let tweets = [...negativeTweets, ...positiveTweets];
