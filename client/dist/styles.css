@@ -79,6 +79,44 @@
   padding: 20px;
 }
 
+.profile-image-div {
+  position: inherit;
+  width: fit-content;
+  height: fit-content;
+  top: 10%;
+  left: 10%;
+} 
+
+.profile-image {
+  border-style: none;
+  border-radius: 50% 50%;
+}
+
+.profile-list {
+  position: inherit;
+  width: 80%;
+  height: 250px;
+  top: 68%;
+  left: 10%;
+  overflow-x: auto;
+}
+
+.profile-list-status-item {
+
+}
+
+.status-button {
+
+}
+
+.friends-button {
+  
+}
+
+.followers-button {
+  
+}
+
 .user-modal-content {
   position: absolute;
   top: 40px;
@@ -88,7 +126,7 @@
   border: 1px solid rgb(204, 204, 204);
   background: rgb(255, 255, 255);
   overflow: auto;
-  -webkit-overflow-scrolling: 'touch';
+  -webkit-overflow-scrolling: touch;
   border-radius: 4px;
   outline: none;
   padding: 20px;

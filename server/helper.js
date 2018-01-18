@@ -129,7 +129,8 @@ getUserProfileData = (userScreenName, cb) => {
 			}
 
 			const adjustProfileImageSize = (imageUrl, size) => {
-				return imageUrl.split('').reverse().join('').replace(/[a-z\.]*_/, '').split('').reverse().join('') + `_${size}x${size}.jpg`
+				let editedImageUrl = imageUrl.slice()
+				return editedImageUrl.split('').reverse().join('').replace(/[a-z\.]*_/, '').split('').reverse().join('') + `_${size}x${size}.jpg`
 			}
 
 			//picking object belows keys off object above
@@ -213,7 +214,7 @@ getUserProfileData = (userScreenName, cb) => {
 									profile_image_url_https,
 									profile_banner_url 
 								}
-								follower.profile_image_url_https = adjustProfileImageSize(profile_image_url_https, 400)
+								follower.profile_image_url_https_400 = adjustProfileImageSize(profile_image_url_https, 400)
 								return follower
 							}).sort(mostPopularUser)
 
@@ -258,7 +259,7 @@ getUserProfileData = (userScreenName, cb) => {
 											profile_image_url_https,
 											profile_banner_url 
 										};
-										friend.profile_image_url_https = adjustProfileImageSize(profile_image_url_https, 400)
+										friend.profile_image_url_https_400 = adjustProfileImageSize(profile_image_url_https, 400)
 										return friend
 									}).sort(mostPopularUser)
 
@@ -274,7 +275,8 @@ getUserProfileData = (userScreenName, cb) => {
 											favourites_count: favourites_count,
 											verified: verified,
 											statuses_count: statuses_count,
-											profile_image_url_https: adjustProfileImageSize(profile_image_url_https, 400),
+											profile_image_url_https: profile_image_url_https,
+											profile_image_url_https_400: adjustProfileImageSize(profile_image_url_https, 400),
 											profile_banner_url: profile_banner_url,
 											usersFollowers,
 											usersFriends,
