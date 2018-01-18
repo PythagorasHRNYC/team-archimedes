@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "bluebird": "^3.5.1",
     "body-parser": "^1.17.2",
     "bookshelf": "^0.12.1",
     "browserslist": "^2.11.0",

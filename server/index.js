@@ -3,7 +3,7 @@
 // This file sets up the express routes for our app.
 //
 ///////////////////////////////////////////////////////////////////
-
+const Promise = require('bluebird');
 const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request')
@@ -34,13 +34,20 @@ const sanitizeHTML = require('sanitize-html')
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.json())
 
-app.post('/favetweets', (req, res) => {
-  console.log(req.body)
-  let users = req.body.slice(2);
-  users[0] = 'from:' + users[0];
-  users = users.join('ANDfrom:')
-  console.log(users)
-  helper.getSpecificUserTweets(users[0], (data) => console.log('data',data))
+
+
+app.post('/favetweets', async (req, res) => {
+  let tweets = [];
+  let users = req.body;
+  Promise.all(users.map(user => {
+    return helper.getTweetsMulti(user)
+    .then(result => {
+      return result
+    })
+  }))
+  .then(tweets => {
+    res.status(200).send(tweets.reduce((a, b) => a.concat(b)));
+  })
 })
 
 
