@@ -50,7 +50,44 @@ cronJob = () => {
 	
 }
 
+getTweetsMulti = (st, cb) => {
+	var oauth = new OAuth.OAuth(
+		'https://api.twitter.com/oauth/request_token',
+		'https://api.twitter.com/oauth/access_token',
+		key.CONSUMER_KEY,
+		key.CONSUMER_SECRET,
+		'1.0A',
+		null,
+		'HMAC-SHA1'
+	);
 
+	return new Promise((resolve, reject) => oauth.get(`https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${st}&count=2&tweet_mode=extended&exclude_replies=true&include_rts=true`, key.ACCESS_TOKEN, key.ACCESS_TOKEN_SECRET, function(e, data, res) {
+		if (e) { 
+			console.error(e);
+			cb([]);
+		} else {
+			let temp = JSON.parse(data)
+			let cleaned = []
+			// console.log(st)
+			temp.map((tweet) => {
+				var selectedData = {
+					// score: sentiment(tweet).score,
+					searchTerm: st,
+					timeStamp: tweet.created_at,
+					// if tweet has been retweeted, its full text lives in the retweeted_status object
+					tweetBody: tweet.retweeted_status ? tweet.retweeted_status.full_text : tweet.full_text,
+					user_name: tweet.user.screen_name,
+					user_location: tweet.user.location,
+					avatar_url: tweet.user.profile_image_url
+				}
+				cleaned.push(selectedData)
+			})
+			console.log(cleaned)
+		resolve(cleaned);
+		// return cleaned
+		}
+	}))
+}
 
 getTweets = (st, cb) => {
 	var oauth = new OAuth.OAuth(
@@ -62,7 +99,8 @@ getTweets = (st, cb) => {
 		null,
 		'HMAC-SHA1'
 	);
-
+	const names = `https://api.twitter.com/1.1/users/show.json?screen_name=${st}&include_entities=false`
+	const string = `https://api.twitter.com/1.1/search/tweets.json?q=${st}&count=100&tweet_mode=extended`
 	oauth.get(`https://api.twitter.com/1.1/search/tweets.json?q=${st}&count=100&tweet_mode=extended`, key.ACCESS_TOKEN, key.ACCESS_TOKEN_SECRET, function(e, data, res) {
 		if (e) { 
 			console.error(e);
@@ -339,4 +377,5 @@ module.exports.getUserProfileData = getUserProfileData;
 module.exports.getTweets = getTweets;
 module.exports.getSpecificUserTweets = getSpecificUserTweets;
 module.exports.cronJob = cronJob;
+module.exports.getTweetsMulti = getTweetsMulti;
 
