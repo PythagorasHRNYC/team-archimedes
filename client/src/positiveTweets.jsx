@@ -40,7 +40,7 @@ class PositiveTweets extends React.Component {
               <h3>Positive Tweets</h3>
             </div>
             <div>
-              {this.props.tweets.map((tweet, i) => <Tweet id={i} clickHandler={this.props.clickHandler} userClickHandler={this.props.userClickHandler}  dragging={this.props.dragging} type="positiveTweets" key={i} tweet={tweet} />)}
+              {this.props.tweets.map((tweet, i) => <Tweet id={i} userClickHandler={this.props.userClickHandler} clickHandler={this.props.clickHandler} dragging={this.props.dragging} type="positiveTweets" key={i} tweet={tweet} />)}
             </div>
           </div>
         </Tweets>

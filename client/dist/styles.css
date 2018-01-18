@@ -193,7 +193,20 @@ ul {
   animation: byline 10s linear ;
 }
 .byline {
-  animation: byline 10s linear ;
+  animation: byline 10s linear; 
+}
+
+#modalWar {
+  animation: fix 11x linear;
+}
+
+@keyframes fix{
+  0%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+  }
 }
 
 /* Keyframes */
@@ -212,6 +225,7 @@ ul {
   100% {
     opacity: 0;
     transform: translateZ(-1000em);
+    display: none;    
   }
 }
 
@@ -230,6 +244,7 @@ ul {
   100% {
     opacity: 0;
     transform: translateZ(-1000em);
+    display: none;    
   }
 }
 
@@ -247,6 +262,7 @@ ul {
   }
   95%, 100% {
     opacity: 0;
+    display: none;
   }
 }
 
@@ -268,15 +284,16 @@ ul {
 /* General styles and layout */
 #modalWar {
   background: #000 url(//cssanimation.rocks/demo/starwars/images/bg.jpg);
+  background-size: cover;
 }
 
 .starwars-demo {
-  height: 17em;
+  /* height: 17em; */
   left: 50%;
   position: absolute;
   top: 53%;
   transform: translate(-50%, -50%);
-  width: 34em;
+  width: 100%;
 }
 
 /* .byline span {
@@ -287,9 +304,9 @@ ul {
   width: 100%;
 }
 
-.star, .wars, .byline {
-  position: absolute;
-}
+/* .star, .wars, .byline { */
+  /* position: absolute; */
+/* } */
 
 .star {
   top: -0.75em;

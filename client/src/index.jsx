@@ -80,7 +80,9 @@ class App extends React.Component {
   }
 
   userClickHandler(name){
-    this.state.battleUser[name] = true;
+    if(!this.state.battleUser[name]){
+      this.state.battleUser[name] = true;
+    }
   }
 
   showGraph(e) {
@@ -302,8 +304,9 @@ class App extends React.Component {
       })
     }
   }
-
+  
   render () {
+    setTimeout( ()=> {this.refs.modalWar.style.display = "none"}, 5000);
     const styles = {
       smallIcon: {
         width: 36,
@@ -345,14 +348,10 @@ class App extends React.Component {
           <MuiThemeProvider>
           <div className="row">
 
-
-
             { !authenticated ?
               <UserModal storeUser={this.storeUser}/>:
               null
             }
-
-          <div onClick={()=>{console.log(this.state.battleUser)}}>hello</div>
 
             <div className="siteNav header col col-6-of-6">
               <h1>What the Flock?</h1>
@@ -401,29 +400,9 @@ class App extends React.Component {
               // closeTimeoutMS={n}
               style={styles}
               contentLabel="Modal" 
-              // style={{ backgroundImage: `url("//cssanimation.rocks/demo/starwars/images/bg.jpg")`}}
+              style={{ backgroundImage: `url("//cssanimation.rocks/demo/starwars/images/bg.jpg")`,   
+            }}
             >
-            
-              <div className="starwars-demo" id="modalWar">
-                <img id="img" src="//cssanimation.rocks/demo/starwars/images/star.svg" alt="Star" className="star"/>
-                <img id="img" src="//cssanimation.rocks/demo/starwars/images/wars.svg" alt="Wars" className="wars"/>
-                <h2 className="byline" id="byline">The Force Awakens</h2>
-                
-              </div>
-              {/* <h1>User Wars</h1> */}
-
-              
-              {this.state.battleData.map((val, idx, arr)=>{
-                
-                return<div style={{textAlign:"end"}}>
-                        <img src={val.userInfo.pic} alt="Smiley face" height="42" width="42"/>
-                        <div>{val.userInfo.name}</div>
-                        <div>{val.userInfo.location}</div>
-                        <div>{val.score}</div>
-                    </div>
-              })}
-              
-
               <IconButton
                 iconStyle={styles.mediumIcon}
                 style={Object.assign(styles.medium, styles.closeButton)}
@@ -431,6 +410,25 @@ class App extends React.Component {
               >
                 <ActionNavigationClose/>
               </IconButton> 
+            
+              <div className="starwars-demo" ref="modalWar" id="modalWar" >
+                <img id="img" src="//cssanimation.rocks/demo/starwars/images/star.svg" alt="Star" className="star"/>
+                <h2 className="byline" id="byline">The Force Awakens</h2>
+                <img id="img" src="//cssanimation.rocks/demo/starwars/images/wars.svg" alt="Wars" className="wars"/>
+              </div>
+              
+              
+              {this.state.battleData.map((val, idx, arr)=>{
+                
+                return<div>
+                        <img src={val.userInfo.pic} alt="User" height="100" width="100"/>
+                        <div>{val.userInfo.name}</div>
+                        <div>{val.userInfo.location}</div>
+                        <div>{val.score}</div>
+                    </div>
+              })}
+              
+
             </Modal>
 
             <Search submitQuery={this.submitQuery} searchTerm={this.state.searchTerm} getAllTweets={this.getAllTweets} handleInputChange={this.handleInputChange}/>

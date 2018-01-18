@@ -157,13 +157,17 @@ getSpecificUserTweets = (user, cb) => {
 				userInfo:{},
 				score: 0
 			}
+			const adjustProfileImageSize = (imageUrl, size) => {
+				return imageUrl.split('').reverse().join('').replace(/[a-z\.]*_/, '').split('').reverse().join('') + `_${size}x${size}.jpg`
+			}
 			temp.forEach((val, idx, arr)=>{
-				console.log(sentiment(val.retweeted_status ? val.retweeted_status.full_text : val.full_text).score);
+				// console.log(sentiment(val.retweeted_status ? val.retweeted_status.full_text : val.full_text).score);
 				cleaned.score += sentiment(val.retweeted_status ? val.retweeted_status.full_text : val.full_text).score
 			})
+			
 			cleaned.userInfo.name = temp[0].user.screen_name;
 			cleaned.userInfo.location = temp[0].user.location;
-			cleaned.userInfo.pic = temp[0].user.profile_image_url;
+			cleaned.userInfo.pic = adjustProfileImageSize(temp[0].user.profile_image_url, 400);
 			// temp.map((tweet) => {
 			// 	var selectedData = {
 			// 		// if tweet has been retweeted, its full text lives in the retweeted_status object
