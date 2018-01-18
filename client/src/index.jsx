@@ -23,6 +23,8 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import UserModal from './userModal.jsx';
 import Cookies from 'universal-cookie';
+import SelectedUsersProfile from './SelectedUsersProfile.jsx';
+
 
 
 class App extends React.Component {
@@ -47,7 +49,6 @@ class App extends React.Component {
       clickedUserDataContentLoaded: false,
       isDragging: false,
       authenticated: false,
-      userModalStylingSheet: 'user-modal-content-loading',
       battleUser : {},
       battleData: [],
       canBattle: false
@@ -101,10 +102,6 @@ class App extends React.Component {
         this.getUserData()
       })
     })
-  }
-  
-  closePorfile() {
-
   }
 
   resetGraphMode(e) {
@@ -183,9 +180,9 @@ class App extends React.Component {
   getUserData() {
     axios.post(`/UserProfileData`, {clickedUser: this.state.clickedUser})
     .then((results) => {
-      let UserProfileDataObject = results;
+      let UserProfileDataObject = results.data;
       console.log(UserProfileDataObject)
-      this.setState({UserProfileData: UserProfileDataObject}, () => {
+      this.setState({clickedUserData: UserProfileDataObject}, () => {
         this.setState({userModalStylingSheet: 'user-modal-content'})
         this.setState({clickedUserDataContentLoaded: true})
       })
@@ -329,20 +326,7 @@ class App extends React.Component {
       },
       closeButton: {
         right: "-90%",
-        bottom: 25
-      },
-      content : {
-        position: 'relative',
-        top: 40,
-        left: 240,
-        right: 240,
-        bottom: 40,
-        border: '1px solid rgb(204, 204, 204)',
-        background: 'rgb(255, 255, 255)',
-        overflow: 'auto',
-        borderRadius: 4,
-        outline: 'none',
-        padding: 20
+        bottom: 85
       }
     };
     const { authenticated } = this.state;
@@ -378,7 +362,7 @@ class App extends React.Component {
               // closeTimeoutMS={n}
               className={{
                 base: 'user-modal-content',
-                afterOpen: `${this.state.userModalStylingSheet}`,
+                afterOpen: 'user-modal-overlay_after-open',
                 beforeClose: 'user-modal-content_before-close'
               }}
               overlayClassName={{
@@ -395,11 +379,10 @@ class App extends React.Component {
                 onClick={this.clickHandler}
               >
                 <ActionNavigationClose/>
-              </IconButton> 
-              <a className="twitter-timeline"
-                href={`https://twitter.com/${this.state.clickedUser}`}>
-                Tweets by @{this.state.clickedUser}
-              </a>
+              </IconButton>
+              <SelectedUsersProfile 
+                userData={this.state.clickedUserData}
+              />
             </Modal>
 
             <Modal
