@@ -155,26 +155,28 @@ class App extends React.Component {
   }
 
   getAverage(tweets, searchTerm) {
-    tweets.map((message) => {
-      var score = sentiment(message.tweetBody).score;
-      message.score = score;
-      if ( score < 0 ) {
-        // add negative tweets to negativeTweets array
-        this.setState({
-          negativeTweets: [...this.state.negativeTweets, message]
-        });
-      } else if ( score > 0 ) {
-        // add positive tweets to positiveTweets array
-        this.setState({
-          positiveTweets: [...this.state.positiveTweets, message]
-        });
-      }
-    });
-    var newAverage = (this.state.negativeTweets.length / this.state.tweets.length) * 100
-    this.setState({
-      average: newAverage
-    });
-    axios.post('/database', {average: newAverage, searchTerm: searchTerm});
+    console.log('average', tweets)
+    // tweets.map((message) => {
+    //   var score = sentiment(message.tweetBody).score;
+    //   message.score = score;
+    //   if ( score < 0 ) {
+    //     // add negative tweets to negativeTweets array
+    //     this.setState({
+    //       negativeTweets: [...this.state.negativeTweets, message]
+    //     });
+    //   } else if ( score > 0 ) {
+    //     // add positive tweets to positiveTweets array
+    //     this.setState({
+    //       positiveTweets: [...this.state.positiveTweets, message]
+    //     });
+    //   }
+    // });
+    // var newAverage = (this.state.negativeTweets.length / this.state.tweets.length) * 100
+    // this.setState({
+    //   average: newAverage
+    // });
+    let average = this.assignAndCount(tweets);
+    axios.post('/database', {average, searchTerm: searchTerm});
   }
 
   getUserData() {
@@ -194,21 +196,26 @@ class App extends React.Component {
     let negativeTweets = this.state.negativeTweets;
     let tweet;
     if (type === 'positiveTweets') {
+      console.log('positive')
       tweet = positiveTweets.splice(idx, 1)[0]
       tweet.score = -tweet.score
       negativeTweets.splice(idx, 0, tweet)
 
     } else if (type === 'negativeTweets') {
+      console.log('negative')
       tweet = negativeTweets.splice(idx, 1)[0]
+      console.log('pre', tweet.score)
       tweet.score = -tweet.score
+      console.log('aft', tweet.score)
       positiveTweets.splice(idx, 0, tweet);
     }
+    let tweets = [...negativeTweets, ...positiveTweets];
+    let average = (negativeTweets.length / tweets.length) * 100
     this.setState({
-      negativeTweets,
       positiveTweets,
-      tweets: negativeTweets.concat(positiveTweets)
-    }, () => {
-      this.getAverage(this.state.tweets, 'flock')
+      negativeTweets,
+      tweets,
+      average
     })
   }
 
@@ -224,15 +231,15 @@ class App extends React.Component {
   }
 
   handleSave({ idx, type }) {
-    let tweet;
+    let tweet, userId, favorite;
     const cookies = new Cookies();
     if(type === 'positiveTweets') {
       tweet = this.state.positiveTweets[idx];
     } else {
       tweet = this.state.negativeTweets[idx];
     }
-    const userId = cookies.get('userId')
-    const favorite = tweet.user_name;
+    userId = cookies.get('userId')
+    favorite = tweet.user_name;
     if (userId) {
       axios.post('/favorites', {userId, favorite})
       .then((fav) => console.log('stored favorite', fav))
@@ -245,6 +252,28 @@ class App extends React.Component {
     })
   }
 
+  assignAndCount(tweets) {
+    if (!tweets.length) return
+    let negativeTweets = [], positiveTweets = [], average;
+    tweets.forEach(tweet => {
+      let score = sentiment(tweet.tweetBody).score;
+      tweet.score = score;
+      if (score < 0) negativeTweets.push(tweet);
+      else positiveTweets.push(tweet);
+    })
+
+    tweets = [...negativeTweets, ...positiveTweets]
+    average = (negativeTweets.length / tweets.length) * 100
+
+    this.setState({
+      tweets,
+      average,
+      positiveTweets,
+      negativeTweets
+    })
+    return average
+  }
+
   handleFaves() {
     const cookies = new Cookies();
     axios.get('/favorites', {
@@ -254,10 +283,10 @@ class App extends React.Component {
       return response.data.map(a => a.favorite);
     })
     .then(names => {
-      console.log(names)
       axios.post('/favetweets', names)
       .then(res => {
-        console.log(res)
+        console.log('tweets', )
+        this.assignAndCount(res.data);
       })
     })
   }

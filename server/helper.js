@@ -61,7 +61,7 @@ getTweetsMulti = (st, cb) => {
 		'HMAC-SHA1'
 	);
 
-	return new Promise((resolve, reject) => oauth.get(`https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${st}&count=20&tweet_mode=extended&exclude_replies=true&include_rts=true`, key.ACCESS_TOKEN, key.ACCESS_TOKEN_SECRET, function(e, data, res) {
+	return new Promise((resolve, reject) => oauth.get(`https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${st}&count=2&tweet_mode=extended&exclude_replies=true&include_rts=true`, key.ACCESS_TOKEN, key.ACCESS_TOKEN_SECRET, function(e, data, res) {
 		if (e) { 
 			console.error(e);
 			cb([]);
