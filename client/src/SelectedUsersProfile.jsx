@@ -33,7 +33,6 @@ class SelectedUsersProfile extends React.Component {
     } else {
       return (
         <div className="profile-content">
-          <h1>{`@${this.props.userData.screen_name}`}</h1>
           <div className="profile-image-div">
             <img className="profile-image" srcSet={`${this.props.userData.profile_image_url_https, this.props.userData.profile_image_url_https_400}`} />
           </div>

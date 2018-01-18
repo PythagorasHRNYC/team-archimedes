@@ -402,8 +402,8 @@ class App extends React.Component {
               }}
               contentLabel="Modal" 
             >
-              <h1>User Profile</h1>
-              <IconButton
+            <h1>{`@${this.state.clickedUser}`}</h1>
+          <IconButton
                 iconStyle={styles.mediumIcon}
                 style={Object.assign(styles.medium, styles.closeButton)}
                 onClick={this.clickHandler}

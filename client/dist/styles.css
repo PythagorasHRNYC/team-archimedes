@@ -81,7 +81,7 @@
 
 .profile-image-div {
   position: inherit;
-  width: fit-content;
+  width: 80%;
   height: fit-content;
   top: 10%;
   left: 10%;
@@ -90,6 +90,8 @@
 .profile-image {
   border-style: none;
   border-radius: 50% 50%;
+  max-width: 45%;
+  height: auto;
 }
 
 .profile-list {
@@ -119,14 +121,13 @@
 
 .user-modal-content {
   position: absolute;
-  top: 40px;
-  left: 540px;
-  right: 540px;
+  top: 80px;
+  left: 20%;
+  right: 20%;
   bottom: 40px;
   border: 1px solid rgb(204, 204, 204);
   background: rgb(255, 255, 255);
   overflow: auto;
-  -webkit-overflow-scrolling: touch;
   border-radius: 4px;
   outline: none;
   padding: 20px;
@@ -321,5 +322,50 @@ ul {
 @media only screen and (max-width: 480px) {
   .starwars-demo {
     font-size: 7px;
+  }
+}
+
+/** lg **/
+@media only screen and (max-width: 1800px) {
+  .profile-list {
+    position: inherit;
+    width: 80%;
+    height: 250px;
+    top: 68%;
+    left: 10%;
+    overflow-x: auto;
+  }
+}
+
+/** med **/
+@media only screen and (max-width: 1200px) {
+  .profile-list {
+    position: inherit;
+    width: 80%;
+    height: 250px;
+    top: 68%;
+    left: 10%;
+    overflow-x: auto;
+  }
+}
+
+/** sm **/
+@media only screen and (max-width: 992px) {
+  /** sm **/
+  .profile-list {
+    height: 500px;
+    top: 45%;
+  }
+}
+
+/** xs **/
+@media only screen and (max-width: 376px) {
+  .profile-list {
+    position: inherit;
+    width: 80%;
+    height: 50%;
+    top: 45%;
+    left: 10%;
+    overflow-x: auto;
   }
 }
