@@ -90,7 +90,7 @@ class SelectedUsersProfile extends React.Component {
                         created_at: listItem.created_at,
                         user_name: `@${listItem.screen_name}`,
                         avatar_url: listItem.profile_image_url_https,
-                        followers_count_count: listItem.followers_count,
+                        followers_count: listItem.followers_count,
                         friends_count: listItem.friends_count,
                         statuses_count: listItem.statuses_count
                       }}

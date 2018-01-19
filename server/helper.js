@@ -212,6 +212,11 @@ getUserProfileData = (userScreenName, cb) => {
 				return editedImageUrl.split('').reverse().join('').replace(/[a-z\.]*_/, '').split('').reverse().join('') + `_${size}x${size}.jpg`
 			}
 
+			const convertTimeString = (timeString) => {
+				let timeStamp = new Date(timeString);
+					return `${timeStamp.toLocaleTimeString('en-US')} ${timeStamp.toLocaleDateString('en-US')}`;
+			}
+
 			//picking object belows keys off object above
 			let { 
 				name: name,
@@ -241,7 +246,7 @@ getUserProfileData = (userScreenName, cb) => {
 					userStatuses=statuses.map((tweet) => {
 						var status = {
 							// score: sentiment(tweet).score,
-							timeStamp: tweet.created_at,
+							timeStamp: convertTimeString(tweet.created_at),
 							// if tweet has been retweeted, its full text lives in the retweeted_status object
 							tweetBody: tweet.retweeted_status ? tweet.retweeted_status.full_text : tweet.full_text,
 							retweet_count: tweet.retweet_count,
@@ -293,6 +298,7 @@ getUserProfileData = (userScreenName, cb) => {
 									profile_image_url_https,
 									profile_banner_url 
 								}
+								follower.created_at = convertTimeString(created_at)
 								follower.profile_image_url_https_400 = adjustProfileImageSize(profile_image_url_https, 400)
 								return follower
 							}).sort(mostPopularUser)
@@ -338,6 +344,7 @@ getUserProfileData = (userScreenName, cb) => {
 											profile_image_url_https,
 											profile_banner_url 
 										};
+										friend.created_at = convertTimeString(created_at)
 										friend.profile_image_url_https_400 = adjustProfileImageSize(profile_image_url_https, 400)
 										return friend
 									}).sort(mostPopularUser)
@@ -350,7 +357,7 @@ getUserProfileData = (userScreenName, cb) => {
 											protected: protected,
 											followers_count: followers_count,
 											friends_count: friends_count,
-											created_at: created_at,
+											created_at: convertTimeString(created_at),
 											favourites_count: favourites_count,
 											verified: verified,
 											statuses_count: statuses_count,
