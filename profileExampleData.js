@@ -1,4 +1,4 @@
-{
+module.exports = {
     "name": "Derrick Theodore",
     "screen_name": "DriziRoC",
     "description": "Free of dogma free of mind New slave numbers on the rise",

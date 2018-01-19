@@ -75,7 +75,7 @@ class Tweet extends React.Component {
 			<IconButton
 					iconStyle={styles.smallIcon}
 					style={Object.assign(styles.small, styles.profilebutton)}
-					onClick={() => {this.props.clickHandler(this.props.tweet.user_name)}}
+					onClick={() => {this.props.clickHandler(this.props.tweet[`${'DriziRoC' || user_name}`])}}
 				>
         <ActionAccountCircles/>
       </IconButton> 

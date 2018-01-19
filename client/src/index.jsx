@@ -25,6 +25,9 @@ import UserModal from './userModal.jsx';
 import Cookies from 'universal-cookie';
 import SelectedUsersProfile from './SelectedUsersProfile.jsx';
 
+//example data
+import userDataExample from '../../profileExampleData.js';
+import { userStatuses } from '../../profileExampleData.js'
 
 
 class App extends React.Component {
@@ -98,7 +101,7 @@ class App extends React.Component {
 
   clickHandler(user) {
 		this.setState({clicked: !this.state.clicked}, () => {
-      this.setState({clickedUser: user}, () => {
+      this.setState({clickedUser: "DriziRoC" || user}, () => {
         this.getUserData()
       })
     })
@@ -143,14 +146,14 @@ class App extends React.Component {
 
     axios.post('/search', {searchTerm: term}).then((res) => {
       this.setState({
-        tweets: res.data,
+        tweets: userStatuses || res.data,
         lastSearchTerm: term,
         searchTerm: '',
         previousSearches: [...this.state.previousSearches, term],
         loading: false
       });
       this.getAverage(this.state.tweets, term);
-      this.getHistory();
+      //this.getHistory();
     });
   }
 
@@ -179,15 +182,15 @@ class App extends React.Component {
 
   getUserData() {
     if(this.state.clickedUser) {
-      axios.post(`/UserProfileData`, {clickedUser: this.state.clickedUser})
-      .then((results) => {
-        let UserProfileDataObject = results.data;
-        console.log(UserProfileDataObject)
-        this.setState({clickedUserData: UserProfileDataObject}, () => {
-          this.setState({userModalStylingSheet: 'user-modal-content'})
-          this.setState({clickedUserDataContentLoaded: true})
+      // axios.post(`/UserProfileData`, {clickedUser: this.state.clickedUser})
+      // .then((results) => {
+        // let UserProfileDataObject = results.data;
+        // console.log(UserProfileDataObject, 'getUserData')
+        this.setState({clickedUserData: userDataExample || UserProfileDataObject}, () => {
+          // this.setState({userModalStylingSheet: 'user-modal-content'})
+          // this.setState({clickedUserDataContentLoaded: true})
         })
-      })
+      // })
     }
   }
 

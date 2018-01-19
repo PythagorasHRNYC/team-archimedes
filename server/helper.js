@@ -110,6 +110,12 @@ getTweets = (st, cb) => {
 			let cleaned = []
 
 			temp.map((tweet) => {
+				//////////////////////////////
+				//invoke client promise //////
+				//and when resolved decorate /
+				//seledtedDatas key/value/////
+				//////////////////////////////
+				
 				var selectedData = {
 					// score: sentiment(tweet).score,
 					searchTerm: st,
