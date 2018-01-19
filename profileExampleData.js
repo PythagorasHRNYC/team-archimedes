@@ -1,4 +1,4 @@
-module.exports =  {
+{
     "name": "Derrick Theodore",
     "screen_name": "DriziRoC",
     "description": "Free of dogma free of mind New slave numbers on the rise",
@@ -6,11 +6,12 @@ module.exports =  {
     "protected": false,
     "followers_count": 25,
     "friends_count": 46,
-    "created_at": "Tue Sep 22 14:26:05 +0000 2009",
+    "created_at": "10:26:05 AM 9/22/2009",
     "favourites_count": 25,
     "verified": false,
     "statuses_count": 109,
-    "profile_image_url_https": "https://pbs.twimg.com/profile_images/3392618364/d39d5dfd3b82c3b55d10e8c9d57b2ebf_400x400.jpg",
+    "profile_image_url_https": "https://pbs.twimg.com/profile_images/3392618364/d39d5dfd3b82c3b55d10e8c9d57b2ebf_normal.jpeg",
+    "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/3392618364/d39d5dfd3b82c3b55d10e8c9d57b2ebf_400x400.jpg",
     "profile_banner_url": "https://pbs.twimg.com/profile_banners/76345688/1351294947",
     "usersFollowers": [
         {
@@ -19,13 +20,14 @@ module.exports =  {
             "description": "the next real thing in hip hop if u like hip hop you will love me",
             "location": "hip hop",
             "protected": false,
-            "followers_count": 125944,
+            "followers_count": 125926,
             "friends_count": 4359,
-            "created_at": "Sun Nov 23 17:02:03 +0000 2008",
+            "created_at": "12:02:03 PM 11/23/2008",
             "favourites_count": 100,
             "verified": false,
             "statuses_count": 8181,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/2713792411/fbd89e1fee81bbbb0912665ee2cfd9da_400x400.jpg"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/2713792411/fbd89e1fee81bbbb0912665ee2cfd9da_normal.png",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/2713792411/fbd89e1fee81bbbb0912665ee2cfd9da_400x400.jpg"
         },
         {
             "name": "Iva Maryalice",
@@ -34,13 +36,14 @@ module.exports =  {
             "location": "York ",
             "protected": false,
             "followers_count": 6173,
-            "friends_count": 6145,
-            "created_at": "Sun Jun 23 18:25:59 +0000 2013",
+            "friends_count": 6144,
+            "created_at": "2:25:59 PM 6/23/2013",
             "favourites_count": 0,
             "verified": false,
             "statuses_count": 91,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/378800000415505709/25057631a0c1c74b579b25afc540f022_400x400.jpg",
-            "profile_banner_url": "https://pbs.twimg.com/profile_banners/1541591449/1378397404"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/378800000415505709/25057631a0c1c74b579b25afc540f022_normal.jpeg",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/1541591449/1378397404",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/378800000415505709/25057631a0c1c74b579b25afc540f022_400x400.jpg"
         },
         {
             "name": "Amanda D. Billington",
@@ -48,14 +51,15 @@ module.exports =  {
             "description": "",
             "location": "New York, USA",
             "protected": false,
-            "followers_count": 1438,
+            "followers_count": 1434,
             "friends_count": 5000,
-            "created_at": "Wed Dec 21 14:22:27 +0000 2016",
+            "created_at": "9:22:27 AM 12/21/2016",
             "favourites_count": 0,
             "verified": false,
             "statuses_count": 247,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/811594931684966400/Bgf1pRKo_400x400.jpg",
-            "profile_banner_url": "https://pbs.twimg.com/profile_banners/811577575487180800/1482334276"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/811594931684966400/Bgf1pRKo_normal.jpg",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/811577575487180800/1482334276",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/811594931684966400/Bgf1pRKo_400x400.jpg"
         },
         {
             "name": "New York Knicks",
@@ -65,12 +69,13 @@ module.exports =  {
             "protected": false,
             "followers_count": 964,
             "friends_count": 1739,
-            "created_at": "Fri Apr 15 15:52:45 +0000 2011",
+            "created_at": "11:52:45 AM 4/15/2011",
             "favourites_count": 0,
             "verified": false,
             "statuses_count": 4491,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/606647764475244544/fpX0ir5P_400x400.jpg",
-            "profile_banner_url": "https://pbs.twimg.com/profile_banners/282632583/1433471081"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/606647764475244544/fpX0ir5P_normal.png",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/282632583/1433471081",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/606647764475244544/fpX0ir5P_400x400.jpg"
         },
         {
             "name": "Maxwavy LaFlame",
@@ -79,12 +84,13 @@ module.exports =  {
             "location": "Detroit, MI",
             "protected": false,
             "followers_count": 600,
-            "friends_count": 1770,
-            "created_at": "Sat Jul 23 17:10:41 +0000 2011",
+            "friends_count": 1768,
+            "created_at": "1:10:41 PM 7/23/2011",
             "favourites_count": 9,
             "verified": false,
             "statuses_count": 224,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/1516907735/steve_and_nicki_400x400.jpg"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/1516907735/steve_and_nicki_normal.jpg",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/1516907735/steve_and_nicki_400x400.jpg"
         },
         {
             "name": "У氏",
@@ -94,12 +100,29 @@ module.exports =  {
             "protected": false,
             "followers_count": 435,
             "friends_count": 1793,
-            "created_at": "Fri Jan 15 14:36:14 +0000 2010",
+            "created_at": "9:36:14 AM 1/15/2010",
             "favourites_count": 89,
             "verified": false,
             "statuses_count": 1809,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/748945284277743616/IkGz1UUA_400x400.jpg",
-            "profile_banner_url": "https://pbs.twimg.com/profile_banners/105156402/1467452344"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/748945284277743616/IkGz1UUA_normal.jpg",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/105156402/1467452344",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/748945284277743616/IkGz1UUA_400x400.jpg"
+        },
+        {
+            "name": "Varlin Genmist",
+            "screen_name": "MacAttack35",
+            "description": "Whatever Forever",
+            "location": "COMPTON, NJ",
+            "protected": false,
+            "followers_count": 199,
+            "friends_count": 730,
+            "created_at": "11:27:53 PM 7/30/2009",
+            "favourites_count": 61137,
+            "verified": false,
+            "statuses_count": 29598,
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/921941767213191170/Axeevd3L_normal.jpg",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/61679795/1348011042",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/921941767213191170/Axeevd3L_400x400.jpg"
         },
         {
             "name": "Appy",
@@ -109,27 +132,13 @@ module.exports =  {
             "protected": true,
             "followers_count": 199,
             "friends_count": 1956,
-            "created_at": "Wed Apr 29 01:44:27 +0000 2009",
+            "created_at": "9:44:27 PM 4/28/2009",
             "favourites_count": 49,
             "verified": false,
             "statuses_count": 9178,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/728187856997515264/7Ee1c-2D_400x400.jpg",
-            "profile_banner_url": "https://pbs.twimg.com/profile_banners/36247721/1462448197"
-        },
-        {
-            "name": "Varlin Genmist",
-            "screen_name": "MacAttack35",
-            "description": "Whatever Forever",
-            "location": "COMPTON, NJ",
-            "protected": false,
-            "followers_count": 198,
-            "friends_count": 730,
-            "created_at": "Fri Jul 31 03:27:53 +0000 2009",
-            "favourites_count": 61046,
-            "verified": false,
-            "statuses_count": 29593,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/921941767213191170/Axeevd3L_400x400.jpg",
-            "profile_banner_url": "https://pbs.twimg.com/profile_banners/61679795/1348011042"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/728187856997515264/7Ee1c-2D_normal.jpg",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/36247721/1462448197",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/728187856997515264/7Ee1c-2D_400x400.jpg"
         },
         {
             "name": "iPhone 5 cases ",
@@ -137,13 +146,14 @@ module.exports =  {
             "description": "FOLLOW US! It's coming, the iPhone 5. We will provide you with Your first IPhone 5 case. visit: http://swagmyiphone5.com",
             "location": "",
             "protected": false,
-            "followers_count": 139,
+            "followers_count": 140,
             "friends_count": 316,
-            "created_at": "Tue Sep 11 05:27:36 +0000 2012",
+            "created_at": "1:27:36 AM 9/11/2012",
             "favourites_count": 0,
             "verified": false,
             "statuses_count": 64,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/2610966221/j3cf1gc4k4x0fya9hlw5_400x400.jpg"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/2610966221/j3cf1gc4k4x0fya9hlw5_normal.jpeg",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/2610966221/j3cf1gc4k4x0fya9hlw5_400x400.jpg"
         },
         {
             "name": "lucia",
@@ -153,12 +163,13 @@ module.exports =  {
             "protected": false,
             "followers_count": 138,
             "friends_count": 325,
-            "created_at": "Fri Jun 19 21:45:53 +0000 2009",
-            "favourites_count": 972,
+            "created_at": "5:45:53 PM 6/19/2009",
+            "favourites_count": 971,
             "verified": false,
             "statuses_count": 4022,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/631116933480452096/rdqQhyX__400x400.jpg",
-            "profile_banner_url": "https://pbs.twimg.com/profile_banners/48839859/1358554033"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/631116933480452096/rdqQhyX__normal.jpg",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/48839859/1358554033",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/631116933480452096/rdqQhyX__400x400.jpg"
         },
         {
             "name": "Brittany",
@@ -168,11 +179,12 @@ module.exports =  {
             "protected": true,
             "followers_count": 95,
             "friends_count": 142,
-            "created_at": "Wed Mar 09 16:35:05 +0000 2011",
+            "created_at": "11:35:05 AM 3/9/2011",
             "favourites_count": 53,
             "verified": false,
             "statuses_count": 750,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/378800000763456534/2987cd77b2ac6ba6fba96deb1b76b6db_400x400.jpg"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/378800000763456534/2987cd77b2ac6ba6fba96deb1b76b6db_normal.jpeg",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/378800000763456534/2987cd77b2ac6ba6fba96deb1b76b6db_400x400.jpg"
         },
         {
             "name": "Jessica Lynn",
@@ -182,12 +194,13 @@ module.exports =  {
             "protected": false,
             "followers_count": 85,
             "friends_count": 219,
-            "created_at": "Fri May 25 02:46:54 +0000 2012",
+            "created_at": "10:46:54 PM 5/24/2012",
             "favourites_count": 149,
             "verified": false,
             "statuses_count": 793,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/3459094657/93b7f5c50a7dee3c51795ded90d80044_400x400.jpg",
-            "profile_banner_url": "https://pbs.twimg.com/profile_banners/589624997/1402109627"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/3459094657/93b7f5c50a7dee3c51795ded90d80044_normal.jpeg",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/589624997/1402109627",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/3459094657/93b7f5c50a7dee3c51795ded90d80044_400x400.jpg"
         },
         {
             "name": "Justin Astrin",
@@ -197,12 +210,13 @@ module.exports =  {
             "protected": false,
             "followers_count": 84,
             "friends_count": 208,
-            "created_at": "Tue Apr 14 21:40:06 +0000 2009",
+            "created_at": "5:40:06 PM 4/14/2009",
             "favourites_count": 17,
             "verified": false,
             "statuses_count": 397,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/3772717872/ed96e5e8a6724e36387d0fc00e34568f_400x400.jpg",
-            "profile_banner_url": "https://pbs.twimg.com/profile_banners/31234713/1371521247"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/3772717872/ed96e5e8a6724e36387d0fc00e34568f_normal.jpeg",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/31234713/1371521247",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/3772717872/ed96e5e8a6724e36387d0fc00e34568f_400x400.jpg"
         },
         {
             "name": "Sally Rutherford",
@@ -212,12 +226,13 @@ module.exports =  {
             "protected": false,
             "followers_count": 76,
             "friends_count": 3047,
-            "created_at": "Thu Jul 07 21:31:59 +0000 2011",
+            "created_at": "5:31:59 PM 7/7/2011",
             "favourites_count": 46,
             "verified": false,
             "statuses_count": 50,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/748227916811669504/Vac6OMJe_400x400.jpg",
-            "profile_banner_url": "https://pbs.twimg.com/profile_banners/331242237/1453747891"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/748227916811669504/Vac6OMJe_normal.jpg",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/331242237/1453747891",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/748227916811669504/Vac6OMJe_400x400.jpg"
         },
         {
             "name": "Cee K£llA",
@@ -227,12 +242,13 @@ module.exports =  {
             "protected": false,
             "followers_count": 74,
             "friends_count": 138,
-            "created_at": "Sun Dec 11 17:19:00 +0000 2011",
+            "created_at": "12:19:00 PM 12/11/2011",
             "favourites_count": 12,
             "verified": false,
             "statuses_count": 1244,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/2987931425/5ddc967e2a0718757e7d5e26653246f4_400x400.jpg",
-            "profile_banner_url": "https://pbs.twimg.com/profile_banners/434280946/1355180000"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/2987931425/5ddc967e2a0718757e7d5e26653246f4_normal.jpeg",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/434280946/1355180000",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/2987931425/5ddc967e2a0718757e7d5e26653246f4_400x400.jpg"
         },
         {
             "name": "Kyle Susmin",
@@ -242,12 +258,13 @@ module.exports =  {
             "protected": true,
             "followers_count": 69,
             "friends_count": 88,
-            "created_at": "Tue Apr 10 14:14:22 +0000 2012",
+            "created_at": "10:14:22 AM 4/10/2012",
             "favourites_count": 8,
             "verified": false,
             "statuses_count": 51,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/378800000476627472/bcae819dac1da5714174ffe6a946d85d_400x400.jpg",
-            "profile_banner_url": "https://pbs.twimg.com/profile_banners/550143038/1391567816"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/378800000476627472/bcae819dac1da5714174ffe6a946d85d_normal.jpeg",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/550143038/1391567816",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/378800000476627472/bcae819dac1da5714174ffe6a946d85d_400x400.jpg"
         },
         {
             "name": "Felicity Mitchell",
@@ -257,11 +274,12 @@ module.exports =  {
             "protected": false,
             "followers_count": 41,
             "friends_count": 383,
-            "created_at": "Wed Dec 28 11:24:59 +0000 2011",
+            "created_at": "6:24:59 AM 12/28/2011",
             "favourites_count": 0,
             "verified": false,
             "statuses_count": 0,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/1719339502/temp247217925_400x400.jpg"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/1719339502/temp247217925_normal.jpg",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/1719339502/temp247217925_400x400.jpg"
         },
         {
             "name": "amberlynne pannhurst",
@@ -271,11 +289,12 @@ module.exports =  {
             "protected": false,
             "followers_count": 33,
             "friends_count": 42,
-            "created_at": "Wed Apr 25 23:46:33 +0000 2012",
+            "created_at": "7:46:33 PM 4/25/2012",
             "favourites_count": 1,
             "verified": false,
             "statuses_count": 94,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/3298206773/b1736f6bb527fcaca92a34d6205d96f4_400x400.jpg"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/3298206773/b1736f6bb527fcaca92a34d6205d96f4_normal.jpeg",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/3298206773/b1736f6bb527fcaca92a34d6205d96f4_400x400.jpg"
         },
         {
             "name": "Joseph Tedesco",
@@ -285,11 +304,12 @@ module.exports =  {
             "protected": false,
             "followers_count": 33,
             "friends_count": 90,
-            "created_at": "Wed Jun 15 04:19:34 +0000 2011",
+            "created_at": "12:19:34 AM 6/15/2011",
             "favourites_count": 0,
             "verified": false,
             "statuses_count": 195,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/2359752330/nkfS7K88_400x400.jpg"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/2359752330/nkfS7K88_normal",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/2359752330/nkfS7K88_400x400.jpg"
         },
         {
             "name": "diana hansen",
@@ -299,12 +319,13 @@ module.exports =  {
             "protected": false,
             "followers_count": 25,
             "friends_count": 64,
-            "created_at": "Thu Mar 31 04:42:34 +0000 2011",
+            "created_at": "12:42:34 AM 3/31/2011",
             "favourites_count": 8,
             "verified": false,
             "statuses_count": 165,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/3058049462/870030062c9b8997474df6e0705a9760_400x400.jpg",
-            "profile_banner_url": "https://pbs.twimg.com/profile_banners/274858064/1354494832"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/3058049462/870030062c9b8997474df6e0705a9760_normal.jpeg",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/274858064/1354494832",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/3058049462/870030062c9b8997474df6e0705a9760_400x400.jpg"
         },
         {
             "name": "Daniel Mcdonald",
@@ -314,11 +335,12 @@ module.exports =  {
             "protected": false,
             "followers_count": 14,
             "friends_count": 53,
-            "created_at": "Mon Sep 09 14:03:48 +0000 2013",
+            "created_at": "10:03:48 AM 9/9/2013",
             "favourites_count": 0,
             "verified": false,
             "statuses_count": 21,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/378800000434302460/f72df0184cb5becac6980cb180a95624_400x400.jpg"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/378800000434302460/f72df0184cb5becac6980cb180a95624_normal.jpeg",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/378800000434302460/f72df0184cb5becac6980cb180a95624_400x400.jpg"
         },
         {
             "name": "Parcell Simpson",
@@ -328,11 +350,12 @@ module.exports =  {
             "protected": false,
             "followers_count": 1,
             "friends_count": 6,
-            "created_at": "Wed Nov 23 02:11:14 +0000 2011",
+            "created_at": "9:11:14 PM 11/22/2011",
             "favourites_count": 0,
             "verified": false,
             "statuses_count": 221,
-            "profile_image_url_https": "https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.jpg"
+            "profile_image_url_https": "https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png",
+            "profile_image_url_https_400": "https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.jpg"
         }
     ],
     "usersFriends": [
@@ -342,13 +365,14 @@ module.exports =  {
             "description": "not a doctor",
             "location": "beach",
             "protected": false,
-            "followers_count": 27582289,
+            "followers_count": 27584602,
             "friends_count": 131,
-            "created_at": "Fri Mar 20 15:32:52 +0000 2009",
+            "created_at": "11:32:52 AM 3/20/2009",
             "favourites_count": 2,
             "verified": true,
             "statuses_count": 13669,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/218283715/Daniel-Tosh---Shot_2-12976_400x400.jpg"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/218283715/Daniel-Tosh---Shot_2-12976_normal.gif",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/218283715/Daniel-Tosh---Shot_2-12976_400x400.jpg"
         },
         {
             "name": "PlayStation",
@@ -356,14 +380,15 @@ module.exports =  {
             "description": "Official Twitter updates on PlayStation, PS4, PS VR, PS3, PS Vita, and PSN. Titles rated E-M. Support channel: @AskPlayStation",
             "location": "California",
             "protected": false,
-            "followers_count": 15242811,
+            "followers_count": 15246616,
             "friends_count": 797,
-            "created_at": "Tue Nov 27 22:37:20 +0000 2007",
+            "created_at": "5:37:20 PM 11/27/2007",
             "favourites_count": 1156,
             "verified": true,
-            "statuses_count": 25777,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/921488985184075776/iJjpRYXx_400x400.jpg",
-            "profile_banner_url": "https://pbs.twimg.com/profile_banners/10671602/1514231878"
+            "statuses_count": 25782,
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/921488985184075776/iJjpRYXx_normal.jpg",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/10671602/1516308821",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/921488985184075776/iJjpRYXx_400x400.jpg"
         },
         {
             "name": "Seth MacFarlane",
@@ -371,14 +396,15 @@ module.exports =  {
             "description": "The Official Twitter Page of Seth MacFarlane - \"THE ORVILLE\" Thursdays at 9/8c on Fox",
             "location": "Los Angeles",
             "protected": false,
-            "followers_count": 14012872,
+            "followers_count": 14031238,
             "friends_count": 423,
-            "created_at": "Tue Jan 13 19:04:37 +0000 2009",
+            "created_at": "2:04:37 PM 1/13/2009",
             "favourites_count": 1,
             "verified": true,
-            "statuses_count": 7657,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/477598819715395585/g0lGqC_J_400x400.jpg",
-            "profile_banner_url": "https://pbs.twimg.com/profile_banners/18948541/1497692146"
+            "statuses_count": 7660,
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/477598819715395585/g0lGqC_J_normal.jpeg",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/18948541/1497692146",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/477598819715395585/g0lGqC_J_400x400.jpg"
         },
         {
             "name": "Kobe Bryant",
@@ -386,13 +412,14 @@ module.exports =  {
             "description": "Granity Studios - CEO, Writer, Producer",
             "location": "",
             "protected": false,
-            "followers_count": 13433891,
-            "friends_count": 356,
-            "created_at": "Fri Jan 04 01:09:40 +0000 2013",
+            "followers_count": 13442974,
+            "friends_count": 357,
+            "created_at": "8:09:40 PM 1/3/2013",
             "favourites_count": 20,
             "verified": true,
-            "statuses_count": 1391,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/847230346546487296/c91SRFL0_400x400.jpg"
+            "statuses_count": 1392,
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/847230346546487296/c91SRFL0_normal.jpg",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/847230346546487296/c91SRFL0_400x400.jpg"
         },
         {
             "name": "Usher Raymond IV",
@@ -400,14 +427,15 @@ module.exports =  {
             "description": "HI!!! My name is Usher",
             "location": "",
             "protected": false,
-            "followers_count": 12793879,
+            "followers_count": 12795209,
             "friends_count": 574,
-            "created_at": "Mon May 18 16:36:50 +0000 2009",
+            "created_at": "12:36:50 PM 5/18/2009",
             "favourites_count": 1191,
             "verified": true,
             "statuses_count": 5657,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/928475434634813440/_tBjreUD_400x400.jpg",
-            "profile_banner_url": "https://pbs.twimg.com/profile_banners/40908929/1510200739"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/928475434634813440/_tBjreUD_normal.jpg",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/40908929/1510200739",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/928475434634813440/_tBjreUD_400x400.jpg"
         },
         {
             "name": "Richard Branson",
@@ -415,14 +443,15 @@ module.exports =  {
             "description": "Tie-loathing adventurer, philanthropist & troublemaker, who believes in turning ideas into reality. Otherwise known as Dr Yes at @virgin!",
             "location": "",
             "protected": false,
-            "followers_count": 12084947,
+            "followers_count": 12097787,
             "friends_count": 3848,
-            "created_at": "Mon Aug 13 15:20:18 +0000 2007",
+            "created_at": "11:20:18 AM 8/13/2007",
             "favourites_count": 0,
             "verified": true,
-            "statuses_count": 19009,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/876792863459352577/SBLRu4VV_400x400.jpg",
-            "profile_banner_url": "https://pbs.twimg.com/profile_banners/8161232/1507798274"
+            "statuses_count": 19023,
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/876792863459352577/SBLRu4VV_normal.jpg",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/8161232/1507798274",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/876792863459352577/SBLRu4VV_400x400.jpg"
         },
         {
             "name": "The Weeknd",
@@ -430,14 +459,15 @@ module.exports =  {
             "description": "STARBOY",
             "location": "Toronto, Ontario",
             "protected": false,
-            "followers_count": 8414575,
+            "followers_count": 8420171,
             "friends_count": 0,
-            "created_at": "Mon Feb 21 07:45:45 +0000 2011",
+            "created_at": "2:45:45 AM 2/21/2011",
             "favourites_count": 53,
             "verified": true,
             "statuses_count": 2844,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/916711664753565698/5p9g3ZN8_400x400.jpg",
-            "profile_banner_url": "https://pbs.twimg.com/profile_banners/255388236/1506718769"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/916711664753565698/5p9g3ZN8_normal.jpg",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/255388236/1506718769",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/916711664753565698/5p9g3ZN8_400x400.jpg"
         },
         {
             "name": "Uzi London 🌎☄️💕®",
@@ -445,14 +475,15 @@ module.exports =  {
             "description": "Luv is R6ge 2 out now ® I once w6s the DEVUL backw6rds...LUVED® SEMICOLON Lifestyl3",
             "location": "LIFE",
             "protected": false,
-            "followers_count": 3486128,
+            "followers_count": 3506783,
             "friends_count": 13,
-            "created_at": "Wed Jul 17 00:53:57 +0000 2013",
-            "favourites_count": 17519,
+            "created_at": "8:53:57 PM 7/16/2013",
+            "favourites_count": 17520,
             "verified": true,
-            "statuses_count": 14109,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/932392853573132288/fVjY-WqZ_400x400.jpg",
-            "profile_banner_url": "https://pbs.twimg.com/profile_banners/1599608046/1511134756"
+            "statuses_count": 14130,
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/932392853573132288/fVjY-WqZ_normal.jpg",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/1599608046/1511134756",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/932392853573132288/fVjY-WqZ_400x400.jpg"
         },
         {
             "name": "TRAVIS SCOTT",
@@ -460,14 +491,15 @@ module.exports =  {
             "description": "Huncho Jack Jack Huncho https://HunchoJack.lnk.to/HJJH Cactus Jack Records 💿",
             "location": "",
             "protected": false,
-            "followers_count": 2852250,
+            "followers_count": 2860910,
             "friends_count": 773,
-            "created_at": "Tue Apr 20 03:25:10 +0000 2010",
+            "created_at": "11:25:10 PM 4/19/2010",
             "favourites_count": 174,
             "verified": true,
             "statuses_count": 564,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/634514155261833216/czgYrPLQ_400x400.jpg",
-            "profile_banner_url": "https://pbs.twimg.com/profile_banners/135019364/1491349984"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/634514155261833216/czgYrPLQ_normal.jpg",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/135019364/1491349984",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/634514155261833216/czgYrPLQ_400x400.jpg"
         },
         {
             "name": "E3",
@@ -475,14 +507,15 @@ module.exports =  {
             "description": "The Official Electronic Entertainment Expo Twitter. Follow @TheESA for more E3 news and announcements.",
             "location": "Los Angeles, CA",
             "protected": false,
-            "followers_count": 2002401,
+            "followers_count": 2003521,
             "friends_count": 580,
-            "created_at": "Fri Jan 23 20:54:04 +0000 2009",
+            "created_at": "3:54:04 PM 1/23/2009",
             "favourites_count": 2218,
             "verified": true,
-            "statuses_count": 6329,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/919910836898091008/juPMiRfg_400x400.jpg",
-            "profile_banner_url": "https://pbs.twimg.com/profile_banners/19413393/1508158799"
+            "statuses_count": 6330,
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/919910836898091008/juPMiRfg_normal.jpg",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/19413393/1508158799",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/919910836898091008/juPMiRfg_400x400.jpg"
         },
         {
             "name": "olivia wilde",
@@ -490,14 +523,15 @@ module.exports =  {
             "description": "World champion parallel parker.",
             "location": "Brooklyn",
             "protected": false,
-            "followers_count": 1857502,
+            "followers_count": 1857566,
             "friends_count": 484,
-            "created_at": "Thu Nov 12 18:15:42 +0000 2009",
-            "favourites_count": 447,
+            "created_at": "1:15:42 PM 11/12/2009",
+            "favourites_count": 451,
             "verified": true,
             "statuses_count": 5612,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/566344375983026178/HW05Mewo_400x400.jpg",
-            "profile_banner_url": "https://pbs.twimg.com/profile_banners/89503894/1485135087"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/566344375983026178/HW05Mewo_normal.jpeg",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/89503894/1485135087",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/566344375983026178/HW05Mewo_400x400.jpg"
         },
         {
             "name": "Complex",
@@ -505,14 +539,15 @@ module.exports =  {
             "description": "Making Culture Pop. Snapchat: ComplexMag",
             "location": "New York",
             "protected": false,
-            "followers_count": 1372668,
+            "followers_count": 1373019,
             "friends_count": 540,
-            "created_at": "Mon Feb 04 14:34:39 +0000 2008",
-            "favourites_count": 12672,
+            "created_at": "9:34:39 AM 2/4/2008",
+            "favourites_count": 12671,
             "verified": true,
-            "statuses_count": 291295,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/839858358920310785/JVgCbSHx_400x400.jpg",
-            "profile_banner_url": "https://pbs.twimg.com/profile_banners/13049362/1515857223"
+            "statuses_count": 291446,
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/839858358920310785/JVgCbSHx_normal.jpg",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/13049362/1515857223",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/839858358920310785/JVgCbSHx_400x400.jpg"
         },
         {
             "name": "QuavoYRN",
@@ -520,14 +555,15 @@ module.exports =  {
             "description": "1/3 of @Migos #YRN",
             "location": "N A W F ",
             "protected": false,
-            "followers_count": 1252734,
-            "friends_count": 529,
-            "created_at": "Wed Sep 28 17:58:30 +0000 2011",
-            "favourites_count": 233,
+            "followers_count": 1255988,
+            "friends_count": 530,
+            "created_at": "1:58:30 PM 9/28/2011",
+            "favourites_count": 234,
             "verified": true,
             "statuses_count": 15426,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/924028247943368705/lWNy_dvP_400x400.jpg",
-            "profile_banner_url": "https://pbs.twimg.com/profile_banners/381648806/1509141751"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/924028247943368705/lWNy_dvP_normal.jpg",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/381648806/1509141751",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/924028247943368705/lWNy_dvP_400x400.jpg"
         },
         {
             "name": "Apple News",
@@ -535,14 +571,15 @@ module.exports =  {
             "description": "#AppleNews: Latest news about #Apple ( #iPhone) . We are not related with Apple® .",
             "location": "United States",
             "protected": false,
-            "followers_count": 1110147,
+            "followers_count": 1110216,
             "friends_count": 47,
-            "created_at": "Fri May 01 19:30:49 +0000 2009",
+            "created_at": "3:30:49 PM 5/1/2009",
             "favourites_count": 465,
             "verified": false,
-            "statuses_count": 159997,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/639785559225954304/XtQnsHHI_400x400.jpg",
-            "profile_banner_url": "https://pbs.twimg.com/profile_banners/37019708/1347996296"
+            "statuses_count": 160059,
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/639785559225954304/XtQnsHHI_normal.jpg",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/37019708/1347996296",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/639785559225954304/XtQnsHHI_400x400.jpg"
         },
         {
             "name": "AsapSCIENCE",
@@ -550,14 +587,15 @@ module.exports =  {
             "description": "Your daily dose of fascinating science! - Instagram @AsapScience - Created by @mitchellmoffit and @whalewatchmeplz.",
             "location": "Canada",
             "protected": false,
-            "followers_count": 778343,
+            "followers_count": 782129,
             "friends_count": 806,
-            "created_at": "Mon May 28 17:35:57 +0000 2012",
-            "favourites_count": 10678,
+            "created_at": "1:35:57 PM 5/28/2012",
+            "favourites_count": 10683,
             "verified": true,
-            "statuses_count": 15093,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/2596038915/9e5p412uh6qwsuo8700e_400x400.jpg",
-            "profile_banner_url": "https://pbs.twimg.com/profile_banners/592912724/1415469207"
+            "statuses_count": 15103,
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/2596038915/9e5p412uh6qwsuo8700e_normal.jpeg",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/592912724/1415469207",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/2596038915/9e5p412uh6qwsuo8700e_400x400.jpg"
         },
         {
             "name": "HipHopDX",
@@ -565,14 +603,15 @@ module.exports =  {
             "description": "Internet's #1 Source for Hip Hop News, Interviews, Music & Reviews",
             "location": "Los Angeles, California",
             "protected": false,
-            "followers_count": 554108,
-            "friends_count": 2245,
-            "created_at": "Fri Jul 04 18:01:58 +0000 2008",
-            "favourites_count": 2640,
+            "followers_count": 554321,
+            "friends_count": 2246,
+            "created_at": "2:01:58 PM 7/4/2008",
+            "favourites_count": 2641,
             "verified": true,
-            "statuses_count": 182535,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/481587622247026688/fRqBH2FG_400x400.jpg",
-            "profile_banner_url": "https://pbs.twimg.com/profile_banners/15319698/1439318275"
+            "statuses_count": 182552,
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/481587622247026688/fRqBH2FG_normal.png",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/15319698/1439318275",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/481587622247026688/fRqBH2FG_400x400.jpg"
         },
         {
             "name": "News12LI",
@@ -580,14 +619,15 @@ module.exports =  {
             "description": "As local as local news gets! #LongIsland #LI #News #Weather",
             "location": "Long Island, NY",
             "protected": false,
-            "followers_count": 333229,
+            "followers_count": 333415,
             "friends_count": 137,
-            "created_at": "Wed Oct 01 13:35:13 +0000 2008",
+            "created_at": "9:35:13 AM 10/1/2008",
             "favourites_count": 167,
             "verified": true,
-            "statuses_count": 37832,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/715365107811885056/XIeRwQYz_400x400.jpg",
-            "profile_banner_url": "https://pbs.twimg.com/profile_banners/16543760/1478118184"
+            "statuses_count": 37843,
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/715365107811885056/XIeRwQYz_normal.jpg",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/16543760/1478118184",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/715365107811885056/XIeRwQYz_400x400.jpg"
         },
         {
             "name": "Childish Gambino",
@@ -595,13 +635,14 @@ module.exports =  {
             "description": "Writer, actor, rapper. Childish Gambino (aka Donald Glover) spits the best one-liners out there, bar none.",
             "location": "",
             "protected": false,
-            "followers_count": 13660,
+            "followers_count": 13659,
             "friends_count": 0,
-            "created_at": "Tue Nov 15 22:18:07 +0000 2011",
+            "created_at": "5:18:07 PM 11/15/2011",
             "favourites_count": 0,
             "verified": false,
             "statuses_count": 169,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/1641043092/childish-gambino-1029689-Donald-Glover-617_400x400.jpg"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/1641043092/childish-gambino-1029689-Donald-Glover-617_normal.jpg",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/1641043092/childish-gambino-1029689-Donald-Glover-617_400x400.jpg"
         },
         {
             "name": "Brittany",
@@ -611,11 +652,12 @@ module.exports =  {
             "protected": true,
             "followers_count": 95,
             "friends_count": 142,
-            "created_at": "Wed Mar 09 16:35:05 +0000 2011",
+            "created_at": "11:35:05 AM 3/9/2011",
             "favourites_count": 53,
             "verified": false,
             "statuses_count": 750,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/378800000763456534/2987cd77b2ac6ba6fba96deb1b76b6db_400x400.jpg"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/378800000763456534/2987cd77b2ac6ba6fba96deb1b76b6db_normal.jpeg",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/378800000763456534/2987cd77b2ac6ba6fba96deb1b76b6db_400x400.jpg"
         },
         {
             "name": "Robert Sinclair",
@@ -625,118 +667,119 @@ module.exports =  {
             "protected": false,
             "followers_count": 12,
             "friends_count": 28,
-            "created_at": "Mon Aug 01 19:35:37 +0000 2011",
+            "created_at": "3:35:37 PM 8/1/2011",
             "favourites_count": 0,
             "verified": false,
             "statuses_count": 8,
-            "profile_image_url_https": "https://pbs.twimg.com/profile_images/1612949381/087JPG_400x400.jpg"
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/1612949381/087_normal.JPG",
+            "profile_image_url_https_400": "https://pbs.twimg.com/profile_images/1612949381/087JPG_400x400.jpg"
         }
     ],
     "userStatuses": [
         {
-            "timeStamp": "Wed Apr 05 17:42:56 +0000 2017",
+            "timeStamp": "1:42:56 PM 4/5/2017",
             "tweetBody": "WE'RE SO READY FOR THIS COLLAB https://t.co/KoIPg2zSy4",
             "retweet_count": 1035,
             "favorite_count": 2062
         },
         {
-            "timeStamp": "Thu Mar 30 23:43:31 +0000 2017",
+            "timeStamp": "7:43:31 PM 3/30/2017",
             "tweetBody": "Man says he'll buy every Congressman's browser history If the House Republicans pass this internet privacy bill https://t.co/WeokfRKzwi https://t.co/SIx5a2rhs1",
             "retweet_count": 180,
-            "favorite_count": 406
+            "favorite_count": 405
         },
         {
-            "timeStamp": "Sun Mar 26 05:00:28 +0000 2017",
+            "timeStamp": "1:00:28 AM 3/26/2017",
             "tweetBody": "Drake's 'More Life' has surpassed 'Views' in first-week streaming numbers. https://t.co/Lxvv7TaG1T https://t.co/jMd1fu4Ly1",
-            "retweet_count": 386,
+            "retweet_count": 385,
             "favorite_count": 942
         },
         {
-            "timeStamp": "Sat Mar 25 05:55:34 +0000 2017",
+            "timeStamp": "1:55:34 AM 3/25/2017",
             "tweetBody": "Album Review: @Drake’s \"More Life\" Playlist Basically Makes The Skip Button Useless https://t.co/LKfzHD7RGW https://t.co/NY76OsFcqy",
             "retweet_count": 40,
             "favorite_count": 49
         },
         {
-            "timeStamp": "Sat Mar 25 05:53:00 +0000 2017",
+            "timeStamp": "1:53:00 AM 3/25/2017",
             "tweetBody": "J. Cole Bringing \"4 Your Eyez Only\" Documentary To HBO https://t.co/DBoLgckVrQ https://t.co/XIRDdL4nUb",
             "retweet_count": 34,
             "favorite_count": 53
         },
         {
-            "timeStamp": "Thu Jan 09 19:15:13 +0000 2014",
+            "timeStamp": "2:15:13 PM 1/9/2014",
             "tweetBody": "http://t.co/tMuC4s6Zp1",
             "retweet_count": 0,
             "favorite_count": 7
         },
         {
-            "timeStamp": "Fri Sep 06 13:17:34 +0000 2013",
+            "timeStamp": "9:17:34 AM 9/6/2013",
             "tweetBody": "If you're playing against Peyton Manning in fantasy football this week, just give yourself an L right now: http://t.co/65nibrCzmy",
             "retweet_count": 25,
             "favorite_count": 5
         },
         {
-            "timeStamp": "Thu Aug 29 12:32:59 +0000 2013",
+            "timeStamp": "8:32:59 AM 8/29/2013",
             "tweetBody": "Using your phone while it's charging can damage the battery - This is why the cords for chargers are so short.",
             "retweet_count": 3069,
             "favorite_count": 905
         },
         {
-            "timeStamp": "Thu May 02 03:34:55 +0000 2013",
+            "timeStamp": "11:34:55 PM 5/1/2013",
             "tweetBody": "Got to play better! Will play better! #KnicksTape",
-            "retweet_count": 1845,
+            "retweet_count": 1844,
             "favorite_count": 771
         },
         {
-            "timeStamp": "Mon Apr 01 20:36:10 +0000 2013",
+            "timeStamp": "4:36:10 PM 4/1/2013",
             "tweetBody": "Congrats to my big bruh @TheRealJRSmith on winning Easter conference player of the week!!! #tape8 #thetapeisreal #chuuuuchclothes",
             "retweet_count": 458,
             "favorite_count": 184
         },
         {
-            "timeStamp": "Sun Mar 17 21:21:56 +0000 2013",
+            "timeStamp": "5:21:56 PM 3/17/2013",
             "tweetBody": "My favorite Tapiture photos of the week (50 Photos) http://t.co/brIovzQa9q",
             "retweet_count": 0,
             "favorite_count": 0
         },
         {
-            "timeStamp": "Sun Mar 17 16:36:01 +0000 2013",
+            "timeStamp": "12:36:01 PM 3/17/2013",
             "tweetBody": "#meme http://t.co/JR8VtRSmVj",
             "retweet_count": 0,
             "favorite_count": 0
         },
         {
-            "timeStamp": "Fri Feb 22 02:06:38 +0000 2013",
+            "timeStamp": "9:06:38 PM 2/21/2013",
             "tweetBody": "#youtryingtogetthepipe | J.R. Smith Cuts To The Chase &amp; DM's A Girl \"You Trying To Get The Pipe?\" http://t.co/SBoadJz6Lp",
             "retweet_count": 1,
             "favorite_count": 0
         },
         {
-            "timeStamp": "Sat Feb 09 17:32:18 +0000 2013",
+            "timeStamp": "12:32:18 PM 2/9/2013",
             "tweetBody": "Now all I need to do is plow some snow in a shape of a mouse trap http://t.co/LCJaMOOj",
             "retweet_count": 0,
             "favorite_count": 0
         },
         {
-            "timeStamp": "Sat Feb 09 13:57:25 +0000 2013",
+            "timeStamp": "8:57:25 AM 2/9/2013",
             "tweetBody": "#blizzard2013 Round1 and a  third done http://t.co/sYoyaSeT",
             "retweet_count": 0,
             "favorite_count": 0
         },
         {
-            "timeStamp": "Fri Jan 25 02:40:11 +0000 2013",
+            "timeStamp": "9:40:11 PM 1/24/2013",
             "tweetBody": "“@UberFacts: Captain Crunch’s first name is actually Horatio.”",
             "retweet_count": 0,
             "favorite_count": 0
         },
         {
-            "timeStamp": "Mon Dec 31 20:22:18 +0000 2012",
+            "timeStamp": "3:22:18 PM 12/31/2012",
             "tweetBody": "“@ComplexMag: Jay-Z is working on the score for the upcoming film \"The Great Gatsby\": http://t.co/UfxhV3oq” @Joseph_Tedesco @KennKeller",
             "retweet_count": 0,
             "favorite_count": 0
         },
         {
-            "timeStamp": "Sun Dec 16 05:40:41 +0000 2012",
+            "timeStamp": "12:40:41 AM 12/16/2012",
             "tweetBody": "“@katiemckeough: Learn how I earn money working from home! Working about 3 hours a day. http://t.co/aV7WJvjb” learn how to get hack follow",
             "retweet_count": 0,
             "favorite_count": 0
