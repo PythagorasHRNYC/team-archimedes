@@ -43,12 +43,12 @@ storage
     const client = new language.LanguageServiceClient();
 
     // The text to analyze
-const text = 'I hate president\'s, but I absolutely love Trump.  As for vice predsident, he\'s ok';
+    const text = 'I hate president\'s, but I absolutely love Trump.  As for vice predsident, he\'s ok';
 
-const document = {
-  content: text,
-  type: 'PLAIN_TEXT',
-};
+    const document = {
+      content: text,
+      type: 'PLAIN_TEXT',
+    };
 
 // Detects sentiment of entities in the document
 client
