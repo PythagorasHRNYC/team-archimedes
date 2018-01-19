@@ -25,9 +25,12 @@ import UserModal from './userModal.jsx';
 import Cookies from 'universal-cookie';
 import SelectedUsersProfile from './SelectedUsersProfile.jsx';
 
-//example data
+////////////////
+//EXAMPLE DATA//
+////////////////
 import userDataExample from '../../profileExampleData.js';
 import { userStatuses } from '../../profileExampleData.js'
+////////////////
 
 
 class App extends React.Component {
