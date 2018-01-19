@@ -25,6 +25,12 @@ import UserModal from './userModal.jsx';
 import Cookies from 'universal-cookie';
 import SelectedUsersProfile from './SelectedUsersProfile.jsx';
 
+////////////////
+//EXAMPLE DATA//
+////////////////
+import userDataExample from '../../profileExampleData.js';
+import { userStatuses } from '../../profileExampleData.js'
+////////////////
 
 
 class App extends React.Component {
@@ -98,7 +104,7 @@ class App extends React.Component {
 
   clickHandler(user) {
 		this.setState({clicked: !this.state.clicked}, () => {
-      this.setState({clickedUser: user}, () => {
+      this.setState({clickedUser: "DriziRoC" || user}, () => {
         this.getUserData()
       })
     })
@@ -143,52 +149,52 @@ class App extends React.Component {
 
     axios.post('/search', {searchTerm: term}).then((res) => {
       this.setState({
-        tweets: res.data,
+        tweets: userStatuses || res.data,
         lastSearchTerm: term,
         searchTerm: '',
         previousSearches: [...this.state.previousSearches, term],
         loading: false
       });
       this.getAverage(this.state.tweets, term);
-      this.getHistory();
+      //this.getHistory();
     });
   }
 
   getAverage(tweets, searchTerm) {
-    console.log('average', tweets)
-    // tweets.map((message) => {
-    //   var score = sentiment(message.tweetBody).score;
-    //   message.score = score;
-    //   if ( score < 0 ) {
-    //     // add negative tweets to negativeTweets array
-    //     this.setState({
-    //       negativeTweets: [...this.state.negativeTweets, message]
-    //     });
-    //   } else if ( score > 0 ) {
-    //     // add positive tweets to positiveTweets array
-    //     this.setState({
-    //       positiveTweets: [...this.state.positiveTweets, message]
-    //     });
-    //   }
-    // });
-    // var newAverage = (this.state.negativeTweets.length / this.state.tweets.length) * 100
-    // this.setState({
-    //   average: newAverage
-    // });
-    let average = this.assignAndCount(tweets);
-    axios.post('/database', {average, searchTerm: searchTerm});
+    tweets.map((message) => {
+      var score = sentiment(message.tweetBody).score;
+      message.score = score;
+      if ( score < 0 ) {
+        // add negative tweets to negativeTweets array
+        this.setState({
+          negativeTweets: [...this.state.negativeTweets, message]
+        });
+      } else if ( score > 0 ) {
+        // add positive tweets to positiveTweets array
+        this.setState({
+          positiveTweets: [...this.state.positiveTweets, message]
+        });
+      }
+    });
+    var newAverage = (this.state.negativeTweets.length / this.state.tweets.length) * 100
+    this.setState({
+      average: newAverage
+    });
+    axios.post('/database', {average: newAverage, searchTerm: searchTerm});
   }
 
   getUserData() {
-    axios.post(`/UserProfileData`, {clickedUser: this.state.clickedUser})
-    .then((results) => {
-      let UserProfileDataObject = results.data;
-      console.log(UserProfileDataObject)
-      this.setState({clickedUserData: UserProfileDataObject}, () => {
-        this.setState({userModalStylingSheet: 'user-modal-content'})
-        this.setState({clickedUserDataContentLoaded: true})
-      })
-    })
+    if(this.state.clickedUser) {
+      // axios.post(`/UserProfileData`, {clickedUser: this.state.clickedUser})
+      // .then((results) => {
+        // let UserProfileDataObject = results.data;
+        // console.log(UserProfileDataObject, 'getUserData')
+        this.setState({clickedUserData: userDataExample || UserProfileDataObject}, () => {
+          // this.setState({userModalStylingSheet: 'user-modal-content'})
+          // this.setState({clickedUserDataContentLoaded: true})
+        })
+      // })
+    }
   }
 
   handleDrop({idx, type}) {
@@ -196,7 +202,6 @@ class App extends React.Component {
     let negativeTweets = this.state.negativeTweets;
     let tweet;
     if (type === 'positiveTweets') {
-      console.log('positive')
       tweet = positiveTweets.splice(idx, 1)[0]
       tweet.score = -tweet.score
       negativeTweets.splice(idx, 0, tweet)
@@ -206,13 +211,12 @@ class App extends React.Component {
       tweet.score = -tweet.score
       positiveTweets.splice(idx, 0, tweet);
     }
-    let tweets = [...negativeTweets, ...positiveTweets];
-    let average = (negativeTweets.length / tweets.length) * 100
     this.setState({
-      positiveTweets,
       negativeTweets,
-      tweets,
-      average
+      positiveTweets,
+      tweets: negativeTweets.concat(positiveTweets)
+    }, () => {
+      this.getAverage(this.state.tweets, 'flock')
     })
   }
 
@@ -228,15 +232,15 @@ class App extends React.Component {
   }
 
   handleSave({ idx, type }) {
-    let tweet, userId, favorite;
+    let tweet;
     const cookies = new Cookies();
     if(type === 'positiveTweets') {
       tweet = this.state.positiveTweets[idx];
     } else {
       tweet = this.state.negativeTweets[idx];
     }
-    userId = cookies.get('userId')
-    favorite = tweet.user_name;
+    const userId = cookies.get('userId')
+    const favorite = tweet.user_name;
     if (userId) {
       axios.post('/favorites', {userId, favorite})
       .then((fav) => console.log('stored favorite', fav))
@@ -249,28 +253,6 @@ class App extends React.Component {
     })
   }
 
-  assignAndCount(tweets) {
-    if (!tweets.length) return
-    let negativeTweets = [], positiveTweets = [], average;
-    tweets.forEach(tweet => {
-      let score = sentiment(tweet.tweetBody).score;
-      tweet.score = score;
-      if (score < 0) negativeTweets.push(tweet);
-      else positiveTweets.push(tweet);
-    })
-
-    tweets = [...negativeTweets, ...positiveTweets]
-    average = (negativeTweets.length / tweets.length) * 100
-
-    this.setState({
-      tweets,
-      average,
-      positiveTweets,
-      negativeTweets
-    })
-    return average
-  }
-
   handleFaves() {
     const cookies = new Cookies();
     axios.get('/favorites', {
@@ -280,11 +262,7 @@ class App extends React.Component {
       return response.data.map(a => a.favorite);
     })
     .then(names => {
-      axios.post('/favetweets', names)
-      .then(res => {
-        console.log('tweets', )
-        this.assignAndCount(res.data);
-      })
+      console.log(names)
     })
   }
 
@@ -312,7 +290,7 @@ class App extends React.Component {
 
 
   componentWillMount() {
-    this.getAllTweets('flock');
+    this.getAllTweets('hackreactor');
   }
 
   componentDidMount() {
@@ -402,8 +380,8 @@ class App extends React.Component {
               }}
               contentLabel="Modal" 
             >
-              <h1>User Profile</h1>
-              <IconButton
+            <h1>{`@${this.state.clickedUser}`}</h1>
+          <IconButton
                 iconStyle={styles.mediumIcon}
                 style={Object.assign(styles.medium, styles.closeButton)}
                 onClick={this.clickHandler}

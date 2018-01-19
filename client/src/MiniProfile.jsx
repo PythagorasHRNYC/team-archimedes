@@ -19,7 +19,9 @@ class MiniProfile extends React.Component {
 				</h3>
 			</div>
 			<div className="tweetText row">
+				{"Description:"}
 				<p className="col col-6-of-6">{this.props.profile.description}</p>
+				{"Member Since:"}
 				<span className="timeStamp col right-3-of-6">{this.props.profile.created_at}</span>
 			</div>
 			<hr/>

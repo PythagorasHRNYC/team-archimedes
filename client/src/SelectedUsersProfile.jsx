@@ -33,7 +33,6 @@ class SelectedUsersProfile extends React.Component {
     } else {
       return (
         <div className="profile-content">
-          <h1>{`@${this.props.userData.screen_name}`}</h1>
           <div className="profile-image-div">
             <img className="profile-image" srcSet={`${this.props.userData.profile_image_url_https, this.props.userData.profile_image_url_https_400}`} />
           </div>
@@ -91,7 +90,7 @@ class SelectedUsersProfile extends React.Component {
                         created_at: listItem.created_at,
                         user_name: `@${listItem.screen_name}`,
                         avatar_url: listItem.profile_image_url_https,
-                        followers_count_count: listItem.followers_count,
+                        followers_count: listItem.followers_count,
                         friends_count: listItem.friends_count,
                         statuses_count: listItem.statuses_count
                       }}
