@@ -16,6 +16,7 @@ var OAuth = require ('oauth');
 var key = require ('../config/twitter.js');
 var sentiment = require('sentiment');
 var db = require('../database/index.js');
+var googleSentiment = require('./googleAPI.js');
 
 cronJob = () => {
 	db.getAllTermData((res) => {
@@ -46,9 +47,8 @@ cronJob = () => {
       });
     });
   });
-	
-	
 }
+
 
 getTweetsMulti = (st, cb) => {
 	var oauth = new OAuth.OAuth(
@@ -115,7 +115,7 @@ getTweets = (st, cb) => {
 				//and when resolved decorate /
 				//seledtedDatas key/value/////
 				//////////////////////////////
-				
+
 				var selectedData = {
 					// score: sentiment(tweet).score,
 					searchTerm: st,

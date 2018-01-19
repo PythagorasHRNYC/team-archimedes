@@ -1,28 +1,29 @@
-const language = require('@google-cloud/language');
+// const language = require('@google-cloud/language');
 
-// Instantiates a client
-const client = new language.LanguageServiceClient();
+// // Instantiates a client
+// const client = new language.LanguageServiceClient();
 
-// The text to analyze
-const text = 'Hello, world!';
+// module.exports = client;
 
-const document = {
-  content: text,
-  type: 'PLAIN_TEXT',
-};
+// // The text to analyze
+// const text = 'Hello, world!';
 
-// Detects the sentiment of the text
-client
-  .analyzeSentiment({document: document})
-  .then(results => {
-    const sentiment = results[0].documentSentiment;
+// const document = {
+//   content: text,
+//   type: 'PLAIN_TEXT',
+// };
 
-    console.log(`Text: ${text}`);
-    console.log(`Sentiment score: ${sentiment.score}`);
-    console.log(`Sentiment magnitude: ${sentiment.magnitude}`);
-  })
-  .catch(err => {
-    console.error('ERROR:', err);
-  });
+// // Detects the sentiment of the text
+// client
+//   .analyzeSentiment({document: document})
+//   .then(results => {
+//     const sentiment = results[0].documentSentiment;
 
-  
+//     console.log(`Text: ${text}`);
+//     console.log(`Sentiment score: ${sentiment.score}`);
+//     console.log(`Sentiment magnitude: ${sentiment.magnitude}`);
+//   })
+//   .catch(err => {
+//     console.error('ERROR:', err);
+//   });
+

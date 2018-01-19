@@ -17,7 +17,64 @@ const knex = require('../database/real-database/config.js').knex;
 const User = require('../database/real-database/models/user.js')
 const Favorite = require('../database/real-database/models/favorite.js')
 const UserProfileDummyData = require('../profileExampleData.js')
+const Storage = require('@google-cloud/storage');
+const language = require('@google-cloud/language');
 
+// Instantiates a client
+//////////////////////////////////////////////////////////////////////////
+//////////// Testing Google-API NLP Connection & "Hello World"////////////
+//////////////////////////////////////////////////////////////////////////
+/**
+ * Connection extablish to projects storage
+ */
+const storage = Storage({
+  keyFilename: './WhattheFlock-ff196bb36222.json'
+});
+
+storage
+  .getBuckets()
+  .then((results) => {
+    const buckets = results[0];
+
+    console.log('Buckets')
+    buckets.forEach(bucket => {
+      console.log(bucket.name);
+    });
+    const client = new language.LanguageServiceClient();
+
+    // The text to analyze
+const text = 'I hate president\'s, but I absolutely love Trump.  As for vice predsident, he\'s ok';
+
+const document = {
+  content: text,
+  type: 'PLAIN_TEXT',
+};
+
+// Detects sentiment of entities in the document
+client
+  .analyzeEntitySentiment({document: document})
+  .then(results => {
+    const entities = results[0].entities;
+
+    console.log(`Entities and sentiments:`);
+    entities.forEach(entity => {
+      // if(entity.salience) {
+        console.log(`  Salience: ${entity.salience}`);
+        console.log(`  Name: ${entity.name}`);
+        console.log(`  Type: ${entity.type}`);
+        console.log(`  Score: ${entity.sentiment.score}`);
+        console.log(`  Magnitude: ${entity.sentiment.magnitude}`);
+      // }
+    });
+  })
+  .catch(err => {
+    console.error('ERROR:', err);
+  });
+  })
+  .catch(err => console.error('ERROR', err));
+/**
+ * 
+ */
 // helper functions - see helper.js
 var getTweets = require('./helper.js').getTweets; 
 var cronJob = require('./helper.js').cronJob;
