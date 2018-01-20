@@ -17,8 +17,6 @@ const knex = require('../database/real-database/config.js').knex;
 const User = require('../database/real-database/models/user.js')
 const Favorite = require('../database/real-database/models/favorite.js')
 const UserProfileDummyData = require('../profileExampleData.js')
-
-
 var getTweets = require('./helper.js').getTweets; 
 var cronJob = require('./helper.js').cronJob;
 var getUserProfileData = require('./helper.js').getUserProfileData;

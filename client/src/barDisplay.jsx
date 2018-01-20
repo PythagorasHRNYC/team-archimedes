@@ -8,7 +8,7 @@ class BarDisplay extends React.Component {
 	}
 
 	render() {
-		// {console.log("neg=>", this.props.negPercentage, "neut=>", this.props.neutPercentage, "pos=>", this.props.posPercentage)}
+		{console.log("neg=>", this.props.negPercentage, "neut=>", this.props.neutPercentage, "pos=>", this.props.posPercentage)}
 		return (
 		
 		<div className="container horizontal rounded col col-6-of-6">
