@@ -268,11 +268,7 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-<<<<<<< HEAD
     this.getAllTweets('Javascript React');//add extra searchParameter functionallity
-=======
-    this.getAllTweets('Javascript React');
->>>>>>> rebased
   }
 
   componentDidMount() {
@@ -368,49 +364,6 @@ class App extends React.Component {
                 friendClickHandler={this.friendClickHandler}
               />
             </Modal>
-<<<<<<< HEAD
-=======
-
-            <Modal
-              isOpen={this.state.canBattle}
-              ariaHideApp={false}
-              // onAfterOpen={afterOpenFn}
-              // onRequestClose={requestCloseFn}
-              // closeTimeoutMS={n}
-              style={styles}
-              contentLabel="Modal" 
-              style={{ backgroundImage: `url("//cssanimation.rocks/demo/starwars/images/bg.jpg")`,   
-            }}
-            >
-              <IconButton
-                iconStyle={styles.mediumIcon}
-                style={Object.assign(styles.medium, styles.closeButton)}
-                onClick={()=>{this.setState({canBattle: !this.state.canBattle})}}
-              >
-                <ActionNavigationClose/>
-              </IconButton> 
-            
-              <div className="starwars-demo" ref="modalWar" id="modalWar" >
-                <img id="img" src="//cssanimation.rocks/demo/starwars/images/star.svg" alt="Star" className="star"/>
-                <h2 className="byline" id="byline">The Force Awakens</h2>
-                <img id="img" src="//cssanimation.rocks/demo/starwars/images/wars.svg" alt="Wars" className="wars"/>
-              </div>
-              
-              
-              {this.state.battleData.map((val, idx, arr)=>{
-                
-                return<div>
-                        <img src={val.userInfo.pic} alt="User" height="100" width="100"/>
-                        <div>{val.userInfo.name}</div>
-                        <div>{val.userInfo.location}</div>
-                        <div>{val.score}</div>
-                    </div>
-              })}
-              
-
-            </Modal>
-
->>>>>>> rebased
             <Search submitQuery={this.submitQuery} searchTerm={this.state.searchTerm} getAllTweets={this.getAllTweets} handleInputChange={this.handleInputChange}/>
             <div id="error"></div>
             {
