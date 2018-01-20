@@ -3,8 +3,10 @@ import Loader from './loader.jsx';
 import List from 'material-ui/List';
 import { ListItem, FlatButton }  from 'material-ui';
 import ProfileTweet from './ProfileTweet.jsx';
+import Graph from './Graph.jsx';
 import MiniProfile from './MiniProfile.jsx';
-
+import sentiment from 'sentiment';
+import c3 from 'c3';
 
 
 class SelectedUsersProfile extends React.Component {
@@ -15,8 +17,10 @@ class SelectedUsersProfile extends React.Component {
       navbarChoice: {
         index: 0, 
         list: "userStatuses"
-      }
+      },
+      scores: ["scores"]
     }
+    // this.chart = this.chart.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -66,38 +70,46 @@ class SelectedUsersProfile extends React.Component {
             })}}
             className={'followers-button'}
           />
+          <Graph scores={this.state.scores}>
+          </Graph>
           <List
             className={'profile-list'}
           >  
-            {this.props.userData[`${this.state.navbarChoice.list}`].map((listItem) => <ListItem 
-              className={'profile-list-status-list-item'}
-              // children={listItem.tweetBody}
-              containerElement={
-                  [
-                    <ProfileTweet
-                      tweet={{
-                        tweetBody: listItem.tweetBody,
-                        created_at: listItem.timeStamp,
-                        user_name: `@${this.props.userData.screen_name}`,
-                        avatar_url: this.props.userData.profile_image_url_https,
-                        retweet_count: listItem.retweet_count,
-                        favorite_count: listItem.favorite_count
-                      }}
-                    />,
-                    <MiniProfile
-                      profile={{
-                        description: listItem.description,
-                        created_at: listItem.created_at,
-                        user_name: `@${listItem.screen_name}`,
-                        avatar_url: listItem.profile_image_url_https,
-                        followers_count: listItem.followers_count,
-                        friends_count: listItem.friends_count,
-                        statuses_count: listItem.statuses_count
-                      }}
-                    />
-                ][this.state.navbarChoice.index]
-              }
-            />)}
+            {
+              this.props.userData[`${this.state.navbarChoice.list}`].map((listItem, idx) => {
+              
+              this.state.scores.push(sentiment(listItem.tweetBody).score)
+              return <ListItem 
+                className={'profile-list-status-list-item'}
+                // children={listItem.tweetBody}
+                containerElement={
+                    [
+                      <ProfileTweet
+                        tweet={{
+                          tweetBody: listItem.tweetBody,
+                          created_at: listItem.timeStamp,
+                          user_name: `@${this.props.userData.screen_name}`,
+                          avatar_url: this.props.userData.profile_image_url_https,
+                          retweet_count: listItem.retweet_count,
+                          favorite_count: listItem.favorite_count
+                        }}
+                      />,
+                      <MiniProfile
+                        profile={{
+                          description: listItem.description,
+                          created_at: listItem.created_at,
+                          user_name: `@${listItem.screen_name}`,
+                          avatar_url: listItem.profile_image_url_https,
+                          followers_count_count: listItem.followers_count,
+                          friends_count: listItem.friends_count,
+                          statuses_count: listItem.statuses_count
+                        }}
+                      />
+                  ][this.state.navbarChoice.index]
+                }
+            />})
+            
+            }
           </List>
         </div>
       )

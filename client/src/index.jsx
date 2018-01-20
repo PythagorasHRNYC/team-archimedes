@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import NegativeTweets from './negativeTweets.jsx';
+import NeutralTweets from './neutralTweets.jsx';
 import PositiveTweets from './positiveTweets.jsx';
 import GraphDisplay from './GraphDisplay.jsx';
 import BarDisplay from './barDisplay.jsx';
@@ -39,9 +40,12 @@ class App extends React.Component {
   	this.state = {
       tweets: [],
       negativeTweets: [],
+      neutralTweets: [],
       positiveTweets: [],
       previousSearches: [],
-      average: 50,
+      posAverage: 0,
+      neutAverage: 0,
+      negAverage: 0,
       searchTerm: '',
       lastSearchTerm: 'flock',
       graphData: [],
@@ -55,9 +59,6 @@ class App extends React.Component {
       clickedUserDataContentLoaded: false,
       isDragging: false,
       authenticated: false,
-      battleUser : {},
-      battleData: [],
-      canBattle: false
     }
 
     this.getUserData = this.getUserData.bind(this);
@@ -74,31 +75,12 @@ class App extends React.Component {
     this.clickHandler = this.clickHandler.bind(this);
     this.storeUser = this.storeUser.bind(this);
     this.handleFaves = this.handleFaves.bind(this);
-    this.userClickHandler = this.userClickHandler.bind(this);
-    this.compareClick = this.compareClick.bind(this);
-    this.starwars = this.compareClick.bind(this);
-  }
-
-  userClickHandler(name){
-    this.state.battleUser[name] = true;
   }
 
   showGraph(e) {
     e.preventDefault()
     this.setState({
       graphMode: true
-    });
-  }
-
-  compareClick(){
-    this.setState({battleData: []})
-    Object.keys(this.state.battleUser).forEach((val, idx, arr)=>{
-      axios.get('/userBattle', {params:{user: val}})
-      .then((res)=>{
-        this.state.battleData.push(res.data);
-      }).then(()=>{
-        this.setState({canBattle: true})
-      })
     });
   }
 
@@ -142,6 +124,7 @@ class App extends React.Component {
     // first reset state so that new tweets will render properly.
     this.setState({
       negativeTweets: [],
+      neutralTweets: [],
       positiveTweets: [],
       loading: true,
       graphMode: false
@@ -197,26 +180,59 @@ class App extends React.Component {
     }
   }
 
+  assignAndCount(tweets) {
+    if (!tweets.length) return
+    let negativeTweets = [], positiveTweets = [], neutralTweets = [], negAverage, posAverage, neutAverage;
+    tweets.forEach(tweet => {
+      let score = sentiment(tweet.tweetBody).score;
+      tweet.score = score;
+      if (score < 0){
+        negativeTweets.push(tweet)
+      }else if( score === 0){
+        neutralTweets.push(tweet)
+      } else {positiveTweets.push(tweet)};
+    })
+
+    tweets = [...negativeTweets, ...positiveTweets, ...neutralTweets]
+    negAverage = (negativeTweets.length / tweets.length) * 100
+    posAverage = (positiveTweets.length / tweets.length) * 100
+    neutAverage = (neutralTweets.length / tweets.length) * 100
+
+    this.setState({
+      tweets,
+      negAverage,
+      posAverage,
+      neutAverage,
+      positiveTweets,
+      negativeTweets,
+      neutralTweets
+    })
+  }
   handleDrop({idx, type}) {
     let positiveTweets = this.state.positiveTweets;
+    let neutralTweets = this.state.neutralTweets;
     let negativeTweets = this.state.negativeTweets;
     let tweet;
     if (type === 'positiveTweets') {
       tweet = positiveTweets.splice(idx, 1)[0]
-      tweet.score = -tweet.score
+      tweet.score = -1 * tweet.score
       negativeTweets.splice(idx, 0, tweet)
 
     } else if (type === 'negativeTweets') {
       tweet = negativeTweets.splice(idx, 1)[0]
-      tweet.score = -tweet.score
+      tweet.score = -1 * tweet.score
       positiveTweets.splice(idx, 0, tweet);
     }
+    let tweets = [...negativeTweets, ...positiveTweets, ...neutralTweets];
+    let negAverage = (negativeTweets.length / tweets.length) * 100
+    let posAverage = (positiveTweets.length / tweets.length) * 100
+    let neutAverage = (neutralTweets.length / tweets.length) * 100
     this.setState({
       negativeTweets,
-      positiveTweets,
-      tweets: negativeTweets.concat(positiveTweets)
-    }, () => {
-      this.getAverage(this.state.tweets, 'flock')
+      tweets,
+      posAverage,
+      negAverage,
+      neutAverage
     })
   }
 
@@ -266,31 +282,12 @@ class App extends React.Component {
     })
   }
 
-  // starwars(){
-  //   var byline = document.getElementById('byline');     // Find the H2
-  //   bylineText = byline.innerHTML;                                      // Get the content of the H2
-  //   bylineArr = bylineText.split('');                                   // Split content into array
-  //   byline.innerHTML = '';                                                      // Empty current content
-
-  //   var span;                   // Create variables to create elements
-  //   var letter;
-
-  //   for(i=0;i<bylineArr.length;i++){                                    // Loop for every letter
-  //     span = React.createElement('span', {}, bylineArr[i]);
-  //     // span = document.createElement("span");                    // Create a <span> element
-  //     // letter = document.createTextNode();   // Create the letter
-  //     if(bylineArr[i] == ' ') {                                             // If the letter is a space...
-  //       byline.appendChild(letter);                 // ...Add the space without a span
-  //     } else {
-  //       span.appendChild(letter);                       // Add the letter to the span
-  //       byline.appendChild(span);                   // Add the span to the h2
-  //     }
-  //   }    
-  // }
-
-
   componentWillMount() {
+<<<<<<< HEAD
     this.getAllTweets('hackreactor');
+=======
+    this.getAllTweets('Javascript React');
+>>>>>>> add gauge add spline graph
   }
 
   componentDidMount() {
@@ -302,8 +299,9 @@ class App extends React.Component {
       })
     }
   }
-
+  
   render () {
+    setTimeout( ()=> {this.refs.modalWar.style.display = "none"}, 5000);
     const styles = {
       smallIcon: {
         width: 36,
@@ -345,22 +343,15 @@ class App extends React.Component {
           <MuiThemeProvider>
           <div className="row">
 
-
-
             { !authenticated ?
               <UserModal storeUser={this.storeUser}/>:
               null
             }
 
-          <div onClick={()=>{console.log(this.state.battleUser)}}>hello</div>
-
             <div className="siteNav header col col-6-of-6">
               <h1>What the Flock?</h1>
               <img src="./images/poop_logo.png" alt="" className="logo"/>
             </div>
-
-
-              <button onClick={()=>{this.compareClick()}}> Test</button>
               
             <Modal
               isOpen={this.state.clicked}
@@ -393,6 +384,8 @@ class App extends React.Component {
               />
             </Modal>
 
+<<<<<<< HEAD
+=======
             <Modal
               isOpen={this.state.canBattle}
               ariaHideApp={false}
@@ -401,29 +394,9 @@ class App extends React.Component {
               // closeTimeoutMS={n}
               style={styles}
               contentLabel="Modal" 
-              // style={{ backgroundImage: `url("//cssanimation.rocks/demo/starwars/images/bg.jpg")`}}
+              style={{ backgroundImage: `url("//cssanimation.rocks/demo/starwars/images/bg.jpg")`,   
+            }}
             >
-            
-              <div className="starwars-demo" id="modalWar">
-                <img id="img" src="//cssanimation.rocks/demo/starwars/images/star.svg" alt="Star" className="star"/>
-                <img id="img" src="//cssanimation.rocks/demo/starwars/images/wars.svg" alt="Wars" className="wars"/>
-                <h2 className="byline" id="byline">The Force Awakens</h2>
-                
-              </div>
-              {/* <h1>User Wars</h1> */}
-
-              
-              {this.state.battleData.map((val, idx, arr)=>{
-                
-                return<div style={{textAlign:"end"}}>
-                        <img src={val.userInfo.pic} alt="Smiley face" height="42" width="42"/>
-                        <div>{val.userInfo.name}</div>
-                        <div>{val.userInfo.location}</div>
-                        <div>{val.score}</div>
-                    </div>
-              })}
-              
-
               <IconButton
                 iconStyle={styles.mediumIcon}
                 style={Object.assign(styles.medium, styles.closeButton)}
@@ -431,8 +404,28 @@ class App extends React.Component {
               >
                 <ActionNavigationClose/>
               </IconButton> 
+            
+              <div className="starwars-demo" ref="modalWar" id="modalWar" >
+                <img id="img" src="//cssanimation.rocks/demo/starwars/images/star.svg" alt="Star" className="star"/>
+                <h2 className="byline" id="byline">The Force Awakens</h2>
+                <img id="img" src="//cssanimation.rocks/demo/starwars/images/wars.svg" alt="Wars" className="wars"/>
+              </div>
+              
+              
+              {this.state.battleData.map((val, idx, arr)=>{
+                
+                return<div>
+                        <img src={val.userInfo.pic} alt="User" height="100" width="100"/>
+                        <div>{val.userInfo.name}</div>
+                        <div>{val.userInfo.location}</div>
+                        <div>{val.score}</div>
+                    </div>
+              })}
+              
+
             </Modal>
 
+>>>>>>> modalwindowcss
             <Search submitQuery={this.submitQuery} searchTerm={this.state.searchTerm} getAllTweets={this.getAllTweets} handleInputChange={this.handleInputChange}/>
             <div id="error"></div>
             {
@@ -440,9 +433,12 @@ class App extends React.Component {
               <SaveTweet save={this.handleSave} handleFaves={this.handleFaves} isDraggingging={this.state.isDraggingging}/>:
               null
             }
-            <BarDisplay percentage={this.state.average} lastSearchTerm={this.state.lastSearchTerm} loading={this.state.loading} showGraph={this.showGraph}/>
-            <NegativeTweets className="tweetColumns row" userClickHandler={this.userClickHandler} dragging={this.handleDrag} drop={this.handleDrop} clickHandler={this.clickHandler} tweets={this.state.negativeTweets}/>
-            <PositiveTweets className="tweetColumns row" userClickHandler={this.userClickHandler} dragging={this.handleDrag} drop={this.handleDrop} clickHandler={this.clickHandler} tweets={this.state.positiveTweets}/>
+            <BarDisplay negPercentage={this.state.negAverage} neutPercentage={this.state.neutAverage} posPercentage={this.state.posAverage} lastSearchTerm={this.state.lastSearchTerm} loading={this.state.loading} showGraph={this.showGraph}/>
+            <div style={{display:"flex"}}>
+              <PositiveTweets className="tweetColumns row" dragging={this.handleDrag} drop={this.handleDrop} clickHandler={this.clickHandler} tweets={this.state.positiveTweets}/>
+              <NeutralTweets className="tweetColumns row" dragging={this.handleDrag} drop={this.handleDrop} clickHandler={this.clickHandler} tweets={this.state.neutralTweets}/>            
+              <NegativeTweets className="tweetColumns row"  dragging={this.handleDrag} drop={this.handleDrop} clickHandler={this.clickHandler} tweets={this.state.negativeTweets}/>
+            </div>
           </div>
           </MuiThemeProvider>
         )
