@@ -24,15 +24,21 @@ var getUserProfileData = require('./helper.js').getUserProfileData;
 
 var helper = require('./helper.js');
 
-cron.schedule('*/30 * * * *', () => {
-  // call helper function every half-hour
-  cronJob();
-});
+// cron.schedule('*/30 * * * *', () => {
+//   // call helper function every half-hour
+//   cronJob();
+// });
 
+const sanitizeHTML = require('sanitize-html')
+app.use(express.static(__dirname + '/../client/dist'));
+app.use(bodyParser.json())
 
-
-//put in command line
-//export GOOGLE_APPLICATION_CREDENTIALS=/Users/derricktheodore/Desktop/legacyProject/team-archimedes/WhattheFlock-ff196bb36222.json
+//////////////////////////////////////////
+//export this to authenticate google API//
+//////////////////////////////////////////
+//put in command line////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//export GOOGLE_APPLICATION_CREDENTIALS=/Users/{Your_name}/Desktop/legacyProject/team-archimedes/WhattheFlock-ff196bb36222.json//////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.post('/favetweets', async (req, res) => {
   let tweets = [];
@@ -48,19 +54,17 @@ app.post('/favetweets', async (req, res) => {
   })
 })
 
-
+//delete?--- yes
 app.get('/userBattle', function(req, res){
   helper.getSpecificUserTweets(req.query.user, (data)=>{
     res.send(data)
   })
-  
 })
 
 app.post('/search', function(req, res) {
   ///////////////////////////////////////////////////////////
   //Added searchParam to req.body for refine serach request//
   ///////////////////////////////////////////////////////////
-
   const searchTerm = sanitizeHTML(req.body.searchTerm) || 'undefined';
   //new
   const searchParam = req.body.searchParam;

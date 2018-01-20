@@ -25,6 +25,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import UserModal from './userModal.jsx';
 import Cookies from 'universal-cookie';
 import SelectedUsersProfile from './SelectedUsersProfile.jsx';
+import Navbar from './navBar.jsx'
 
 ////////////////
 //EXAMPLE DATA//
@@ -128,7 +129,7 @@ class App extends React.Component {
     this.state.searchTerm === '' ? $('.search.container').addClass('error') : this.getAllTweets(this.state.searchTerm); //add extra searchParameter functionallity
   }
 
-  getAllTweets(term) {//add extra searchParameter functionallity
+  getAllTweets(term, filter) {//add extra searchParameter functionallity
     // first reset state so that new tweets will render properly.
     this.setState({
       negativeTweets: [],
@@ -138,9 +139,9 @@ class App extends React.Component {
       graphMode: false
     });
 
-    axios.post('/search', {searchTerm: term}).then((res) => {
+    axios.post('/search', {searchTerm: term, searchParam: filter}).then((res) => {
       this.setState({
-        tweets:  res.data,
+        tweets: res.data,
         lastSearchTerm: term,
         searchTerm: '',
         previousSearches: [...this.state.previousSearches, term],
@@ -168,7 +169,12 @@ class App extends React.Component {
     if (!tweets.length) return
     let negativeTweets = [], positiveTweets = [], neutralTweets = [], negAverage, posAverage, neutAverage;
     tweets.forEach(tweet => {
-      let score = 1 || tweet.tweetBody.sentimentDataObject.score;
+      let score = tweet.sentimentDataObject.reduce((final_score, sentimentObject) => {
+        if( this.state.lastSearchTerm.includes( sentimentObject.name ) ) {
+          final_score += sentimentObject.score;
+        }
+        return final_score;
+      }, 0)
       tweet.score = score;
       if (score < 0){
         negativeTweets.push(tweet)
@@ -271,7 +277,7 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    this.getAllTweets('Javascript React');//add extra searchParameter functionallity
+    this.getAllTweets('President Trump', '');//add extra searchParameter functionallity
   }
 
   componentDidMount() {
@@ -362,6 +368,7 @@ class App extends React.Component {
             </Modal>
 
             <Search submitQuery={this.submitQuery} searchTerm={this.state.searchTerm} getAllTweets={this.getAllTweets} handleInputChange={this.handleInputChange}/>
+            {/* <NavBar /> */}
             <div id="error"></div>
             {
               authenticated ?

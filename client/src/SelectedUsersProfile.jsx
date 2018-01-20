@@ -113,11 +113,8 @@ class SelectedUsersProfile extends React.Component {
           <List >  
             {
               this.props.userData[`${this.state.navbarChoice.list}`].map((listItem, idx) => {
-              //refector with Google analyze backend call
-              this.state.scores.push(sentiment(listItem.tweetBody).score)
-              //refactor 
-              this.state.navbarChoice.list === 'userStatuses' && this.state.scores.push(1 || listItem.tweetBody.sentimentDataObject.score)
-               
+              this.state.navbarChoice.list === 'userStatuses' && this.state.scores.push(sentiment(listItem.tweetBody))
+                
               return <ListItem 
                 className={'profile-list-status-list-item'}
                 containerElement={
