@@ -67,7 +67,6 @@ app.post('/search', function(req, res) {
   searchTerm.split(`'`).join('').split('#').join('').split('"').join('').split('/').join('').split('`').join('')
 
   db.addToSearchTerms({searchTerm: searchTerm});
-
   getTweets(searchTerm, (data) => {
     res.send(data)
   });

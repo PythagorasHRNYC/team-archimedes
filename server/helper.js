@@ -102,7 +102,7 @@ getTweets = (st, cb) => {
 	);
 	const names = `https://api.twitter.com/1.1/users/show.json?screen_name=${st}&include_entities=false`
 	const string = `https://api.twitter.com/1.1/search/tweets.json?q=${st}&count=100&tweet_mode=extended`
-	oauth.get(`https://api.twitter.com/1.1/search/tweets.json?q=%23${st}&count=100&tweet_mode=extended&result_type=popular`, key.ACCESS_TOKEN, key.ACCESS_TOKEN_SECRET, function(e, data, res) {
+	oauth.get(`https://api.twitter.com/1.1/search/tweets.json?q=%27${st}%27&count=100&tweet_mode=extended&result_type=popular`, key.ACCESS_TOKEN, key.ACCESS_TOKEN_SECRET, function(e, data, res) {
 		if (e) { 
 			console.error(e);
 			cb([]);
@@ -110,27 +110,23 @@ getTweets = (st, cb) => {
 			let temp = JSON.parse(data).statuses
 			let cleaned = []
 
-
-			Promise.all(temp.map((tweet) => {
+				temp.map((tweet) => {
 				//////////////////////////////
 				//invoke client promise //////
 				//and when resolved decorate /
 				//seledtedDatas key/value/////
 				//////////////////////////////
-
 				const document = {
-					content: tweet,
-					type: 'PLAIN_TEXT',
-				};
-				new Promise(() => {
-					client
+								content: tweet.retweeted_status ? tweet.retweeted_status.full_text : tweet.full_text,
+								type: 'PLAIN_TEXT',
+							};
+					googleSentiment 
 					.analyzeEntitySentiment({document: document})
 					.then(results => {
 						const entities = results[0].entities;
-						let sentimentData;
-		
+						let selectedData, sentimentDatal;
 						entities.forEach(entity => {
-							if(entity === st) {
+							if(entity.name.toLocaleLowerCase() === st.toLocaleLowerCase()) {
 							sentimentData = {
 									salience: entity.salience,
 									name: entity.name,
@@ -138,7 +134,7 @@ getTweets = (st, cb) => {
 									score: entity.sentiment.score,
 									magnitude: entity.sentiment.magnitude
 								}
-								var selectedData = {
+								selectedData = {
 									// score: sentiment(tweet).score,
 									searchTerm: st,
 									timeStamp: tweet.created_at,
@@ -149,18 +145,12 @@ getTweets = (st, cb) => {
 									user_location: tweet.user.location,
 									avatar_url: tweet.user.profile_image_url
 								}
+								cleaned.push(selectedData);
 							}
-							resolve(sentimentData);
 						});
 					})
-					.catch(err => {
-						resolve(err);
-					});
 				})
-			})).then((cleaned) => {
-				cb(cleaned);
-			})
-
+			cb(cleaned);
 		}
 	});
 }

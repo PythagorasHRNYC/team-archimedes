@@ -160,7 +160,7 @@ class App extends React.Component {
     if (!tweets.length) return
     let negativeTweets = [], positiveTweets = [], neutralTweets = [], negAverage, posAverage, neutAverage;
     tweets.forEach(tweet => {
-      let score = sentiment(tweet.tweetBody).score;
+      let score = tweet.tweetBody.sentimentDataObject.score;
       tweet.score = score;
       if (score < 0){
         negativeTweets.push(tweet)
