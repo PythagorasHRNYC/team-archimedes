@@ -151,12 +151,13 @@ class Tweet extends React.Component {
 	return connectDragSource(
 		<div className="tweetBody" data-key={this.props.data} data-type={this.props.type}>
 
-			<IconButton
+				<IconButton
 				iconStyle={styles.smallIcon}
 				style={Object.assign(styles.small, styles.profilebutton)}
 				onClick={() => {this.props.clickHandler(this.props.tweet.user_name)}}>
-				<ActionAccountCircles/>
-			</IconButton> 
+					<ActionAccountCircles style={{}}/>
+				</IconButton> 
+			
 
 			<div className="header row">
 				<img className="avatar" src={this.props.tweet.avatar_url}></img>
