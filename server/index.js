@@ -17,11 +17,10 @@ const knex = require('../database/real-database/config.js').knex;
 const User = require('../database/real-database/models/user.js')
 const Favorite = require('../database/real-database/models/favorite.js')
 const UserProfileDummyData = require('../profileExampleData.js')
-
-// helper functions - see helper.js
 var getTweets = require('./helper.js').getTweets; 
 var cronJob = require('./helper.js').cronJob;
 var getUserProfileData = require('./helper.js').getUserProfileData;
+
 
 var helper = require('./helper.js');
 
@@ -30,11 +29,10 @@ cron.schedule('*/30 * * * *', () => {
   cronJob();
 });
 
-const sanitizeHTML = require('sanitize-html')
-app.use(express.static(__dirname + '/../client/dist'));
-app.use(bodyParser.json())
 
 
+//put in command line
+//export GOOGLE_APPLICATION_CREDENTIALS=/Users/derricktheodore/Desktop/legacyProject/team-archimedes/WhattheFlock-ff196bb36222.json
 
 app.post('/favetweets', async (req, res) => {
   let tweets = [];
@@ -59,15 +57,21 @@ app.get('/userBattle', function(req, res){
 })
 
 app.post('/search', function(req, res) {
+  ///////////////////////////////////////////////////////////
+  //Added searchParam to req.body for refine serach request//
+  ///////////////////////////////////////////////////////////
 
   const searchTerm = sanitizeHTML(req.body.searchTerm) || 'undefined';
+  //new
+  const searchParam = req.body.searchParam;
   searchTerm.split(`'`).join('').split('#').join('').split('"').join('').split('/').join('').split('`').join('')
 
   db.addToSearchTerms({searchTerm: searchTerm});
 
+  //new 3rd parameter
   getTweets(searchTerm, (data) => {
     res.send(data)
-  });
+  }, searchParam);
 
 })
 

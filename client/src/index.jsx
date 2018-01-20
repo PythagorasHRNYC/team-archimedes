@@ -62,7 +62,6 @@ class App extends React.Component {
     }
 
     this.getUserData = this.getUserData.bind(this);
-    this.getAverage = this.getAverage.bind(this);
     this.getAllTweets = this.getAllTweets.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this);
     this.submitQuery = this.submitQuery.bind(this);
@@ -73,6 +72,7 @@ class App extends React.Component {
     this.handleSave = this.handleSave.bind(this);
     this.handleDrag = this.handleDrag.bind(this);
     this.clickHandler = this.clickHandler.bind(this);
+    this.friendClickHandler = this.friendClickHandler.bind(this);
     this.storeUser = this.storeUser.bind(this);
     this.handleFaves = this.handleFaves.bind(this);
   }
@@ -92,12 +92,20 @@ class App extends React.Component {
     })
   }
 
+  friendClickHandler(user) {
+    console.log('user:  ', user)
+    this.setState({clickedUser: user}, () => {
+      this.getUserData()
+    })
+  }
+
   resetGraphMode(e) {
     e.preventDefault();
     this.setState({
       graphMode: false
     });
   }
+
 
   handleInputChange(e) {
     $('.search.container').removeClass('error');
@@ -117,10 +125,10 @@ class App extends React.Component {
 
   submitQuery(e) {
     e.preventDefault();
-    this.state.searchTerm === '' ? $('.search.container').addClass('error') : this.getAllTweets(this.state.searchTerm);
+    this.state.searchTerm === '' ? $('.search.container').addClass('error') : this.getAllTweets(this.state.searchTerm); //add extra searchParameter functionallity
   }
 
-  getAllTweets(term) {
+  getAllTweets(term) {//add extra searchParameter functionallity
     // first reset state so that new tweets will render properly.
     this.setState({
       negativeTweets: [],
@@ -138,34 +146,9 @@ class App extends React.Component {
         previousSearches: [...this.state.previousSearches, term],
         loading: false
       });
-      this.getAverage(this.state.tweets, term);
-      //this.getHistory();
+      this.assignAndCount(this.state.tweets, term)
+      this.getHistory();
     });
-  }
-
-  getAverage(tweets, searchTerm) {
-    // tweets.map((message) => {
-    //   var score = sentiment(message.tweetBody).score;
-    //   message.score = score;
-    //   if ( score < 0 ) {
-    //     // add negative tweets to negativeTweets array
-    //     this.setState({
-    //       negativeTweets: [...this.state.negativeTweets, message]
-    //     });
-    //   } else if ( score > 0 ) {
-    //     // add positive tweets to positiveTweets array
-    //     this.setState({
-    //       positiveTweets: [...this.state.positiveTweets, message]
-    //     });
-    //   }
-    // });
-    // var newAverage = (this.state.negativeTweets.length / this.state.tweets.length) * 100
-    // this.setState({
-    //   average: newAverage
-    // });
-    // axios.post('/database', {average: newAverage, searchTerm: searchTerm});
-    let average = this.assignAndCount(tweets);
-    axios.post('/database', {average, searchTerm: searchTerm});
   }
 
   getUserData() {
@@ -173,7 +156,6 @@ class App extends React.Component {
       axios.post(`/UserProfileData`, {clickedUser: this.state.clickedUser})
       .then((results) => {
         let UserProfileDataObject = results.data;
-        // console.log(UserProfileDataObject, 'getUserData')
         this.setState({clickedUserData: UserProfileDataObject}, () => {
           this.setState({userModalStylingSheet: 'user-modal-content'})
           this.setState({clickedUserDataContentLoaded: true})
@@ -186,7 +168,7 @@ class App extends React.Component {
     if (!tweets.length) return
     let negativeTweets = [], positiveTweets = [], neutralTweets = [], negAverage, posAverage, neutAverage;
     tweets.forEach(tweet => {
-      let score = sentiment(tweet.tweetBody).score;
+      let score = 1 || tweet.tweetBody.sentimentDataObject.score;
       tweet.score = score;
       if (score < 0){
         negativeTweets.push(tweet)
@@ -208,7 +190,11 @@ class App extends React.Component {
       positiveTweets,
       negativeTweets,
       neutralTweets
+
     }, ()=>{console.log("neg", this.state.negAverage, "pos", this.state.posAverage, "neut", this.state.neutAverage)})
+
+    })
+    axios.post('/database', {average: newAverage, searchTerm: searchTerm});
   }
   handleDrop({idx, type}) {
     let positiveTweets = this.state.positiveTweets;
@@ -285,8 +271,7 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    this.getAllTweets('hackreactor');
-    // this.getAllTweets('Javascript React');
+    this.getAllTweets('Javascript React');//add extra searchParameter functionallity
   }
 
   componentDidMount() {
@@ -372,6 +357,7 @@ class App extends React.Component {
               <SelectedUsersProfile 
                 userData={this.state.clickedUserData}
                 clickHandler={this.clickHandler}
+                friendClickHandler={this.friendClickHandler}
               />
             </Modal>
 
