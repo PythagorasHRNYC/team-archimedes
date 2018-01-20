@@ -283,11 +283,7 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-<<<<<<< HEAD
-    this.getAllTweets('hackreactor');
-=======
     this.getAllTweets('Javascript React');
->>>>>>> add gauge add spline graph
   }
 
   componentDidMount() {
@@ -384,8 +380,6 @@ class App extends React.Component {
               />
             </Modal>
 
-<<<<<<< HEAD
-=======
             <Modal
               isOpen={this.state.canBattle}
               ariaHideApp={false}
@@ -425,7 +419,6 @@ class App extends React.Component {
 
             </Modal>
 
->>>>>>> modalwindowcss
             <Search submitQuery={this.submitQuery} searchTerm={this.state.searchTerm} getAllTweets={this.getAllTweets} handleInputChange={this.handleInputChange}/>
             <div id="error"></div>
             {
