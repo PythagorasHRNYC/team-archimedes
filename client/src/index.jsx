@@ -117,6 +117,13 @@ class App extends React.Component {
     });
   }
 
+  getSentiment(tweet) {
+    return axios.post('/sentiment-score', {
+      tweet: tweet,
+      term: this.state.searchTerm
+    })
+  }
+
   handleInputChange(e) {
     $('.search.container').removeClass('error');
     this.setState({
@@ -265,29 +272,6 @@ class App extends React.Component {
       console.log(names)
     })
   }
-
-  // starwars(){
-  //   var byline = document.getElementById('byline');     // Find the H2
-  //   bylineText = byline.innerHTML;                                      // Get the content of the H2
-  //   bylineArr = bylineText.split('');                                   // Split content into array
-  //   byline.innerHTML = '';                                                      // Empty current content
-
-  //   var span;                   // Create variables to create elements
-  //   var letter;
-
-  //   for(i=0;i<bylineArr.length;i++){                                    // Loop for every letter
-  //     span = React.createElement('span', {}, bylineArr[i]);
-  //     // span = document.createElement("span");                    // Create a <span> element
-  //     // letter = document.createTextNode();   // Create the letter
-  //     if(bylineArr[i] == ' ') {                                             // If the letter is a space...
-  //       byline.appendChild(letter);                 // ...Add the space without a span
-  //     } else {
-  //       span.appendChild(letter);                       // Add the letter to the span
-  //       byline.appendChild(span);                   // Add the span to the h2
-  //     }
-  //   }    
-  // }
-
 
   componentWillMount() {
     this.getAllTweets('hackreactor');
