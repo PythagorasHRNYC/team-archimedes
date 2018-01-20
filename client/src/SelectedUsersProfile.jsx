@@ -78,7 +78,8 @@ class SelectedUsersProfile extends React.Component {
             {
               this.props.userData[`${this.state.navbarChoice.list}`].map((listItem, idx) => {
               
-              this.state.scores.push(sentiment(listItem.tweetBody).score)
+              this.state.navbarChoice.list === 'userStatuses' && this.state.scores.push(listItem.tweetBody.sentimentDataObject.score)
+                
               return <ListItem 
                 className={'profile-list-status-list-item'}
                 // children={listItem.tweetBody}

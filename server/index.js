@@ -17,13 +17,11 @@ const knex = require('../database/real-database/config.js').knex;
 const User = require('../database/real-database/models/user.js')
 const Favorite = require('../database/real-database/models/favorite.js')
 const UserProfileDummyData = require('../profileExampleData.js')
-const language = require('@google-cloud/language');
 
 
 var getTweets = require('./helper.js').getTweets; 
 var cronJob = require('./helper.js').cronJob;
 var getUserProfileData = require('./helper.js').getUserProfileData;
-const client = new language.LanguageServiceClient();
 
 
 var helper = require('./helper.js');
@@ -40,42 +38,6 @@ app.use(bodyParser.json())
 
 //put in command line
 //export GOOGLE_APPLICATION_CREDENTIALS=/Users/derricktheodore/Desktop/legacyProject/team-archimedes/WhattheFlock-ff196bb36222.json
-
-
-app.post('/sentiment-score', (req, res) => {
-  const text = req.body.tweet;
-  const searchTerm = req.body.term;
-
-  const document = {
-    content: text,
-    type: 'PLAIN_TEXT',
-  };
-
-  client
-  .analyzeEntitySentiment({document: document})
-  .then(results => {
-    const entities = results[0].entities;
-
-    console.log(`Entities and sentiments:`);
-    console.log('////////////////////////')
-    entities.forEach(entity => {
-      if(entity === searchTerm) {
-        console.log(`  Salience: ${entity.salience}`);
-        console.log(`  Name: ${entity.name}`);
-        console.log(`  Type: ${entity.type}`);
-        console.log(`  Score: ${entity.sentiment.score}`);
-        console.log(`  Magnitude: ${entity.sentiment.magnitude}`);
-      }
-    });
-  })
-  .catch(err => {
-    console.error('ERROR:', err);
-  });
-  res.send('working')
-})
-
-
-
 
 app.post('/favetweets', async (req, res) => {
   let tweets = [];

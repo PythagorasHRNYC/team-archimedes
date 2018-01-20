@@ -62,7 +62,6 @@ class App extends React.Component {
     }
 
     this.getUserData = this.getUserData.bind(this);
-    this.getAverage = this.getAverage.bind(this);
     this.getAllTweets = this.getAllTweets.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this);
     this.submitQuery = this.submitQuery.bind(this);
@@ -99,12 +98,6 @@ class App extends React.Component {
     });
   }
 
-  getSentiment(tweet) {
-    return axios.post('/sentiment-score', {
-      tweet: tweet,
-      term: this.state.searchTerm
-    })
-  }
 
   handleInputChange(e) {
     $('.search.container').removeClass('error');
@@ -145,14 +138,9 @@ class App extends React.Component {
         previousSearches: [...this.state.previousSearches, term],
         loading: false
       });
-      this.getAverage(this.state.tweets, term);
+      this.assignAndCount(this.state.tweets, term)
       this.getHistory();
     });
-  }
-
-  getAverage(tweets, searchTerm) {
-    this.assignAndCount(tweets)
-    axios.post('/database', {average: newAverage, searchTerm: searchTerm});
   }
 
   getUserData() {
@@ -195,6 +183,7 @@ class App extends React.Component {
       negativeTweets,
       neutralTweets
     })
+    axios.post('/database', {average: newAverage, searchTerm: searchTerm});
   }
   handleDrop({idx, type}) {
     let positiveTweets = this.state.positiveTweets;
@@ -285,7 +274,6 @@ class App extends React.Component {
   }
   
   render () {
-    setTimeout( ()=> {this.refs.modalWar.style.display = "none"}, 5000);
     const styles = {
       smallIcon: {
         width: 36,

@@ -18,6 +18,7 @@ var sentiment = require('sentiment');
 var db = require('../database/index.js');
 var googleSentiment = require('./googleAPI.js');
 
+
 cronJob = () => {
 	db.getAllTermData((res) => {
 	// step one - get all search terms
@@ -101,7 +102,7 @@ getTweets = (st, cb) => {
 	);
 	const names = `https://api.twitter.com/1.1/users/show.json?screen_name=${st}&include_entities=false`
 	const string = `https://api.twitter.com/1.1/search/tweets.json?q=${st}&count=100&tweet_mode=extended`
-	oauth.get(`https://api.twitter.com/1.1/search/tweets.json?q=${st}&count=100&tweet_mode=extended`, key.ACCESS_TOKEN, key.ACCESS_TOKEN_SECRET, function(e, data, res) {
+	oauth.get(`https://api.twitter.com/1.1/search/tweets.json?q=%23${st}&count=100&tweet_mode=extended&result_type=popular`, key.ACCESS_TOKEN, key.ACCESS_TOKEN_SECRET, function(e, data, res) {
 		if (e) { 
 			console.error(e);
 			cb([]);
@@ -109,28 +110,56 @@ getTweets = (st, cb) => {
 			let temp = JSON.parse(data).statuses
 			let cleaned = []
 
-			temp.map((tweet) => {
+
+			Promise.all(temp.map((tweet) => {
 				//////////////////////////////
 				//invoke client promise //////
 				//and when resolved decorate /
 				//seledtedDatas key/value/////
 				//////////////////////////////
 
-				var selectedData = {
-					// score: sentiment(tweet).score,
-					searchTerm: st,
-					timeStamp: tweet.created_at,
-					// if tweet has been retweeted, its full text lives in the retweeted_status object
-					tweetBody: tweet.retweeted_status ? tweet.retweeted_status.full_text : tweet.full_text,
-					user_name: tweet.user.screen_name,
-					user_location: tweet.user.location,
-					avatar_url: tweet.user.profile_image_url
-				}
-
-				cleaned.push(selectedData)
-			});
-
-		cb(cleaned);
+				const document = {
+					content: tweet,
+					type: 'PLAIN_TEXT',
+				};
+				new Promise(() => {
+					client
+					.analyzeEntitySentiment({document: document})
+					.then(results => {
+						const entities = results[0].entities;
+						let sentimentData;
+		
+						entities.forEach(entity => {
+							if(entity === st) {
+							sentimentData = {
+									salience: entity.salience,
+									name: entity.name,
+									type: entity.type,
+									score: entity.sentiment.score,
+									magnitude: entity.sentiment.magnitude
+								}
+								var selectedData = {
+									// score: sentiment(tweet).score,
+									searchTerm: st,
+									timeStamp: tweet.created_at,
+									sentimentDataObject: sentimentData,
+									// if tweet has been retweeted, its full text lives in the retweeted_status object
+									tweetBody: tweet.retweeted_status ? tweet.retweeted_status.full_text : tweet.full_text,
+									user_name: tweet.user.screen_name,
+									user_location: tweet.user.location,
+									avatar_url: tweet.user.profile_image_url
+								}
+							}
+							resolve(sentimentData);
+						});
+					})
+					.catch(err => {
+						resolve(err);
+					});
+				})
+			})).then((cleaned) => {
+				cb(cleaned);
+			})
 
 		}
 	});
