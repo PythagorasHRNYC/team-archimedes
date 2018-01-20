@@ -132,7 +132,7 @@ class App extends React.Component {
 
     axios.post('/search', {searchTerm: term}).then((res) => {
       this.setState({
-        tweets: userStatuses || res.data,
+        tweets:  res.data,
         lastSearchTerm: term,
         searchTerm: '',
         previousSearches: [...this.state.previousSearches, term],
@@ -144,39 +144,41 @@ class App extends React.Component {
   }
 
   getAverage(tweets, searchTerm) {
-    tweets.map((message) => {
-      var score = sentiment(message.tweetBody).score;
-      message.score = score;
-      if ( score < 0 ) {
-        // add negative tweets to negativeTweets array
-        this.setState({
-          negativeTweets: [...this.state.negativeTweets, message]
-        });
-      } else if ( score > 0 ) {
-        // add positive tweets to positiveTweets array
-        this.setState({
-          positiveTweets: [...this.state.positiveTweets, message]
-        });
-      }
-    });
-    var newAverage = (this.state.negativeTweets.length / this.state.tweets.length) * 100
-    this.setState({
-      average: newAverage
-    });
-    axios.post('/database', {average: newAverage, searchTerm: searchTerm});
+    // tweets.map((message) => {
+    //   var score = sentiment(message.tweetBody).score;
+    //   message.score = score;
+    //   if ( score < 0 ) {
+    //     // add negative tweets to negativeTweets array
+    //     this.setState({
+    //       negativeTweets: [...this.state.negativeTweets, message]
+    //     });
+    //   } else if ( score > 0 ) {
+    //     // add positive tweets to positiveTweets array
+    //     this.setState({
+    //       positiveTweets: [...this.state.positiveTweets, message]
+    //     });
+    //   }
+    // });
+    // var newAverage = (this.state.negativeTweets.length / this.state.tweets.length) * 100
+    // this.setState({
+    //   average: newAverage
+    // });
+    // axios.post('/database', {average: newAverage, searchTerm: searchTerm});
+    let average = this.assignAndCount(tweets);
+    axios.post('/database', {average, searchTerm: searchTerm});
   }
 
   getUserData() {
     if(this.state.clickedUser) {
-      // axios.post(`/UserProfileData`, {clickedUser: this.state.clickedUser})
-      // .then((results) => {
-        // let UserProfileDataObject = results.data;
+      axios.post(`/UserProfileData`, {clickedUser: this.state.clickedUser})
+      .then((results) => {
+        let UserProfileDataObject = results.data;
         // console.log(UserProfileDataObject, 'getUserData')
         this.setState({clickedUserData: userDataExample || UserProfileDataObject}, () => {
-          // this.setState({userModalStylingSheet: 'user-modal-content'})
-          // this.setState({clickedUserDataContentLoaded: true})
+          this.setState({userModalStylingSheet: 'user-modal-content'})
+          this.setState({clickedUserDataContentLoaded: true})
         })
-      // })
+      })
     }
   }
 
@@ -206,7 +208,7 @@ class App extends React.Component {
       positiveTweets,
       negativeTweets,
       neutralTweets
-    })
+    }, ()=>{console.log("neg", this.state.negAverage, "pos", this.state.posAverage, "neut", this.state.neutAverage)})
   }
   handleDrop({idx, type}) {
     let positiveTweets = this.state.positiveTweets;
@@ -283,11 +285,8 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-<<<<<<< HEAD
     this.getAllTweets('hackreactor');
-=======
-    this.getAllTweets('Javascript React');
->>>>>>> add gauge add spline graph
+    // this.getAllTweets('Javascript React');
   }
 
   componentDidMount() {
@@ -301,7 +300,6 @@ class App extends React.Component {
   }
   
   render () {
-    setTimeout( ()=> {this.refs.modalWar.style.display = "none"}, 5000);
     const styles = {
       smallIcon: {
         width: 36,
@@ -384,48 +382,6 @@ class App extends React.Component {
               />
             </Modal>
 
-<<<<<<< HEAD
-=======
-            <Modal
-              isOpen={this.state.canBattle}
-              ariaHideApp={false}
-              // onAfterOpen={afterOpenFn}
-              // onRequestClose={requestCloseFn}
-              // closeTimeoutMS={n}
-              style={styles}
-              contentLabel="Modal" 
-              style={{ backgroundImage: `url("//cssanimation.rocks/demo/starwars/images/bg.jpg")`,   
-            }}
-            >
-              <IconButton
-                iconStyle={styles.mediumIcon}
-                style={Object.assign(styles.medium, styles.closeButton)}
-                onClick={()=>{this.setState({canBattle: !this.state.canBattle})}}
-              >
-                <ActionNavigationClose/>
-              </IconButton> 
-            
-              <div className="starwars-demo" ref="modalWar" id="modalWar" >
-                <img id="img" src="//cssanimation.rocks/demo/starwars/images/star.svg" alt="Star" className="star"/>
-                <h2 className="byline" id="byline">The Force Awakens</h2>
-                <img id="img" src="//cssanimation.rocks/demo/starwars/images/wars.svg" alt="Wars" className="wars"/>
-              </div>
-              
-              
-              {this.state.battleData.map((val, idx, arr)=>{
-                
-                return<div>
-                        <img src={val.userInfo.pic} alt="User" height="100" width="100"/>
-                        <div>{val.userInfo.name}</div>
-                        <div>{val.userInfo.location}</div>
-                        <div>{val.score}</div>
-                    </div>
-              })}
-              
-
-            </Modal>
-
->>>>>>> modalwindowcss
             <Search submitQuery={this.submitQuery} searchTerm={this.state.searchTerm} getAllTweets={this.getAllTweets} handleInputChange={this.handleInputChange}/>
             <div id="error"></div>
             {
