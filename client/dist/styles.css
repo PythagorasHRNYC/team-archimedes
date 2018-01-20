@@ -35,11 +35,355 @@
 .positive {
   position: relative;
   float:right;
-} */
+}*/
+
+/*.gu-mirror {
+  position: fixed !important;
+  margin: 0 !important;
+  z-index: 9999 !important;
+  opacity: 0.8;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+  filter: alpha(opacity=80);
+}*/
+/*.gu-hide {
+  display: none !important;
+}
+.gu-unselectable {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+.gu-transit {
+  opacity: 0.2;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+  filter: alpha(opacity=20);
+}
 
 .horizontal .progress-fill {
   transition: width 2s
+}*/
+
+/*-- Chart --*/
+.c3 svg {
+  font: 10px sans-serif;
+  -webkit-tap-highlight-color: transparent; }
+
+.c3 path, .c3 line {
+  fill: none;
+  stroke: #000; }
+
+.c3 text {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none; }
+
+.c3-legend-item-tile,
+.c3-xgrid-focus,
+.c3-ygrid,
+.c3-event-rect,
+.c3-bars path {
+  shape-rendering: crispEdges; }
+
+.c3-chart-arc path {
+  stroke: #fff; }
+
+.c3-chart-arc text {
+  fill: #fff;
+  font-size: 13px; }
+
+/*-- Axis --*/
+/*-- Grid --*/
+.c3-grid line {
+  stroke: #aaa; }
+
+.c3-grid text {
+  fill: #aaa; }
+
+.c3-xgrid, .c3-ygrid {
+  stroke-dasharray: 3 3; }
+
+/*-- Text on Chart --*/
+.c3-text.c3-empty {
+  fill: #808080;
+  font-size: 2em; }
+
+/*-- Line --*/
+.c3-line {
+  stroke-width: 1px; }
+
+/*-- Point --*/
+.c3-circle._expanded_ {
+  stroke-width: 1px;
+  stroke: white; }
+
+.c3-selected-circle {
+  fill: white;
+  stroke-width: 2px; }
+
+/*-- Bar --*/
+.c3-bar {
+  stroke-width: 0; }
+
+.c3-bar._expanded_ {
+  fill-opacity: 1;
+  fill-opacity: 0.75; }
+
+/*-- Focus --*/
+.c3-target.c3-focused {
+  opacity: 1; }
+
+.c3-target.c3-focused path.c3-line, .c3-target.c3-focused path.c3-step {
+  stroke-width: 2px; }
+
+.c3-target.c3-defocused {
+  opacity: 0.3 !important; }
+
+/*-- Region --*/
+.c3-region {
+  fill: steelblue;
+  fill-opacity: .1; }
+
+/*-- Brush --*/
+.c3-brush .extent {
+  fill-opacity: .1; }
+
+/*-- Select - Drag --*/
+/*-- Legend --*/
+.c3-legend-item {
+  font-size: 12px; }
+
+.c3-legend-item-hidden {
+  opacity: 0.15; }
+
+.c3-legend-background {
+  opacity: 0.75;
+  fill: white;
+  stroke: lightgray;
+  stroke-width: 1; }
+
+/*-- Title --*/
+.c3-title {
+  font: 14px sans-serif; }
+
+/*-- Tooltip --*/
+.c3-tooltip-container {
+  z-index: 10; }
+
+.c3-tooltip {
+  border-collapse: collapse;
+  border-spacing: 0;
+  background-color: #fff;
+  empty-cells: show;
+  -webkit-box-shadow: 7px 7px 12px -9px #777777;
+  -moz-box-shadow: 7px 7px 12px -9px #777777;
+  box-shadow: 7px 7px 12px -9px #777777;
+  opacity: 0.9; }
+
+.c3-tooltip tr {
+  border: 1px solid #CCC; }
+
+.c3-tooltip th {
+  background-color: #aaa;
+  font-size: 14px;
+  padding: 2px 5px;
+  text-align: left;
+  color: #FFF; }
+
+.c3-tooltip td {
+  font-size: 13px;
+  padding: 3px 6px;
+  background-color: #fff;
+  border-left: 1px dotted #999; }
+
+.c3-tooltip td > span {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 6px; }
+
+.c3-tooltip td.value {
+  text-align: right; }
+
+/*-- Area --*/
+.c3-area {
+  stroke-width: 0;
+  opacity: 0.2; }
+
+/*-- Arc --*/
+.c3-chart-arcs-title {
+  dominant-baseline: middle;
+  font-size: 1.3em; }
+
+.c3-chart-arcs .c3-chart-arcs-background {
+  fill: #e0e0e0;
+  stroke: none; }
+
+.c3-chart-arcs .c3-chart-arcs-gauge-unit {
+  fill: #000;
+  font-size: 16px; }
+
+.c3-chart-arcs .c3-chart-arcs-gauge-max {
+  fill: #777; }
+
+.c3-chart-arcs .c3-chart-arcs-gauge-min {
+  fill: #777; }
+
+.c3-chart-arc .c3-gauge-value {
+  fill: #000;
+  /*  font-size: 28px !important;*/ }
+
+.c3-chart-arc.c3-target g path {
+  opacity: 1; }
+
+.c3-chart-arc.c3-target.c3-focused g path {
+  opacity: 1; }
+
+  /*=== END OF CHART ===*/
+
+  /*=== START OF PROFILE ===*/
+.main-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background: #1d76fc;
 }
+.profile-name{
+  height: 80px;
+  background: white;
+}
+.profile-image-div{
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+}
+.profile-image-div img {
+  border-radius: 50%;
+  /* height: 350px; */
+  width:400px;
+  /* position: inherit; */
+  padding: 18px;
+
+}
+
+.friend-0-profile-image {
+  height: 300px;
+}
+
+.friend-1-profile-image {
+  width: 250px;
+}
+
+.friend-2-profile-image {
+  width: 200px;
+}
+
+.friend-3-profile-image {
+  width: 150px;
+}
+
+.friend-4-profile-image {
+  width: 100px;
+}
+
+.nav-bar{
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  background: #81b3fd;
+}
+
+.tweetsList{
+  height: 290px;
+  overflow: auto;
+  padding: 18px;
+}
+
+
+  /*=== END OF PROFILE ===*/
+
+
+
+
+.profile-content {
+  position: absolute;
+  top: 115px;
+  left: 50px;
+  right: 50px;
+  bottom: 40px;
+  border: 1px solid rgb(204, 204, 204);
+  background: rgb(158, 195, 247);
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 4px;
+  outline: none;
+  padding: 20px;
+}
+
+.profile-image-div {
+  position: inherit;
+  width: 80%;
+  height: fit-content;
+  top: 10%;
+  left: 10%;
+} 
+
+.profile-image {
+  border-style: none;
+  border-radius: 50% 50%;
+  max-width: 45%;
+  height: auto;
+}
+
+.profile-list {
+  position: inherit;
+  width: 80%;
+  height: 250px;
+  top: 68%;
+  left: 10%;
+  overflow-x: auto;
+}
+
+.profile-list-status-item {
+
+}
+
+.status-button {
+
+}
+
+.friends-button {
+  
+}
+
+.followers-button {
+  
+}
+
+.user-modal-content {
+  position: absolute;
+  top: 80px;
+  left: 20%;
+  right: 20%;
+  bottom: 40px;
+  border: 1px solid rgb(204, 204, 204);
+  background: rgb(255, 255, 255);
+  overflow: auto;
+  border-radius: 4px;
+  outline: none;
+  padding: 20px;
+}
+
+.user-modal-overlay {
+  position          : fixed;
+  top               : 0;
+  left              : 0;
+  right             : 0;
+  bottom            : 0;
+  background-color   : rgba(255, 255, 255, 0.75);
+}
+
 
 ul {
   list-style-type: none;
@@ -67,9 +411,220 @@ ul {
   }
 }
 
+.save {
+  float:right;
+  opacity: 0.2;
+}
+
 
 /*.rounded .progress-track,
 .rounded .progress-fill {
   border-radius: 3px;
   box-shadow: inset 0 0 5px rgba(0,0,0,.2);
 }*/
+
+
+/* Animation properties */
+.star {
+  animation: star 10s ease-out ;
+}
+.wars {
+  animation: wars 10s ease-out ;
+}
+.byline span {
+  animation: byline 10s linear ;
+}
+.byline {
+  animation: byline 10s linear; 
+}
+
+#modalWar {
+  animation: fix 11x linear;
+}
+
+@keyframes fix{
+  0%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+  }
+}
+
+/* Keyframes */
+@keyframes star {
+  0% {
+    opacity: 0;
+    transform: scale(1.5) translateY(-0.75em);
+  }
+  20% {
+    opacity: 1;
+  }
+  89% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateZ(-1000em);
+    display: none;    
+  }
+}
+
+@keyframes wars {
+  0% {
+    opacity: 0;
+    transform: scale(1.5) translateY(0.5em);
+  }
+  20% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateZ(-1000em);
+    display: none;    
+  }
+}
+
+@keyframes byline {
+  0%, 10% {
+    opacity: 0;
+    transform: rotateY(90deg);
+  }
+  30% {
+    opacity: 1;
+  }
+  70%, 86% {
+    transform: rotateY(0);
+    opacity: 1;
+  }
+  95%, 100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+@keyframes move-byline {
+  0% {
+    transform: translateZ(5em);
+  }
+  100% {
+    transform: translateZ(0);
+  }
+}
+
+/* Make the 3D work on the container */
+.starwars-demo {
+  perspective: 800px;
+  transform-style: preserve3d;
+}
+
+/* General styles and layout */
+#modalWar {
+  background: #000 url(//cssanimation.rocks/demo/starwars/images/bg.jpg);
+  background-size: cover;
+}
+
+.starwars-demo {
+  /* height: 17em; */
+  left: 50%;
+  position: absolute;
+  top: 53%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
+
+/* .byline span {
+  display: inline-block;
+} */
+
+#img {
+  width: 100%;
+}
+
+/* .star, .wars, .byline { */
+  /* position: absolute; */
+/* } */
+
+.star {
+  top: -0.75em;
+}
+
+.wars {
+  bottom: -0.5em;
+}
+
+.byline {
+  color: red;
+  font-family: "ITC Serif Gothic", Lato;
+  font-size: 2.25em;
+  left: -2em;
+  letter-spacing: 0.4em;
+  right: -2em;
+  text-align: center;
+  text-transform: uppercase;
+  top: 29%;
+}
+
+/*** Media queries for adjusting to different screen sizes ***/
+
+@media only screen and (max-width: 600px) {
+  .starwars-demo {
+    font-size: 10px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .starwars-demo {
+    font-size: 7px;
+  }
+}
+
+/** lg **/
+@media only screen and (max-width: 1800px) {
+  .profile-list {
+    position: inherit;
+    width: 80%;
+    height: 250px;
+    top: 68%;
+    left: 10%;
+    overflow-x: auto;
+  }
+}
+
+/** med **/
+@media only screen and (max-width: 1200px) {
+  .profile-list {
+    position: inherit;
+    width: 80%;
+    height: 250px;
+    top: 68%;
+    left: 10%;
+    overflow-x: auto;
+  }
+}
+
+/** sm **/
+@media only screen and (max-width: 992px) {
+  /** sm **/
+  .profile-list {
+    height: 500px;
+    top: 45%;
+  }
+}
+
+/** xs **/
+@media only screen and (max-width: 376px) {
+  .profile-list {
+    position: inherit;
+    width: 80%;
+    height: 50%;
+    top: 45%;
+    left: 10%;
+    overflow-x: auto;
+  }
+}

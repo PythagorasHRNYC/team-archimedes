@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import NegativeTweets from './negativeTweets.jsx';
+import NeutralTweets from './neutralTweets.jsx';
 import PositiveTweets from './positiveTweets.jsx';
 import GraphDisplay from './GraphDisplay.jsx';
 import BarDisplay from './barDisplay.jsx';
@@ -13,6 +14,25 @@ import bodyParser from 'body-parser';
 import sentiment from 'sentiment';
 import styled from 'styled-components';
 import './style/baseStyle.scss';
+import dragula from 'react-dragula';
+import SaveTweet from './saveTweet.jsx';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Modal from 'react-modal';
+import IconButton from 'material-ui/IconButton';
+import ActionNavigationClose from 'material-ui/svg-icons/navigation/close';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+import UserModal from './userModal.jsx';
+import Cookies from 'universal-cookie';
+import SelectedUsersProfile from './SelectedUsersProfile.jsx';
+
+////////////////
+//EXAMPLE DATA//
+////////////////
+import userDataExample from '../../profileExampleData.js';
+import { userStatuses } from '../../profileExampleData.js'
+////////////////
+
 
 class App extends React.Component {
   constructor(props) {
@@ -20,15 +40,28 @@ class App extends React.Component {
   	this.state = {
       tweets: [],
       negativeTweets: [],
+      neutralTweets: [],
       positiveTweets: [],
       previousSearches: [],
-      average: 50,
+      posAverage: 0,
+      neutAverage: 0,
+      negAverage: 0,
       searchTerm: '',
       lastSearchTerm: 'flock',
       graphData: [],
       graphMode: false, // when user clicks 'view history of ___', changes to true and renders graphDisplay 
-      loading: true
-  	}
+      loading: true,
+      savedTweets: [],
+      clicked: false,
+      clickedUser: '',
+      //hold data fetched from api call 
+      clickedUserData: {},
+      clickedUserDataContentLoaded: false,
+      isDragging: false,
+      authenticated: false,
+    }
+
+    this.getUserData = this.getUserData.bind(this);
     this.getAverage = this.getAverage.bind(this);
     this.getAllTweets = this.getAllTweets.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -36,6 +69,12 @@ class App extends React.Component {
     this.getHistory = this.getHistory.bind(this);
     this.showGraph = this.showGraph.bind(this);
     this.resetGraphMode = this.resetGraphMode.bind(this);
+    this.handleDrop = this.handleDrop.bind(this);
+    this.handleSave = this.handleSave.bind(this);
+    this.handleDrag = this.handleDrag.bind(this);
+    this.clickHandler = this.clickHandler.bind(this);
+    this.storeUser = this.storeUser.bind(this);
+    this.handleFaves = this.handleFaves.bind(this);
   }
 
   showGraph(e) {
@@ -43,6 +82,14 @@ class App extends React.Component {
     this.setState({
       graphMode: true
     });
+  }
+
+  clickHandler(user) {
+		this.setState({clicked: !this.state.clicked}, () => {
+      this.setState({clickedUser: user}, () => {
+        this.getUserData()
+      })
+    })
   }
 
   resetGraphMode(e) {
@@ -77,6 +124,7 @@ class App extends React.Component {
     // first reset state so that new tweets will render properly.
     this.setState({
       negativeTweets: [],
+      neutralTweets: [],
       positiveTweets: [],
       loading: true,
       graphMode: false
@@ -84,18 +132,136 @@ class App extends React.Component {
 
     axios.post('/search', {searchTerm: term}).then((res) => {
       this.setState({
-        tweets: res.data,
+        tweets:  res.data,
         lastSearchTerm: term,
         searchTerm: '',
         previousSearches: [...this.state.previousSearches, term],
         loading: false
       });
       this.getAverage(this.state.tweets, term);
-      this.getHistory();
+      //this.getHistory();
     });
   }
 
   getAverage(tweets, searchTerm) {
+    let average = this.assignAndCount(tweets);
+    axios.post('/database', {average, searchTerm: searchTerm});
+  }
+
+  getUserData() {
+    if(this.state.clickedUser) {
+      axios.post(`/UserProfileData`, {clickedUser: this.state.clickedUser})
+      .then((results) => {
+        let UserProfileDataObject = results.data;
+        this.setState({clickedUserData: UserProfileDataObject}, () => {
+          this.setState({userModalStylingSheet: 'user-modal-content'})
+          this.setState({clickedUserDataContentLoaded: true})
+        })
+      })
+    }
+  }
+
+  assignAndCount(tweets) {
+    if (!tweets.length) return
+    let negativeTweets = [], positiveTweets = [], neutralTweets = [], negAverage, posAverage, neutAverage;
+    tweets.forEach(tweet => {
+      let score = sentiment(tweet.tweetBody).score;
+      tweet.score = score;
+      if (score < 0){
+        negativeTweets.push(tweet)
+      }else if( score === 0){
+        neutralTweets.push(tweet)
+      } else {positiveTweets.push(tweet)};
+    })
+
+    tweets = [...negativeTweets, ...positiveTweets, ...neutralTweets]
+    negAverage = (negativeTweets.length / tweets.length) * 100
+    posAverage = (positiveTweets.length / tweets.length) * 100
+    neutAverage = (neutralTweets.length / tweets.length) * 100
+
+    this.setState({
+      tweets,
+      negAverage,
+      posAverage,
+      neutAverage,
+      positiveTweets,
+      negativeTweets,
+      neutralTweets
+    }, ()=>{console.log("neg", this.state.negAverage, "pos", this.state.posAverage, "neut", this.state.neutAverage)})
+  }
+  handleDrop({idx, type}) {
+    let positiveTweets = this.state.positiveTweets;
+    let neutralTweets = this.state.neutralTweets;
+    let negativeTweets = this.state.negativeTweets;
+    let tweet;
+    if (type === 'positiveTweets') {
+      tweet = positiveTweets.splice(idx, 1)[0]
+      tweet.score = -1 * tweet.score
+      negativeTweets.splice(idx, 0, tweet)
+
+    } else if (type === 'negativeTweets') {
+      tweet = negativeTweets.splice(idx, 1)[0]
+      tweet.score = -1 * tweet.score
+      positiveTweets.splice(idx, 0, tweet);
+    }
+    let tweets = [...negativeTweets, ...positiveTweets, ...neutralTweets];
+    let negAverage = (negativeTweets.length / tweets.length) * 100
+    let posAverage = (positiveTweets.length / tweets.length) * 100
+    let neutAverage = (neutralTweets.length / tweets.length) * 100
+    this.setState({
+      negativeTweets,
+      tweets,
+      posAverage,
+      negAverage,
+      neutAverage
+    })
+  }
+
+  storeUser(userId) {
+    const cookies = new Cookies();
+    let user = cookies.get('userId')
+    if (!user) {
+      cookies.set('userId', userId);
+      this.setState({
+        authenticated: true
+      }, () => console.log(this.state.authenticated))
+    }
+  }
+
+  handleSave({ idx, type }) {
+    let tweet;
+    const cookies = new Cookies();
+    if(type === 'positiveTweets') {
+      tweet = this.state.positiveTweets[idx];
+    } else {
+      tweet = this.state.negativeTweets[idx];
+    }
+    const userId = cookies.get('userId')
+    const favorite = tweet.user_name;
+    if (userId) {
+      axios.post('/favorites', {userId, favorite})
+      .then((fav) => console.log('stored favorite', fav))
+    }
+  }
+
+  handleDrag() {
+    this.setState({
+      isDragging: !this.state.isDragging
+    })
+  }
+
+  handleFaves() {
+    const cookies = new Cookies();
+    axios.get('/favorites', {
+      headers: {'userId': cookies.get('userId')}
+    })
+    .then(response => {
+      return response.data.map(a => a.favorite);
+    })
+    .then(names => {
+      console.log(names)
+    })
+
     tweets.map((message) => {
       var score = sentiment(message.tweetBody).score;
       message.score = score;
@@ -136,25 +302,111 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    // default search.
-    this.getAllTweets('flock');
+    this.getAllTweets('hackreactor');
+    // this.getAllTweets('Javascript React');
   }
 
+  componentDidMount() {
+    const cookies = new Cookies();
+    let user = cookies.get('userId')
+    if(user) {
+      this.setState({
+        authenticated: true
+      })
+    }
+  }
+  
   render () {
+    const styles = {
+      smallIcon: {
+        width: 36,
+        height: 36,
+      },
+      mediumIcon: {
+        width: 48,
+        height: 48,
+      },
+      largeIcon: {
+        width: 60,
+        height: 60,
+      },
+      small: {
+        width: 72,
+        height: 72,
+        padding: 16,
+      },
+      medium: {
+        width: 96,
+        height: 96,
+        padding: 24,
+      },
+      large: {
+        width: 120,
+        height: 120,
+        padding: 30,
+      },
+      closeButton: {
+        right: "-90%",
+        bottom: 85
+      }
+    };
+    const { authenticated } = this.state;
     if (!this.state.loading) {
       if(!this.state.graphMode) {
         return (
+          
+          <MuiThemeProvider>
           <div className="row">
+
+            { !authenticated ?
+              <UserModal storeUser={this.storeUser}/>:
+              null
+            }
+
             <div className="siteNav header col col-6-of-6">
               <h1>What the Flock?</h1>
               <img src="./images/poop_logo.png" alt="" className="logo"/>
             </div>
+              
+            <Modal
+              isOpen={this.state.clicked}
+              ariaHideApp={false}
+              // onAfterOpen={}
+              // onRequestClose={requestCloseFn}
+              // closeTimeoutMS={n}
+              className={{
+                base: 'user-modal-content',
+                afterOpen: 'user-modal-overlay_after-open',
+                beforeClose: 'user-modal-content_before-close'
+              }}
+              overlayClassName={{
+                base: 'user-modal-overlay',
+                afterOpen: 'user-modal-overlay_after-open',
+                beforeClose: 'user-modal-overlay_before-close'
+              }}
+              contentLabel="Modal" 
+            >
+              <SelectedUsersProfile 
+                userData={this.state.clickedUserData}
+                clickHandler={this.clickHandler}
+              />
+            </Modal>
+
             <Search submitQuery={this.submitQuery} searchTerm={this.state.searchTerm} getAllTweets={this.getAllTweets} handleInputChange={this.handleInputChange}/>
             <div id="error"></div>
-            <BarDisplay percentage={this.state.average} lastSearchTerm={this.state.lastSearchTerm} loading={this.state.loading} showGraph={this.showGraph}/>
-            <NegativeTweets className="tweetColumns row" tweets={this.state.negativeTweets}/>
-            <PositiveTweets className="tweetColumns row" tweets={this.state.positiveTweets}/>
+            {
+              authenticated ?
+              <SaveTweet save={this.handleSave} handleFaves={this.handleFaves} isDraggingging={this.state.isDraggingging}/>:
+              null
+            }
+            <BarDisplay negPercentage={this.state.negAverage} neutPercentage={this.state.neutAverage} posPercentage={this.state.posAverage} lastSearchTerm={this.state.lastSearchTerm} loading={this.state.loading} showGraph={this.showGraph}/>
+            <div style={{display:"flex"}}>
+              <PositiveTweets className="tweetColumns row" dragging={this.handleDrag} drop={this.handleDrop} clickHandler={this.clickHandler} tweets={this.state.positiveTweets}/>
+              <NeutralTweets className="tweetColumns row" dragging={this.handleDrag} drop={this.handleDrop} clickHandler={this.clickHandler} tweets={this.state.neutralTweets}/>            
+              <NegativeTweets className="tweetColumns row"  dragging={this.handleDrag} drop={this.handleDrop} clickHandler={this.clickHandler} tweets={this.state.negativeTweets}/>
+            </div>
           </div>
+          </MuiThemeProvider>
         )
       } else {
         	return (
@@ -162,6 +414,7 @@ class App extends React.Component {
               <div className="siteNav header col col-6-of-6">
                 <h1>What the Flock?</h1>
                 <img src="./images/poop_logo.png" alt="" className="logo"/>
+                <button onClick={this.compareClick}> Test</button>
               </div>
               <Search submitQuery={this.submitQuery} searchTerm={this.state.searchTerm} getAllTweets={this.getAllTweets} handleInputChange={this.handleInputChange}/>
               <div id="error"></div>
@@ -176,6 +429,7 @@ class App extends React.Component {
         <div className="siteNav header col col-6-of-6">
           <h1>What the Flock?</h1>
           <img src="./images/poop_logo.png" alt="" className="logo"/>
+          <button onClick={this.compareClick}> Test</button>          
         </div>
         <Search submitQuery={this.submitQuery} searchTerm={this.state.searchTerm} getAllTweets={this.getAllTweets} handleInputChange={this.handleInputChange}/>
         <div id="error"></div>
@@ -187,4 +441,4 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+export default DragDropContext(HTML5Backend)(App)

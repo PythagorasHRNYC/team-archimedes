@@ -16,18 +16,16 @@ var OAuth = require ('oauth');
 var key = require ('../config/twitter.js');
 var sentiment = require('sentiment');
 var db = require('../database/index.js');
+var googleSentiment = require('./googleAPI.js');
 
 cronJob = () => {
-	console.log('cronJob!');
-	
 	db.getAllTermData((res) => {
-  console.log(res)
 	// step one - get all search terms
     res.forEach((term) => {
+      term = term || 'flock';
     // iterate over all search terms
       getTweets(term, (data) => {
       	// get new tweets for each term
-        console.log("Successful CronJob")
         var neg = [];
 
         data.forEach((tweet) => {
@@ -49,8 +47,46 @@ cronJob = () => {
       });
     });
   });
-	
-	
+}
+
+
+getTweetsMulti = (st, cb) => {
+	var oauth = new OAuth.OAuth(
+		'https://api.twitter.com/oauth/request_token',
+		'https://api.twitter.com/oauth/access_token',
+		key.CONSUMER_KEY,
+		key.CONSUMER_SECRET,
+		'1.0A',
+		null,
+		'HMAC-SHA1'
+	);
+
+	return new Promise((resolve, reject) => oauth.get(`https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${st}&count=2&tweet_mode=extended&exclude_replies=true&include_rts=true`, key.ACCESS_TOKEN, key.ACCESS_TOKEN_SECRET, function(e, data, res) {
+		if (e) { 
+			console.error(e);
+			cb([]);
+		} else {
+			let temp = JSON.parse(data)
+			let cleaned = []
+			// console.log(st)
+			temp.map((tweet) => {
+				var selectedData = {
+					// score: sentiment(tweet).score,
+					searchTerm: st,
+					timeStamp: tweet.created_at,
+					// if tweet has been retweeted, its full text lives in the retweeted_status object
+					tweetBody: tweet.retweeted_status ? tweet.retweeted_status.full_text : tweet.full_text,
+					user_name: tweet.user.screen_name,
+					user_location: tweet.user.location,
+					avatar_url: tweet.user.profile_image_url
+				}
+				cleaned.push(selectedData)
+			})
+			// console.log(cleaned)
+		resolve(cleaned);
+		// return cleaned
+		}
+	}))
 }
 
 getTweets = (st, cb) => {
@@ -63,7 +99,8 @@ getTweets = (st, cb) => {
 		null,
 		'HMAC-SHA1'
 	);
-
+	const names = `https://api.twitter.com/1.1/users/show.json?screen_name=${st}&include_entities=false`
+	const string = `https://api.twitter.com/1.1/search/tweets.json?q=${st}&count=100&tweet_mode=extended`
 	oauth.get(`https://api.twitter.com/1.1/search/tweets.json?q=${st}&count=100&tweet_mode=extended`, key.ACCESS_TOKEN, key.ACCESS_TOKEN_SECRET, function(e, data, res) {
 		if (e) { 
 			console.error(e);
@@ -71,9 +108,14 @@ getTweets = (st, cb) => {
 		} else {
 			let temp = JSON.parse(data).statuses
 			let cleaned = []
-			console.log('ST IS ', st)
 
 			temp.map((tweet) => {
+				//////////////////////////////
+				//invoke client promise //////
+				//and when resolved decorate /
+				//seledtedDatas key/value/////
+				//////////////////////////////
+
 				var selectedData = {
 					// score: sentiment(tweet).score,
 					searchTerm: st,
@@ -91,8 +133,265 @@ getTweets = (st, cb) => {
 		cb(cleaned);
 
 		}
-		});
+	});
 }
 
+getSpecificUserTweets = (user, cb) => {
+	var oauth = new OAuth.OAuth(
+		'https://api.twitter.com/oauth/request_token',
+		'https://api.twitter.com/oauth/access_token',
+		key.CONSUMER_KEY,
+		key.CONSUMER_SECRET,
+		'1.0A',
+		null,
+		'HMAC-SHA1'
+	);
+
+	oauth.get(`https://api.twitter.com/1.1/search/tweets.json?q=${user}&count=100&tweet_mode=extended`, key.ACCESS_TOKEN, key.ACCESS_TOKEN_SECRET, function(e, data, res) {
+		if (e) { 
+			console.error(e);
+			cb([]);
+		} else {
+			let temp = JSON.parse(data).statuses
+			let cleaned = {
+				userInfo:{},
+				pos: 0,
+				neg: 0,
+				neut
+			}
+			const adjustProfileImageSize = (imageUrl, size) => {
+				return imageUrl.split('').reverse().join('').replace(/[a-z\.]*_/, '').split('').reverse().join('') + `_${size}x${size}.jpg`
+			}
+			
+			temp.forEach((val, idx, arr)=>{
+				if( sentiment(val.retweeted_status ? val.retweeted_status.full_text : val.full_text).score > 0){
+					cleaned.pos++
+				}else if (sentiment(val.retweeted_status ? val.retweeted_status.full_text : val.full_text).score < 0){
+					cleaned.neg++
+				}else{neut++}
+			})
+			cleaned.neg = Math.floor(cleaned.neg / temp.length * 100);
+            cleaned.pos = Math.floor(cleaned.pos / temp.length * 100);
+            cleaned.neut = Math.floor(cleaned.neut / temp.length * 100);
+			cleaned.userInfo.name = temp[0].user.screen_name;
+			cleaned.userInfo.location = temp[0].user.location;
+			cleaned.userInfo.pic = adjustProfileImageSize(temp[0].user.profile_image_url, 400);
+
+
+		cb(cleaned);
+		}
+	});
+}
+
+
+getUserProfileData = (userScreenName, cb) => {
+	var oauth = new OAuth.OAuth(
+		'https://api.twitter.com/oauth/request_token',
+		'https://api.twitter.com/oauth/access_token',
+		key.CONSUMER_KEY,
+		key.CONSUMER_SECRET,
+		'1.0A',
+		null,
+		'HMAC-SHA1'
+	);
+
+
+	oauth.get(`https://api.twitter.com/1.1/users/show.json?screen_name=${userScreenName}&include_entities=false`, key.ACCESS_TOKEN, key.ACCESS_TOKEN_SECRET, function(e, data, res) {
+		if (e) { 
+			console.error(e);
+			cb([]);
+		} else {
+
+
+			let userObject = JSON.parse(data)
+
+			//sorting callback function
+			const mostPopularUser = (user_a, user_b) => {
+				if(user_a.followers_count < user_b.followers_count) {
+					return 1
+				} else if(user_a.followers_count > user_b.followers_count) {
+					return -1
+				} else {
+					return 0
+				}
+			}
+
+			const adjustProfileImageSize = (imageUrl, size) => {
+				let editedImageUrl = imageUrl.slice()
+				return editedImageUrl.split('').reverse().join('').replace(/[a-z\.]*_/, '').split('').reverse().join('') + `_${size}x${size}.jpg`
+			}
+
+			const convertTimeString = (timeString) => {
+				let timeStamp = new Date(timeString);
+					return `${timeStamp.toLocaleTimeString('en-US')} ${timeStamp.toLocaleDateString('en-US')}`;
+			}
+
+			//picking object belows keys off object above
+			let { 
+				name: name,
+				screen_name: screen_name,
+				description: description,
+				location: location,
+				protected: protected,
+				followers_count: followers_count,
+				friends_count: friends_count,
+				created_at: created_at,
+				favourites_count: favourites_count,
+				verified: verified,
+				statuses_count: statuses_count,
+				profile_image_url_https: profile_image_url_https,
+				profile_banner_url: profile_banner_url,
+			} = userObject;
+
+			oauth.get(`https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=${userScreenName}&count=20&tweet_mode=extended&trim_user=true&exclude_replies=true&include_rts=true`, key.ACCESS_TOKEN, key.ACCESS_TOKEN_SECRET, function(e, data, res) {
+				if (e) { 
+					console.error(e);
+					cb([]);
+				} else {
+					let statuses = JSON.parse(data)
+					
+					let userStatuses;
+
+					userStatuses=statuses.map((tweet) => {
+						var status = {
+							// score: sentiment(tweet).score,
+							timeStamp: convertTimeString(tweet.created_at),
+							// if tweet has been retweeted, its full text lives in the retweeted_status object
+							tweetBody: tweet.retweeted_status ? tweet.retweeted_status.full_text : tweet.full_text,
+							retweet_count: tweet.retweet_count,
+							favorite_count: tweet.retweeted_status ? tweet.retweeted_status.favorite_count : tweet.favorite_count
+						}
+						return status
+					})
+	
+
+					oauth.get(`https://api.twitter.com/1.1/followers/list.json?screen_name=${userScreenName}&skip_status=true&include_user_entities=false&count=100`, key.ACCESS_TOKEN, key.ACCESS_TOKEN_SECRET, function(e, data, res) {
+						if (e) { 
+							console.error(e);
+							cb([]);
+						} else {
+							let followers = JSON.parse(data).users
+
+							let usersFollowers;
+
+							usersFollowers=followers.map((followerInfo) => {
+
+								let { 
+									name,
+									screen_name,
+									description,
+									location,
+									protected,
+									followers_count,
+									friends_count,
+									created_at,
+									favourites_count,
+									verified,
+									statuses_count,
+									profile_image_url_https,
+									profile_banner_url 
+								} = followerInfo;
+
+								let follower = { 
+									name,
+									screen_name,
+									description,
+									location,
+									protected,
+									followers_count,
+									friends_count,
+									created_at,
+									favourites_count,
+									verified,
+									statuses_count,
+									profile_image_url_https,
+									profile_banner_url 
+								}
+								follower.created_at = convertTimeString(created_at)
+								follower.profile_image_url_https_400 = adjustProfileImageSize(profile_image_url_https, 400)
+								return follower
+							}).sort(mostPopularUser)
+
+							oauth.get(`https://api.twitter.com/1.1/friends/list.json?screen_name=${userScreenName}&skip_status=true&include_user_entities=false`, key.ACCESS_TOKEN, key.ACCESS_TOKEN_SECRET, function(e, data, res) {
+								if (e) { 
+									console.error(e);
+									cb([]);
+								} else {
+									let friends = JSON.parse(data).users
+	
+									let usersFriends;
+
+									usersFriends=friends.map((userFriend) => {
+										let { 
+											name,
+											screen_name,
+											description,
+											location,
+											protected,
+											followers_count,
+											friends_count,
+											created_at,
+											favourites_count,
+											verified,
+											statuses_count,
+											profile_image_url_https,
+											profile_banner_url 
+										} = userFriend
+										
+										let friend = { 
+											name,
+											screen_name,
+											description,
+											location,
+											protected,
+											followers_count,
+											friends_count,
+											created_at,
+											favourites_count,
+											verified,
+											statuses_count,
+											profile_image_url_https,
+											profile_banner_url 
+										};
+										friend.created_at = convertTimeString(created_at)
+										friend.profile_image_url_https_400 = adjustProfileImageSize(profile_image_url_https, 400)
+										return friend
+									}).sort(mostPopularUser)
+
+									let UserDataObject = { 
+											name: name,
+											screen_name: screen_name,
+											description: description,
+											location: location,
+											protected: protected,
+											followers_count: followers_count,
+											friends_count: friends_count,
+											created_at: convertTimeString(created_at),
+											favourites_count: favourites_count,
+											verified: verified,
+											statuses_count: statuses_count,
+											profile_image_url_https: profile_image_url_https,
+											profile_image_url_https_400: adjustProfileImageSize(profile_image_url_https, 400),
+											profile_banner_url: profile_banner_url,
+											usersFollowers,
+											usersFriends,
+											userStatuses
+									}	
+									cb( UserDataObject )
+								}
+							});
+						}
+					});
+				}
+			});
+		}
+	});
+}
+
+
+module.exports.getUserProfileData = getUserProfileData;
 module.exports.getTweets = getTweets;
+module.exports.getSpecificUserTweets = getSpecificUserTweets;
 module.exports.cronJob = cronJob;
+module.exports.getTweetsMulti = getTweetsMulti;
+
