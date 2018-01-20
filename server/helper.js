@@ -162,9 +162,6 @@ getSpecificUserTweets = (user, cb) => {
 			const adjustProfileImageSize = (imageUrl, size) => {
 				return imageUrl.split('').reverse().join('').replace(/[a-z\.]*_/, '').split('').reverse().join('') + `_${size}x${size}.jpg`
 			}
-			const adjustProfileImageSize = (imageUrl, size) => {
-				return imageUrl.split('').reverse().join('').replace(/[a-z\.]*_/, '').split('').reverse().join('') + `_${size}x${size}.jpg`
-			}
 			temp.forEach((val, idx, arr)=>{
 				if( sentiment(val.retweeted_status ? val.retweeted_status.full_text : val.full_text).score > 0){
 					cleaned.pos++
