@@ -271,6 +271,30 @@
   height: auto;
 }
 
+.users-friends-profile-images {
+  
+}
+
+.friend-0-profile-image {
+  width: 140px;
+}
+
+.friend-1-profile-image {
+  width: 112px;
+}
+
+.friend-2-profile-image {
+  width: 84px;
+}
+
+.friend-3-profile-image {
+  width: 56px;
+}
+
+.friend-4-profile-image {
+  width: 28px;
+}
+
 .profile-list {
   position: inherit;
   width: 80%;
@@ -295,6 +319,7 @@
 .followers-button {
   
 }
+
 
 .user-modal-content {
   position: absolute;
