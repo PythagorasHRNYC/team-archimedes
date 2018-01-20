@@ -90,7 +90,7 @@ getTweetsMulti = (st, cb) => {
 	}))
 }
 
-getTweets = (st, cb) => {
+getTweets = (st, cb, sp) => {
 	var oauth = new OAuth.OAuth(
 		'https://api.twitter.com/oauth/request_token',
 		'https://api.twitter.com/oauth/access_token',
@@ -100,17 +100,28 @@ getTweets = (st, cb) => {
 		null,
 		'HMAC-SHA1'
 	);
+	///////////////////////////////////////////////////////
+	//change search term based on search parameter passed//
+	///////////////////////////////////////////////////////
+	if(sp === 'hash') {
+		st = '%23' + st; 
+	} else if (sp === 'phrase') {
+		st = `%22%22%${st.replace(/\s/, '%20')}22%0D%0A`
+	} else if (sp === 'accounts') {
+		st = '%40' + st; 
+	}
+
 	const names = `https://api.twitter.com/1.1/users/show.json?screen_name=${st}&include_entities=false`
 	const string = `https://api.twitter.com/1.1/search/tweets.json?q=${st}&count=100&tweet_mode=extended`
-	oauth.get(`https://api.twitter.com/1.1/search/tweets.json?q=%27${st}%27&count=100&tweet_mode=extended&result_type=popular`, key.ACCESS_TOKEN, key.ACCESS_TOKEN_SECRET, function(e, data, res) {
+	oauth.get(`https://api.twitter.com/1.1/search/tweets.json?q=${st}&count=100&tweet_mode=extended&result_type=recent&lang=en`, key.ACCESS_TOKEN, key.ACCESS_TOKEN_SECRET, function(e, data, res) {
 		if (e) { 
-			console.error(e);
+			console.error('err: ', e);
 			cb([]);
 		} else {
 			let temp = JSON.parse(data).statuses
 			let cleaned = []
 
-				temp.map((tweet) => {
+				Promise.all(temp.map((tweet) => {
 				//////////////////////////////
 				//invoke client promise //////
 				//and when resolved decorate /
@@ -120,38 +131,58 @@ getTweets = (st, cb) => {
 								content: tweet.retweeted_status ? tweet.retweeted_status.full_text : tweet.full_text,
 								type: 'PLAIN_TEXT',
 							};
-					googleSentiment 
-					.analyzeEntitySentiment({document: document})
-					.then(results => {
-						const entities = results[0].entities;
-						let selectedData, sentimentDatal;
-						entities.forEach(entity => {
-							if(entity.name.toLocaleLowerCase() === st.toLocaleLowerCase()) {
-							sentimentData = {
-									salience: entity.salience,
-									name: entity.name,
-									type: entity.type,
-									score: entity.sentiment.score,
-									magnitude: entity.sentiment.magnitude
+					return new Promise((resolve, reject) => {		
+						googleSentiment 
+						.analyzeEntitySentiment({document: document})
+						.then(results => {
+							const entities = results[0].entities;
+							let sentimentData;
+							let result = [];
+							entities.forEach(entity => {
+								if(entity.name.toLocaleLowerCase() === st.toLocaleLowerCase()) {
+								sentimentData = {
+										salience: entity.salience,
+										name: entity.name,
+										type: entity.type,
+										score: entity.sentiment.score,
+										magnitude: entity.sentiment.magnitude
+									}
+									result.push(sentimentData)
+								} else {
+									sentimentData = {
+										salience: entity.salience,
+										name: entity.name,
+										type: entity.type,
+										score: 0,
+										magnitude: 0
+									}
+									result.push(sentimentData)
 								}
-								selectedData = {
-									// score: sentiment(tweet).score,
-									searchTerm: st,
-									timeStamp: tweet.created_at,
-									sentimentDataObject: sentimentData,
-									// if tweet has been retweeted, its full text lives in the retweeted_status object
-									tweetBody: tweet.retweeted_status ? tweet.retweeted_status.full_text : tweet.full_text,
-									user_name: tweet.user.screen_name,
-									user_location: tweet.user.location,
-									avatar_url: tweet.user.profile_image_url
-								}
-								cleaned.push(selectedData);
-							}
-						});
+							});
+							resolve(result)
+						})
+						.catch(err => reject(err))
 					})
+				}))
+				.then((results) => {
+					results.forEach((sentimentData, index) => {
+						selectedData = {
+							// score: sentiment(tweet).score,
+							searchTerm: st,
+							timeStamp: temp[index].created_at,
+							sentimentDataObject: sentimentData,
+							// if tweet has been retweeted, its full text lives in the retweeted_status object
+							tweetBody: temp[index].retweeted_status ? temp[index].retweeted_status.full_text : temp[index].full_text,
+							user_name: temp[index].user.screen_name,
+							user_location: temp[index].user.location,
+							avatar_url: temp[index].user.profile_image_url
+						}
+						cleaned.push(selectedData);
+					})
+					console.log('HElllooo ')
+					cb(cleaned);
 				})
-			cb(cleaned);
-		}
+			}
 	});
 }
 

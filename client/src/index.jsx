@@ -125,10 +125,10 @@ class App extends React.Component {
 
   submitQuery(e) {
     e.preventDefault();
-    this.state.searchTerm === '' ? $('.search.container').addClass('error') : this.getAllTweets(this.state.searchTerm);
+    this.state.searchTerm === '' ? $('.search.container').addClass('error') : this.getAllTweets(this.state.searchTerm); //add extra searchParameter functionallity
   }
 
-  getAllTweets(term) {
+  getAllTweets(term) {//add extra searchParameter functionallity
     // first reset state so that new tweets will render properly.
     this.setState({
       negativeTweets: [],
@@ -140,7 +140,7 @@ class App extends React.Component {
 
     axios.post('/search', {searchTerm: term}).then((res) => {
       this.setState({
-        tweets: userStatuses,
+        tweets: res.tweets,
         lastSearchTerm: term,
         searchTerm: '',
         previousSearches: [...this.state.previousSearches, term],
@@ -152,20 +152,16 @@ class App extends React.Component {
   }
 
   getUserData() {
-    // if(this.state.clickedUser) {
-      this.setState({clickedUserData: userDataExample}, () => {
-            // this.setState({userModalStylingSheet: 'user-modal-content'})
-            this.setState({clickedUserDataContentLoaded: true})
-          })
-      // axios.post(`/UserProfileData`, {clickedUser: this.state.clickedUser})
-      // .then((results) => {
-      //   let UserProfileDataObject = results.data;
-      //   this.setState({clickedUserData: UserProfileDataObject}, () => {
-      //     this.setState({userModalStylingSheet: 'user-modal-content'})
-      //     this.setState({clickedUserDataContentLoaded: true})
-      //   })
-      // })
-    // }
+    if(this.state.clickedUser) {
+      axios.post(`/UserProfileData`, {clickedUser: this.state.clickedUser})
+      .then((results) => {
+        let UserProfileDataObject = results.data;
+        this.setState({clickedUserData: UserProfileDataObject}, () => {
+          this.setState({userModalStylingSheet: 'user-modal-content'})
+          this.setState({clickedUserDataContentLoaded: true})
+        })
+      })
+    }
   }
 
   assignAndCount(tweets) {
@@ -272,7 +268,7 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    this.getAllTweets('Javascript React');
+    this.getAllTweets('Javascript React');//add extra searchParameter functionallity
   }
 
   componentDidMount() {
@@ -355,7 +351,7 @@ class App extends React.Component {
               }}
               contentLabel="Modal" 
             >
-            <h1>{`@${'DriziRoc' || this.state.clickedUser}`}</h1>
+            <h1>{`@${this.state.clickedUser}`}</h1>
           <IconButton
                 iconStyle={styles.mediumIcon}
                 style={Object.assign(styles.medium, styles.closeButton)}

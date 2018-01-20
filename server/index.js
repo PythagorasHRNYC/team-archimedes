@@ -62,14 +62,21 @@ app.get('/userBattle', function(req, res){
 })
 
 app.post('/search', function(req, res) {
+  ///////////////////////////////////////////////////////////
+  //Added searchParam to req.body for refine serach request//
+  ///////////////////////////////////////////////////////////
 
   const searchTerm = sanitizeHTML(req.body.searchTerm) || 'undefined';
+  //new
+  const searchParam = req.body.searchParam;
   searchTerm.split(`'`).join('').split('#').join('').split('"').join('').split('/').join('').split('`').join('')
 
   db.addToSearchTerms({searchTerm: searchTerm});
+
+  //new 3rd parameter
   getTweets(searchTerm, (data) => {
     res.send(data)
-  });
+  }, searchParam);
 
 })
 
