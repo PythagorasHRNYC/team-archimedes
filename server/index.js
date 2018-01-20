@@ -38,7 +38,8 @@ app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.json())
 
 
-
+//put in command line
+//export GOOGLE_APPLICATION_CREDENTIALS=/Users/derricktheodore/Desktop/legacyProject/team-archimedes/WhattheFlock-ff196bb36222.json
 
 
 app.post('/sentiment-score', (req, res) => {
