@@ -62,7 +62,6 @@ class App extends React.Component {
     }
 
     this.getUserData = this.getUserData.bind(this);
-    this.getAverage = this.getAverage.bind(this);
     this.getAllTweets = this.getAllTweets.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this);
     this.submitQuery = this.submitQuery.bind(this);
@@ -73,6 +72,7 @@ class App extends React.Component {
     this.handleSave = this.handleSave.bind(this);
     this.handleDrag = this.handleDrag.bind(this);
     this.clickHandler = this.clickHandler.bind(this);
+    this.friendClickHandler = this.friendClickHandler.bind(this);
     this.storeUser = this.storeUser.bind(this);
     this.handleFaves = this.handleFaves.bind(this);
   }
@@ -86,9 +86,16 @@ class App extends React.Component {
 
   clickHandler(user) {
 		this.setState({clicked: !this.state.clicked}, () => {
-      this.setState({clickedUser: "DriziRoC" || user}, () => {
+      this.setState({clickedUser: user}, () => {
         this.getUserData()
       })
+    })
+  }
+
+  friendClickHandler(user) {
+    console.log('user:  ', user)
+    this.setState({clickedUser: user}, () => {
+      this.getUserData()
     })
   }
 
@@ -99,12 +106,6 @@ class App extends React.Component {
     });
   }
 
-  getSentiment(tweet) {
-    return axios.post('/sentiment-score', {
-      tweet: tweet,
-      term: this.state.searchTerm
-    })
-  }
 
   handleInputChange(e) {
     $('.search.container').removeClass('error');
@@ -124,10 +125,10 @@ class App extends React.Component {
 
   submitQuery(e) {
     e.preventDefault();
-    this.state.searchTerm === '' ? $('.search.container').addClass('error') : this.getAllTweets(this.state.searchTerm);
+    this.state.searchTerm === '' ? $('.search.container').addClass('error') : this.getAllTweets(this.state.searchTerm); //add extra searchParameter functionallity
   }
 
-  getAllTweets(term) {
+  getAllTweets(term) {//add extra searchParameter functionallity
     // first reset state so that new tweets will render properly.
     this.setState({
       negativeTweets: [],
@@ -139,51 +140,27 @@ class App extends React.Component {
 
     axios.post('/search', {searchTerm: term}).then((res) => {
       this.setState({
-        tweets: userStatuses || res.data,
+        tweets: res.tweets,
         lastSearchTerm: term,
         searchTerm: '',
         previousSearches: [...this.state.previousSearches, term],
         loading: false
       });
-      this.getAverage(this.state.tweets, term);
-      //this.getHistory();
+      this.assignAndCount(this.state.tweets, term)
+      this.getHistory();
     });
-  }
-
-  getAverage(tweets, searchTerm) {
-    tweets.map((message) => {
-      var score = sentiment(message.tweetBody).score;
-      message.score = score;
-      if ( score < 0 ) {
-        // add negative tweets to negativeTweets array
-        this.setState({
-          negativeTweets: [...this.state.negativeTweets, message]
-        });
-      } else if ( score > 0 ) {
-        // add positive tweets to positiveTweets array
-        this.setState({
-          positiveTweets: [...this.state.positiveTweets, message]
-        });
-      }
-    });
-    var newAverage = (this.state.negativeTweets.length / this.state.tweets.length) * 100
-    this.setState({
-      average: newAverage
-    });
-    axios.post('/database', {average: newAverage, searchTerm: searchTerm});
   }
 
   getUserData() {
     if(this.state.clickedUser) {
-      // axios.post(`/UserProfileData`, {clickedUser: this.state.clickedUser})
-      // .then((results) => {
-        // let UserProfileDataObject = results.data;
-        // console.log(UserProfileDataObject, 'getUserData')
-        this.setState({clickedUserData: userDataExample || UserProfileDataObject}, () => {
-          // this.setState({userModalStylingSheet: 'user-modal-content'})
-          // this.setState({clickedUserDataContentLoaded: true})
+      axios.post(`/UserProfileData`, {clickedUser: this.state.clickedUser})
+      .then((results) => {
+        let UserProfileDataObject = results.data;
+        this.setState({clickedUserData: UserProfileDataObject}, () => {
+          this.setState({userModalStylingSheet: 'user-modal-content'})
+          this.setState({clickedUserDataContentLoaded: true})
         })
-      // })
+      })
     }
   }
 
@@ -191,7 +168,7 @@ class App extends React.Component {
     if (!tweets.length) return
     let negativeTweets = [], positiveTweets = [], neutralTweets = [], negAverage, posAverage, neutAverage;
     tweets.forEach(tweet => {
-      let score = sentiment(tweet.tweetBody).score;
+      let score = 1 || tweet.tweetBody.sentimentDataObject.score;
       tweet.score = score;
       if (score < 0){
         negativeTweets.push(tweet)
@@ -214,6 +191,7 @@ class App extends React.Component {
       negativeTweets,
       neutralTweets
     })
+    // axios.post('/database', {average: newAverage, searchTerm: searchTerm});
   }
   handleDrop({idx, type}) {
     let positiveTweets = this.state.positiveTweets;
@@ -290,11 +268,7 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-<<<<<<< HEAD
-    this.getAllTweets('hackreactor');
-=======
-    this.getAllTweets('Javascript React');
->>>>>>> add gauge add spline graph
+    this.getAllTweets('Javascript React');//add extra searchParameter functionallity
   }
 
   componentDidMount() {
@@ -308,7 +282,6 @@ class App extends React.Component {
   }
   
   render () {
-    setTimeout( ()=> {this.refs.modalWar.style.display = "none"}, 5000);
     const styles = {
       smallIcon: {
         width: 36,
@@ -388,51 +361,9 @@ class App extends React.Component {
               </IconButton>
               <SelectedUsersProfile 
                 userData={this.state.clickedUserData}
+                friendClickHandler={this.friendClickHandler}
               />
             </Modal>
-
-<<<<<<< HEAD
-=======
-            <Modal
-              isOpen={this.state.canBattle}
-              ariaHideApp={false}
-              // onAfterOpen={afterOpenFn}
-              // onRequestClose={requestCloseFn}
-              // closeTimeoutMS={n}
-              style={styles}
-              contentLabel="Modal" 
-              style={{ backgroundImage: `url("//cssanimation.rocks/demo/starwars/images/bg.jpg")`,   
-            }}
-            >
-              <IconButton
-                iconStyle={styles.mediumIcon}
-                style={Object.assign(styles.medium, styles.closeButton)}
-                onClick={()=>{this.setState({canBattle: !this.state.canBattle})}}
-              >
-                <ActionNavigationClose/>
-              </IconButton> 
-            
-              <div className="starwars-demo" ref="modalWar" id="modalWar" >
-                <img id="img" src="//cssanimation.rocks/demo/starwars/images/star.svg" alt="Star" className="star"/>
-                <h2 className="byline" id="byline">The Force Awakens</h2>
-                <img id="img" src="//cssanimation.rocks/demo/starwars/images/wars.svg" alt="Wars" className="wars"/>
-              </div>
-              
-              
-              {this.state.battleData.map((val, idx, arr)=>{
-                
-                return<div>
-                        <img src={val.userInfo.pic} alt="User" height="100" width="100"/>
-                        <div>{val.userInfo.name}</div>
-                        <div>{val.userInfo.location}</div>
-                        <div>{val.score}</div>
-                    </div>
-              })}
-              
-
-            </Modal>
-
->>>>>>> modalwindowcss
             <Search submitQuery={this.submitQuery} searchTerm={this.state.searchTerm} getAllTweets={this.getAllTweets} handleInputChange={this.handleInputChange}/>
             <div id="error"></div>
             {

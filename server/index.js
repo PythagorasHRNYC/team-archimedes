@@ -17,13 +17,11 @@ const knex = require('../database/real-database/config.js').knex;
 const User = require('../database/real-database/models/user.js')
 const Favorite = require('../database/real-database/models/favorite.js')
 const UserProfileDummyData = require('../profileExampleData.js')
-const language = require('@google-cloud/language');
 
 
 var getTweets = require('./helper.js').getTweets; 
 var cronJob = require('./helper.js').cronJob;
 var getUserProfileData = require('./helper.js').getUserProfileData;
-const client = new language.LanguageServiceClient();
 
 
 var helper = require('./helper.js');
@@ -33,48 +31,10 @@ cron.schedule('*/30 * * * *', () => {
   cronJob();
 });
 
-const sanitizeHTML = require('sanitize-html')
-app.use(express.static(__dirname + '/../client/dist'));
-app.use(bodyParser.json())
 
 
-
-
-
-app.post('/sentiment-score', (req, res) => {
-  const text = req.body.tweet;
-  const searchTerm = req.body.term;
-
-  const document = {
-    content: text,
-    type: 'PLAIN_TEXT',
-  };
-
-  client
-  .analyzeEntitySentiment({document: document})
-  .then(results => {
-    const entities = results[0].entities;
-
-    console.log(`Entities and sentiments:`);
-    console.log('////////////////////////')
-    entities.forEach(entity => {
-      // if(entity.salience === searchTerm) {
-        console.log(`  Salience: ${entity.salience}`);
-        console.log(`  Name: ${entity.name}`);
-        console.log(`  Type: ${entity.type}`);
-        console.log(`  Score: ${entity.sentiment.score}`);
-        console.log(`  Magnitude: ${entity.sentiment.magnitude}`);
-        // }
-    });
-  })
-  .catch(err => {
-    console.error('ERROR:', err);
-  });
-  res.send('working')
-})
-
-
-
+//put in command line
+//export GOOGLE_APPLICATION_CREDENTIALS=/Users/derricktheodore/Desktop/legacyProject/team-archimedes/WhattheFlock-ff196bb36222.json
 
 app.post('/favetweets', async (req, res) => {
   let tweets = [];
@@ -99,15 +59,21 @@ app.get('/userBattle', function(req, res){
 })
 
 app.post('/search', function(req, res) {
+  ///////////////////////////////////////////////////////////
+  //Added searchParam to req.body for refine serach request//
+  ///////////////////////////////////////////////////////////
 
   const searchTerm = sanitizeHTML(req.body.searchTerm) || 'undefined';
+  //new
+  const searchParam = req.body.searchParam;
   searchTerm.split(`'`).join('').split('#').join('').split('"').join('').split('/').join('').split('`').join('')
 
   db.addToSearchTerms({searchTerm: searchTerm});
 
+  //new 3rd parameter
   getTweets(searchTerm, (data) => {
     res.send(data)
-  });
+  }, searchParam);
 
 })
 
