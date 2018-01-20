@@ -72,6 +72,7 @@ class App extends React.Component {
     this.handleSave = this.handleSave.bind(this);
     this.handleDrag = this.handleDrag.bind(this);
     this.clickHandler = this.clickHandler.bind(this);
+    this.friendClickHandler = this.friendClickHandler.bind(this);
     this.storeUser = this.storeUser.bind(this);
     this.handleFaves = this.handleFaves.bind(this);
   }
@@ -88,6 +89,13 @@ class App extends React.Component {
       this.setState({clickedUser: user}, () => {
         this.getUserData()
       })
+    })
+  }
+
+  friendClickHandler(user) {
+    console.log('user:  ', user)
+    this.setState({clickedUser: user}, () => {
+      this.getUserData()
     })
   }
 
@@ -132,7 +140,7 @@ class App extends React.Component {
 
     axios.post('/search', {searchTerm: term}).then((res) => {
       this.setState({
-        tweets: res.data || userStatuses,
+        tweets: userStatuses,
         lastSearchTerm: term,
         searchTerm: '',
         previousSearches: [...this.state.previousSearches, term],
@@ -144,23 +152,27 @@ class App extends React.Component {
   }
 
   getUserData() {
-    if(this.state.clickedUser) {
-      axios.post(`/UserProfileData`, {clickedUser: this.state.clickedUser})
-      .then((results) => {
-        let UserProfileDataObject = results.data;
-        this.setState({clickedUserData: UserProfileDataObject ||  userDataExample}, () => {
-          this.setState({userModalStylingSheet: 'user-modal-content'})
-          this.setState({clickedUserDataContentLoaded: true})
-        })
-      })
-    }
+    // if(this.state.clickedUser) {
+      this.setState({clickedUserData: userDataExample}, () => {
+            // this.setState({userModalStylingSheet: 'user-modal-content'})
+            this.setState({clickedUserDataContentLoaded: true})
+          })
+      // axios.post(`/UserProfileData`, {clickedUser: this.state.clickedUser})
+      // .then((results) => {
+      //   let UserProfileDataObject = results.data;
+      //   this.setState({clickedUserData: UserProfileDataObject}, () => {
+      //     this.setState({userModalStylingSheet: 'user-modal-content'})
+      //     this.setState({clickedUserDataContentLoaded: true})
+      //   })
+      // })
+    // }
   }
 
   assignAndCount(tweets) {
     if (!tweets.length) return
     let negativeTweets = [], positiveTweets = [], neutralTweets = [], negAverage, posAverage, neutAverage;
     tweets.forEach(tweet => {
-      let score = tweet.tweetBody.sentimentDataObject.score;
+      let score = 1 || tweet.tweetBody.sentimentDataObject.score;
       tweet.score = score;
       if (score < 0){
         negativeTweets.push(tweet)
@@ -183,7 +195,7 @@ class App extends React.Component {
       negativeTweets,
       neutralTweets
     })
-    axios.post('/database', {average: newAverage, searchTerm: searchTerm});
+    // axios.post('/database', {average: newAverage, searchTerm: searchTerm});
   }
   handleDrop({idx, type}) {
     let positiveTweets = this.state.positiveTweets;
@@ -343,7 +355,7 @@ class App extends React.Component {
               }}
               contentLabel="Modal" 
             >
-            <h1>{`@${this.state.clickedUser}`}</h1>
+            <h1>{`@${'DriziRoc' || this.state.clickedUser}`}</h1>
           <IconButton
                 iconStyle={styles.mediumIcon}
                 style={Object.assign(styles.medium, styles.closeButton)}
@@ -353,6 +365,7 @@ class App extends React.Component {
               </IconButton>
               <SelectedUsersProfile 
                 userData={this.state.clickedUserData}
+                friendClickHandler={this.friendClickHandler}
               />
             </Modal>
             <Search submitQuery={this.submitQuery} searchTerm={this.state.searchTerm} getAllTweets={this.getAllTweets} handleInputChange={this.handleInputChange}/>
