@@ -86,7 +86,7 @@ class App extends React.Component {
 
   clickHandler(user) {
 		this.setState({clicked: !this.state.clicked}, () => {
-      this.setState({clickedUser: "DriziRoC" || user}, () => {
+      this.setState({clickedUser: user}, () => {
         this.getUserData()
       })
     })
@@ -174,7 +174,7 @@ class App extends React.Component {
       .then((results) => {
         let UserProfileDataObject = results.data;
         // console.log(UserProfileDataObject, 'getUserData')
-        this.setState({clickedUserData: userDataExample || UserProfileDataObject}, () => {
+        this.setState({clickedUserData: UserProfileDataObject}, () => {
           this.setState({userModalStylingSheet: 'user-modal-content'})
           this.setState({clickedUserDataContentLoaded: true})
         })
@@ -369,16 +369,9 @@ class App extends React.Component {
               }}
               contentLabel="Modal" 
             >
-            <h1>{`@${this.state.clickedUser}`}</h1>
-          <IconButton
-                iconStyle={styles.mediumIcon}
-                style={Object.assign(styles.medium, styles.closeButton)}
-                onClick={this.clickHandler}
-              >
-                <ActionNavigationClose/>
-              </IconButton>
               <SelectedUsersProfile 
                 userData={this.state.clickedUserData}
+                clickHandler={this.clickHandler}
               />
             </Modal>
 

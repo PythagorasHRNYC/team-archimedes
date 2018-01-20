@@ -51,18 +51,18 @@ class Graph extends React.Component {
 				}
 			},
 			size: {
-				height: "50px"
+				height: "10px"
 			}
 		})
 	};
+
+	componentDidMount(){
+		this.chart(this.props.scores)
+	}
 	render(){
 	return (
-		<div>
-            <button onClick={()=>{ this.chart(this.state.scores)}} >test</button>
 
-            {/* <div id={`chart${this.props.id}`}></div> */}
             <div id="chart"></div>
-        </div>
 		)
 	}
 }
