@@ -7,6 +7,9 @@ import Graph from './Graph.jsx';
 import MiniProfile from './MiniProfile.jsx';
 import sentiment from 'sentiment';
 import c3 from 'c3';
+import IconButton from 'material-ui/IconButton';
+import ActionNavigationClose from 'material-ui/svg-icons/navigation/close';
+
 
 
 class SelectedUsersProfile extends React.Component {
@@ -29,13 +32,75 @@ class SelectedUsersProfile extends React.Component {
   }
 
   render() {
+    const styles = {
+      smallIcon: {
+        width: 36,
+        height: 36,
+      },
+      mediumIcon: {
+        width: 48,
+        height: 48,
+      },
+      largeIcon: {
+        width: 60,
+        height: 60,
+      },
+      small: {
+        width: 72,
+        height: 72,
+        padding: 16,
+      },
+      medium: {
+        width: 96,
+        height: 96,
+        padding: 24,
+      },
+      large: {
+        width: 120,
+        height: 120,
+        padding: 30,
+      },
+      closeButton: {
+        right: "-90%",
+        bottom: 85
+      }
+    };
     if(!this.state.clickedUserDataContentLoaded) {
       return (
         <Loader />
       ) 
     } else {
       return (
-        <div className="profile-content">
+        <div className="main-container">
+
+          <div className="profile-name">
+            <h1>@{this.props.userData.screen_name}</h1>
+            <IconButton
+                iconStyle={styles.mediumIcon}
+                style={Object.assign(styles.medium, styles.closeButton)}
+                onClick={this.props.clickHandler}
+              >
+                <ActionNavigationClose/>
+            </IconButton>
+          </div>
+
+        <div className="inner-container">
+
+          <div className="nav-bar">
+            <FlatButton label={'Statuses'} onClick={() => { this.setState({
+                navbarChoice: {index: 0, list: "userStatuses"}
+            })}}/>
+            <FlatButton label={'Friends'} onClick={() => { this.setState({
+              navbarChoice: {index: 1, list: "usersFriends"}
+            })}}/>
+            <FlatButton label={'Followers'} onClick={() => { this.setState({
+                navbarChoice: {index: 1, list: "usersFollowers"}
+              })}}/>
+            <FlatButton label={'Historical Data'} onClick={() => { this.setState({
+                navbarChoice: {index: 2, list: 'userStatuses'}
+              })}}/>
+          </div>
+
           <div className="profile-image-div">
             <img className="profile-image" srcSet={`${this.props.userData.profile_image_url_https, this.props.userData.profile_image_url_https_400}`} />
             <div className="users-friends-profile-images">
@@ -44,44 +109,10 @@ class SelectedUsersProfile extends React.Component {
               }
             </div>  
           </div>
-          <FlatButton
-            label={'Statuses'}
-            onClick={() => { this.setState({
-              navbarChoice: {
-                index: 0, 
-                list: "userStatuses"
-              }
-            })}}
-            className={'status-button'}
-          />
-          <FlatButton
-            label={'Friends'}
-            onClick={() => { this.setState({
-              navbarChoice: {
-                index: 1, 
-                list: "usersFriends"
-              }
-            })}}
-            className={'friends-button'}
-          />
-          <FlatButton
-            label={'Followers'}
-            onClick={() => { this.setState({
-              navbarChoice: {
-                index: 1, 
-                list: "usersFollowers"
-              }
-            })}}
-            className={'followers-button'}
-          />
-          <Graph scores={this.state.scores}>
-          </Graph>
-          <List
-            className={'profile-list'}
-          >  
+          
+          <List >  
             {
               this.props.userData[`${this.state.navbarChoice.list}`].map((listItem, idx) => {
-              
               this.state.navbarChoice.list === 'userStatuses' && this.state.scores.push(sentiment(listItem.tweetBody))
                 
               return <ListItem 
@@ -108,14 +139,19 @@ class SelectedUsersProfile extends React.Component {
                           friends_count: listItem.friends_count,
                           statuses_count: listItem.statuses_count
                         }}
+                      />,
+                      <Graph 
+                      scores={this.state.scores}
                       />
-                  ][this.state.navbarChoice.index]
+                      ][this.state.navbarChoice.index]
                 }
-            />})
+              />
+          })
             
             }
           </List>
-        </div>
+          </div>  
+        </div> //inner-containter then Main-container
       )
     }
   }

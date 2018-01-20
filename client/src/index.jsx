@@ -196,8 +196,11 @@ class App extends React.Component {
       positiveTweets,
       negativeTweets,
       neutralTweets
+
+    }, ()=>{console.log("neg", this.state.negAverage, "pos", this.state.posAverage, "neut", this.state.neutAverage)})
+
     })
-    // axios.post('/database', {average: newAverage, searchTerm: searchTerm});
+    axios.post('/database', {average: newAverage, searchTerm: searchTerm});
   }
   handleDrop({idx, type}) {
     let positiveTweets = this.state.positiveTweets;
@@ -357,19 +360,13 @@ class App extends React.Component {
               }}
               contentLabel="Modal" 
             >
-            <h1>{`@${this.state.clickedUser}`}</h1>
-          <IconButton
-                iconStyle={styles.mediumIcon}
-                style={Object.assign(styles.medium, styles.closeButton)}
-                onClick={this.clickHandler}
-              >
-                <ActionNavigationClose/>
-              </IconButton>
               <SelectedUsersProfile 
                 userData={this.state.clickedUserData}
+                clickHandler={this.clickHandler}
                 friendClickHandler={this.friendClickHandler}
               />
             </Modal>
+
             <Search submitQuery={this.submitQuery} searchTerm={this.state.searchTerm} getAllTweets={this.getAllTweets} handleInputChange={this.handleInputChange}/>
             {/* <NavBar /> */}
             <div id="error"></div>
