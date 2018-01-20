@@ -99,6 +99,13 @@ class App extends React.Component {
     });
   }
 
+  getSentiment(tweet) {
+    return axios.post('/sentiment-score', {
+      tweet: tweet,
+      term: this.state.searchTerm
+    })
+  }
+
   handleInputChange(e) {
     $('.search.container').removeClass('error');
     this.setState({
