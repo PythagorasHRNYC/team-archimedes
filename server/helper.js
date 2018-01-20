@@ -146,7 +146,9 @@ getSpecificUserTweets = (user, cb) => {
 		null,
 		'HMAC-SHA1'
 	);
-
+	/**
+	 * adding hash only search with most popular tweet response
+	*/
 	oauth.get(`https://api.twitter.com/1.1/search/tweets.json?q=${user}&count=100&tweet_mode=extended`, key.ACCESS_TOKEN, key.ACCESS_TOKEN_SECRET, function(e, data, res) {
 		if (e) { 
 			console.error(e);

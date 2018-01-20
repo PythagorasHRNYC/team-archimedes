@@ -58,13 +58,13 @@ app.post('/sentiment-score', (req, res) => {
     console.log(`Entities and sentiments:`);
     console.log('////////////////////////')
     entities.forEach(entity => {
-      // if(entity.salience === searchTerm) {
+      if(entity === searchTerm) {
         console.log(`  Salience: ${entity.salience}`);
         console.log(`  Name: ${entity.name}`);
         console.log(`  Type: ${entity.type}`);
         console.log(`  Score: ${entity.sentiment.score}`);
         console.log(`  Magnitude: ${entity.sentiment.magnitude}`);
-        // }
+      }
     });
   })
   .catch(err => {

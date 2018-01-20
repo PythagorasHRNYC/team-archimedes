@@ -86,7 +86,7 @@ class App extends React.Component {
 
   clickHandler(user) {
 		this.setState({clicked: !this.state.clicked}, () => {
-      this.setState({clickedUser: "DriziRoC" || user}, () => {
+      this.setState({clickedUser: user}, () => {
         this.getUserData()
       })
     })
@@ -146,44 +146,25 @@ class App extends React.Component {
         loading: false
       });
       this.getAverage(this.state.tweets, term);
-      //this.getHistory();
+      this.getHistory();
     });
   }
 
   getAverage(tweets, searchTerm) {
-    tweets.map((message) => {
-      var score = sentiment(message.tweetBody).score;
-      message.score = score;
-      if ( score < 0 ) {
-        // add negative tweets to negativeTweets array
-        this.setState({
-          negativeTweets: [...this.state.negativeTweets, message]
-        });
-      } else if ( score > 0 ) {
-        // add positive tweets to positiveTweets array
-        this.setState({
-          positiveTweets: [...this.state.positiveTweets, message]
-        });
-      }
-    });
-    var newAverage = (this.state.negativeTweets.length / this.state.tweets.length) * 100
-    this.setState({
-      average: newAverage
-    });
+    this.assignAndCount(tweets)
     axios.post('/database', {average: newAverage, searchTerm: searchTerm});
   }
 
   getUserData() {
     if(this.state.clickedUser) {
-      // axios.post(`/UserProfileData`, {clickedUser: this.state.clickedUser})
-      // .then((results) => {
-        // let UserProfileDataObject = results.data;
-        // console.log(UserProfileDataObject, 'getUserData')
-        this.setState({clickedUserData: userDataExample || UserProfileDataObject}, () => {
-          // this.setState({userModalStylingSheet: 'user-modal-content'})
-          // this.setState({clickedUserDataContentLoaded: true})
+      axios.post(`/UserProfileData`, {clickedUser: this.state.clickedUser})
+      .then((results) => {
+        let UserProfileDataObject = results.data;
+        this.setState({clickedUserData: UserProfileDataObject ||  userDataExample}, () => {
+          this.setState({userModalStylingSheet: 'user-modal-content'})
+          this.setState({clickedUserDataContentLoaded: true})
         })
-      // })
+      })
     }
   }
 
