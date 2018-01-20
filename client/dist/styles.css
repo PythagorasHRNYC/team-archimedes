@@ -241,6 +241,71 @@
 
   /*=== END OF CHART ===*/
 
+  /*=== START OF PROFILE ===*/
+.main-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background: #1d76fc;
+}
+.profile-name{
+  height: 80px;
+  background: white;
+}
+.profile-image-div{
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+}
+.profile-image-div img {
+  border-radius: 50%;
+  /* height: 350px; */
+  width:400px;
+  /* position: inherit; */
+  padding: 18px;
+
+}
+
+.friend-0-profile-image {
+  height: 300px;
+}
+
+.friend-1-profile-image {
+  width: 250px;
+}
+
+.friend-2-profile-image {
+  width: 200px;
+}
+
+.friend-3-profile-image {
+  width: 150px;
+}
+
+.friend-4-profile-image {
+  width: 100px;
+}
+
+.nav-bar{
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  background: #81b3fd;
+}
+
+.tweetsList{
+  height: 290px;
+  overflow: auto;
+  padding: 18px;
+}
+
+
+  /*=== END OF PROFILE ===*/
+
+
+
+
 .profile-content {
   position: absolute;
   top: 115px;
