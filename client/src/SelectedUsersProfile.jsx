@@ -104,8 +104,15 @@ class SelectedUsersProfile extends React.Component {
 
           <div className="profile-image-div">
             <img  srcSet={`${this.props.userData.profile_image_url_https, this.props.userData.profile_image_url_https_400}`} />
+            {/* <div className="users-friends-profile-images"> */}
+              {this.props.userData.usersFriends.slice(0, 5).map((friend, rank) => <img className={`friend-${rank}-profile-image`} 
+                onClick={() => {this.props.friendClickHandler(friend.screen_name)}} 
+                srcSet={`${friend.profile_image_url_https, friend.profile_image_url_https_400}`} />)}
+            {/* </div>   */}
           </div>
-          
+
+
+          <div className="tweetsList">
           <List >  
             {
               this.props.userData[`${this.state.navbarChoice.list}`].map((listItem, idx) => {
@@ -147,6 +154,7 @@ class SelectedUsersProfile extends React.Component {
             
             }
           </List>
+          </div>
           </div>  
         </div> //inner-containter then Main-container
       )
